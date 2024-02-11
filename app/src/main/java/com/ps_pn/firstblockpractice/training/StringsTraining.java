@@ -47,11 +47,9 @@ public class StringsTraining {
 	 * вернуть пустой массив
 	 */
 	public int[] getArrayLastSymbol(String text) {
-
 		if (text.isEmpty() || text.length() == 1) {
 			return new int[]{};
 		}
-
 		List<Integer> indexes = new ArrayList<>();
 		char lastSymbol = text.charAt(text.length() - 1);
 		for (int i = 0; i < text.length() - 1; i++) {
@@ -59,7 +57,6 @@ public class StringsTraining {
 				indexes.add(i);
 			}
 		}
-
 		return indexes.stream().mapToInt(Integer::intValue).toArray();
 	}
 
@@ -71,7 +68,6 @@ public class StringsTraining {
 	 * @return количество цифр в строке
 	 */
 	public int getNumbersCount(String text) {
-
 		if (text != null) {
 			return text.replaceAll("\\D", "").length();
 		} else {
@@ -87,7 +83,6 @@ public class StringsTraining {
 	 * @return текст, где цифры заменены словами
 	 */
 	public String replaceAllNumbers(String text) {
-
 		if (text != null) {
 			return text.replaceAll("1", "one")
 					.replaceAll("2", "two")
@@ -102,7 +97,6 @@ public class StringsTraining {
 		} else {
 			return null;
 		}
-
 	}
 
 	/**
@@ -113,11 +107,9 @@ public class StringsTraining {
 	 * @return измененная строка
 	 */
 	public String capitalReverse(String text) {
-
 		if (text == null) {
 			return null;
 		}
-
 		char[] chars = text.toCharArray();
 		for (int i = 0; i < chars.length; i++) {
 			char c = chars[i];
@@ -129,5 +121,4 @@ public class StringsTraining {
 		}
 		return String.valueOf(chars);
 	}
-
 }

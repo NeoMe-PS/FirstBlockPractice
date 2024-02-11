@@ -9,7 +9,6 @@ public class Enrollee {
 	private boolean enrolled;
 	private Faculty faculty;
 
-
 	public void passExams() {
 		List<Exam> exams = faculty.getExams();
 		for (Exam exam:exams){

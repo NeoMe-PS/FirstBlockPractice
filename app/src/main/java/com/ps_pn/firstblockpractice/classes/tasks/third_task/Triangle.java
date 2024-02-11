@@ -7,7 +7,6 @@ package com.ps_pn.firstblockpractice.classes.tasks.third_task;
       Описать свойства для получения состояния объекта.
      */
 
-
 public class Triangle {
 	private Point a;
 	private Point b;
@@ -26,7 +25,6 @@ public class Triangle {
 		return ab + bc + ac;
 	}
 
-
 	public double getArea() {
 		double ab = Point.getLength(a, b);
 		double bc = Point.getLength(b, c);
@@ -34,7 +32,6 @@ public class Triangle {
 		double p = (ab + bc + ac) / 2;
 		return Math.sqrt(p * (p - ab) * (p - bc) * (p - ac));
 	}
-
 
 	public Point getMedianCross() {
 		return new Point((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3);
@@ -49,4 +46,3 @@ public class Triangle {
 				'}';
 	}
 }
-

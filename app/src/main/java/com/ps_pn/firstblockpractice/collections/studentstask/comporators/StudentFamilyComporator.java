@@ -12,4 +12,3 @@ public class StudentFamilyComporator implements Comparator<Student> {
 		return o1.getFamily().compareTo(o2.getFamily());
 	}
 }
-

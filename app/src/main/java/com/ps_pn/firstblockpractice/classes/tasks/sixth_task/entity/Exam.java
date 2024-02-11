@@ -2,14 +2,7 @@ package com.ps_pn.firstblockpractice.classes.tasks.sixth_task.entity;
 
 public class Exam {
 	private String name;
-
 	private int ball;
-
-
-
-	public Exam() {
-	}
-
 
 	public int getBall() {
 		return ball;

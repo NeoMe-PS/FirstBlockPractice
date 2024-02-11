@@ -5,10 +5,8 @@ import java.util.List;
 public class Order {
 
 	private List<Product> productsInOrder;
-
 	private int sum;
 	private boolean orderIsPaid;
-
 	private Client client;
 
 	public List<Product> getProductsInOrder() {

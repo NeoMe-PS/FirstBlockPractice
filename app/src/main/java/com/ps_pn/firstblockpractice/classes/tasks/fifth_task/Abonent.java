@@ -16,6 +16,7 @@ import java.util.Random;
 	 превышает заданное.  Сведения относительно абонентов, которые пользовались
 	 междугородной связью. Список абонентов в алфавитном порядке.
 	*/
+
 public class Abonent implements Comparable<Abonent> {
 
 	private int id;
@@ -29,10 +30,6 @@ public class Abonent implements Comparable<Abonent> {
 	private int interCityTime;
 	private int cityTime;
 
-	public Abonent() {
-
-	}
-
 	public Abonent(
 			int id,
 			String family,
@@ -44,7 +41,7 @@ public class Abonent implements Comparable<Abonent> {
 			int credit,
 			int interCityTime,
 			int cityTime
-			) {
+	) {
 		this.id = id;
 		this.family = family;
 		this.name = name;
@@ -81,7 +78,6 @@ public class Abonent implements Comparable<Abonent> {
 		Collections.sort(abonents);
 	}
 
-
 	@Override
 	public String toString() {
 		return "Abonent{" +
@@ -98,84 +94,12 @@ public class Abonent implements Comparable<Abonent> {
 				'}';
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getFamily() {
-		return family;
-	}
-
-	public void setFamily(String family) {
-		this.family = family;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getSurname() {
-		return surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public int getCreditCard() {
-		return creditCard;
-	}
-
-	public void setCreditCard(int creditCard) {
-		this.creditCard = creditCard;
-	}
-
-	public int getDebit() {
-		return debit;
-	}
-
-	public void setDebit(int debit) {
-		this.debit = debit;
-	}
-
-	public int getCredit() {
-		return credit;
-	}
-
-	public void setCredit(int credit) {
-		this.credit = credit;
-	}
-
-	public int getInterCityTime() {
-		return interCityTime;
-	}
-
-	public void setInterCityTime(int interCityTime) {
-		this.interCityTime = interCityTime;
-	}
-
-	public int getCityTime() {
-		return cityTime;
-	}
-
-	public void setCityTime(int cityTime) {
-		this.cityTime = cityTime;
 	}
 
 	@Override
@@ -189,10 +113,10 @@ public class Abonent implements Comparable<Abonent> {
 		for (int i = 0; i < 5; i++) {
 			abonents.add(new Abonent(
 					i,
-					"Family "+i,
-					"Name"+i,
-					"surname"+i,
-					"Addres"+i,
+					"Family " + i,
+					"Name" + i,
+					"surname" + i,
+					"Addres" + i,
 					new Random().nextInt(),
 					new Random().nextInt(),
 					new Random().nextInt(),
@@ -201,12 +125,18 @@ public class Abonent implements Comparable<Abonent> {
 			));
 		}
 
+		// Вывести абонентов
 		System.out.println(abonents);
 
+		// Список абонентов в алфавитном порядке
 		Abonent.sortAbonents(abonents);
 		System.out.println(abonents);
 
-		System.out.println(Abonent.getAbonCityTimeMoreThen(34,abonents));
+		 /*Вывести сведения относительно абонентов, у которых время городских переговоров
+				превышает заданное.*/
+		System.out.println(Abonent.getAbonCityTimeMoreThen(34, abonents));
+
+		// Сведения относительно абонентов, которые пользовались междугородной связью
 
 		System.out.println(Abonent.getAbonentsWithInterCityTime(abonents));
 

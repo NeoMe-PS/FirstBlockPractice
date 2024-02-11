@@ -23,7 +23,6 @@ public class StudentInformer {
 			mapWithAllMarks.put(subject, new ArrayList<>());
 		}
 
-
 		for (int i = 0; i < studentsInCourse.size(); i++) {
 
 			HashMap<SchoolSubjects, List<Integer>> studentMap = studentsInCourse.get(i)
@@ -33,15 +32,13 @@ public class StudentInformer {
 				mapWithAllMarks.get(entry.getKey()).addAll(entry.getValue());
 			}
 		}
-		// вычисление avg по каждому предмету
+			// вычисление avg по каждому предмету
 		for (Map.Entry<SchoolSubjects, List<Integer>> entry : mapWithAllMarks.entrySet()) {
 			double avg = entry.getValue().stream().mapToInt(Integer::intValue)
 					.average()
 					.getAsDouble();
-
 			result.put(entry.getKey(), avg);
 		}
-
 		return result;
 	}
 
@@ -97,7 +94,6 @@ public class StudentInformer {
 			}
 			marksByOneStudent.clear();
 		}
-
 		return bestStudent;
 	}
 }

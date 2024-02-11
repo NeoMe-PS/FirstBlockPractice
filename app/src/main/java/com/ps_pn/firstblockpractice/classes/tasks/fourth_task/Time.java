@@ -14,6 +14,9 @@ public class Time {
 	private int minutes = 0;
 	private int seconds = 0;
 
+	private final int MIN_TIME_VALUE = 1;
+	private final int MAX_TIME_VALUE = 60;
+	private final int MAX_HOUR_VALUE = 24;
 
 	public Time(int hours, int minutes, int seconds) {
 		this.hours = hours;
@@ -62,25 +65,25 @@ public class Time {
 	}
 
 	private boolean isCorrectValue(int value) {
-		return value >= 1 && value <= 60;
+		return value >= MIN_TIME_VALUE && value <= MAX_TIME_VALUE;
 	}
 
 	private boolean isCorrectHour(int value) {
-		return value >= 1 && value < 24;
+		return value >= MIN_TIME_VALUE && value < MAX_HOUR_VALUE;
 	}
 
 	public void addHourToTime(int hour) throws Exception {
-		if (isCorrectHour(hour)) {
+		if (!isCorrectHour(hour)) {
+			throw new Exception("Illegal argument value hours : " + hours + " Must be from 0 to 23");
+		} else {
 			int summaryHour = hours + hour;
-			if (summaryHour == 24) {
+			if (summaryHour == MAX_HOUR_VALUE) {
 				hours = 0;
-			} else if (summaryHour > 24) {
-				hours = summaryHour - 24;
+			} else if (summaryHour > MAX_HOUR_VALUE) {
+				hours = summaryHour - MAX_HOUR_VALUE;
 			} else {
 				hours = summaryHour;
 			}
-		} else {
-			throw new Exception("Illegal argument value hours : " + hours + " Must be from 0 to 23");
 		}
 	}
 
@@ -116,5 +119,4 @@ public class Time {
 	public String toString() {
 		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	}
-
 }

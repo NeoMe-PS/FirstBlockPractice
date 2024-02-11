@@ -58,5 +58,4 @@ public class EntranceExamsSystem {
 			teacher.checkEnrollee(enrollee);
 		}
 	}
-
 }

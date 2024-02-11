@@ -7,19 +7,14 @@ public class Faculty {
 	private String name;
 	private List<Enrollee> enrollees = new ArrayList<>();
 	private List<Exam> exams;
-
+	private int type;
+	private int minAvg;
+	public static final int ZLO_TYPE = 0;
+	public static final int DOBRO_TYPE = 1;
 
 	{
 		setExamsAtType();
 	}
-
-	private int type;
-
-	private int minAvg;
-
-	public static final int ZLO_TYPE = 0;
-	public static final int DOBRO_TYPE = 1;
-
 
 	private void setExamsAtType() {
 		this.exams = new ArrayList<>();
@@ -54,7 +49,6 @@ public class Faculty {
 	public String getName() {
 		return name;
 	}
-
 
 	public List<Enrollee> getEnrollees() {
 		return enrollees;

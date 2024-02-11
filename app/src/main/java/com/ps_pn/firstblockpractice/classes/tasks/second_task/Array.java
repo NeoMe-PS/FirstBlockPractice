@@ -20,21 +20,17 @@ public class Array<T> {
 	private int capacity = DEFAULT_CAPACITY;
 	private int size = 0;
 
-
 	public Object[] getArray() {
 		return array;
 	}
-
 
 	public int getCapacity() {
 		return capacity;
 	}
 
-
 	public int getSize() {
 		return size;
 	}
-
 
 	public Array(int capacity) {
 		if (capacity > 0) {
@@ -53,7 +49,6 @@ public class Array<T> {
 		int oldCapacity = array.length;
 		int newCapacity = oldCapacity + oldCapacity;
 		return Arrays.copyOf(array, newCapacity);
-
 	}
 
 	public void add(T element) {
@@ -62,13 +57,11 @@ public class Array<T> {
 		}
 		array[size] = element;
 		size++;
-
 	}
 
 	public T get(int index) {
 		isCorrectIndex(index);
 		return (T) array[index];
-
 	}
 
 	public void shuffle() {
@@ -90,7 +83,6 @@ public class Array<T> {
 		return counter;
 	}
 
-
 	private void isCorrectIndex(int index) {
 		if (index < 0 || index >= array.length) {
 			throw new ArrayIndexOutOfBoundsException();
@@ -101,13 +93,10 @@ public class Array<T> {
 		return size + 1 >= array.length;
 	}
 
-
 	public void fillRandomInt(int countOfElements) {
-
 		for (int i = 0; i < countOfElements; i++) {
 			Integer random = (int) (Math.random() * 10);
 			add((T) random);
-
 		}
 	}
 
@@ -153,7 +142,6 @@ public class Array<T> {
 		separateText();
 
 		System.out.println("Array getCounts:");
-
 		System.out.println(array2.getCountsOfElement(33));
 		separateText();
 	}

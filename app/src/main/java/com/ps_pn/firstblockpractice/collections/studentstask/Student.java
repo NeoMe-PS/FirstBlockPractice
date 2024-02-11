@@ -17,7 +17,6 @@ public class Student {
 	public Student(String family, String name, String surname, int yearOfBirthday,
 	               int course, int numOfGroup, HashMap<SchoolSubjects,
 			List<Integer>> schoolGrades) {
-
 		this.family = family;
 		this.name = name;
 		this.surname = surname;
@@ -91,9 +90,4 @@ public class Student {
 				"\nGroup: " + numOfGroup +
 				"\nSchool grades: " + schoolGrades;
 	}
-
-
 }
-
-
-

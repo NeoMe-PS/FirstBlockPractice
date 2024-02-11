@@ -5,9 +5,7 @@ import java.util.List;
 
 public class Teacher {
 
-
 	public List<Mark> checkEnrollee(Enrollee enrollee) {
-
 		List<Mark> listOfMarks = new ArrayList<>();
 		List<Exam> exams = enrollee.getFaculty().getExams();
 		for (Exam exam : exams) {
@@ -25,6 +23,4 @@ public class Teacher {
 			return Mark.GOOD;
 		} else return Mark.GREAT;
 	}
-
-
 }

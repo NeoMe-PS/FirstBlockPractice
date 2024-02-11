@@ -1,6 +1,5 @@
 package com.ps_pn.firstblockpractice.classes.tasks.seventh_task.entity;
 
-
 import java.util.List;
 import java.util.Random;
 
@@ -12,8 +11,7 @@ public class Merchandiser {
 		this.name = name;
 	}
 
-	public void setProductsInformation(List<Product>products) {
-
+	public void setProductsInformation(List<Product> products) {
 		for (Product product : products) {
 			product.setName("someName");
 			product.setPrice(new Random().nextInt(1000));
@@ -25,11 +23,11 @@ public class Merchandiser {
 		if (magazine.getBlackList().contains(client)) {
 			return;
 		}
-		if (order.isOrderIsPaid()) {
+		if (!order.isOrderIsPaid()) {
+			magazine.getBlackList().add(order.getClient());
+		} else {
 			magazine.getSellingList().add(new Selling(order, this));
 			magazine.getCurrentProducts().removeAll(order.getProductsInOrder());
-		} else {
-			magazine.getBlackList().add(order.getClient());
 		}
 	}
 

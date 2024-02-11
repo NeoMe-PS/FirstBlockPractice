@@ -6,7 +6,6 @@ import java.util.Random;
 
 public class Client {
 
-
 	private List<Product> productsInOrder = new ArrayList<>();
 
 	public Order makeOrder(Magazine magazine) {

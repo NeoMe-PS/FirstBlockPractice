@@ -16,6 +16,4 @@ public class Utill {
 		enrollees.add(new Enrollee("Bobbi"));
 		return enrollees;
 	}
-
-
 }

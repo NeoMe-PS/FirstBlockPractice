@@ -3,7 +3,6 @@ package com.ps_pn.firstblockpractice.classes.tasks.seventh_task.entity;
 public class Selling {
 
 	private Order order;
-
 	private Merchandiser merchandiser;
 
 	public Selling(Order order, Merchandiser merchandiser) {

@@ -6,11 +6,9 @@ import java.util.List;
 
 public class TaskInitializer {
 
-
 	private List<String> pullOfNames = new ArrayList<>();
 	private List<String> pullOfSurnames = new ArrayList<>();
 	private List<String> pullOfFamilies = new ArrayList<>();
-
 
 	public static int getYear() {
 		int min = 2005;
@@ -23,7 +21,6 @@ public class TaskInitializer {
 		fillPullOfNames();
 		fillPullOfSurnames();
 	}
-
 
 	private void fillPullOfNames() {
 		pullOfNames.add("John");
@@ -71,7 +68,6 @@ public class TaskInitializer {
 				getSchoolGrades()
 		);
 	}
-
 
 	private String getRandomName() {
 		return pullOfNames.get((int) (Math.random() * pullOfNames.size()));

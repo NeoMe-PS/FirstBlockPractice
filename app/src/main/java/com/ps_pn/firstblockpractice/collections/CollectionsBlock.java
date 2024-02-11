@@ -1,6 +1,5 @@
 package com.ps_pn.firstblockpractice.collections;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,8 +35,6 @@ public class CollectionsBlock<T extends Comparable> {
 		result.addAll(secondList);
 		result.sort(Collections.reverseOrder());
 		return result;
-
-
 	}
 
 	/**
@@ -75,14 +72,14 @@ public class CollectionsBlock<T extends Comparable> {
 			throw new NullPointerException();
 		} else if (firstList.isEmpty() && secondList.isEmpty()) {
 			return true;
-		} else if (!firstList.isEmpty() && !secondList.isEmpty())
+		} else {
 			if (firstList.size() > secondList.size()) {
 				return firstList.containsAll(secondList);
 			} else {
 				return secondList.containsAll(firstList);
 			}
+		}
 
-		return false;
 	}
 
 	/**
@@ -132,7 +129,6 @@ public class CollectionsBlock<T extends Comparable> {
 			String replaced = stroke.replace(a, b);
 			result.add(replaced);
 		}
-
 		return result;
 	}
 
