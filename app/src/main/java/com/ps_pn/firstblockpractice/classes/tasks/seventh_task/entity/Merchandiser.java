@@ -25,10 +25,10 @@ public class Merchandiser {
 		}
 		if (!order.isOrderIsPaid()) {
 			magazine.getBlackList().add(order.getClient());
-		} else {
-			magazine.getSellingList().add(new Selling(order, this));
-			magazine.getCurrentProducts().removeAll(order.getProductsInOrder());
+			return;
 		}
+		magazine.getSellingList().add(new Selling(order, this));
+		magazine.getCurrentProducts().removeAll(order.getProductsInOrder());
 	}
 
 	@Override

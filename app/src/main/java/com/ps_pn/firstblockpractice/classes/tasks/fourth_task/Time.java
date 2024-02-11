@@ -33,11 +33,10 @@ public class Time {
 	}
 
 	public void setHours(int hours) throws Exception {
-		if (isCorrectHour(hours)) {
-			this.hours = hours;
-		} else {
+		if (!isCorrectHour(hours)) {
 			throw new Exception("Illegal argument value hours : " + hours + " Must be from 0 to 23");
 		}
+		this.hours = hours;
 	}
 
 	public int getMinutes() {
@@ -45,11 +44,10 @@ public class Time {
 	}
 
 	public void setMinutes(int minutes) throws Exception {
-		if (isCorrectValue(minutes)) {
-			this.minutes = minutes;
-		} else {
+		if (!isCorrectValue(minutes)) {
 			throw new Exception("Illegal argument value minutes : " + minutes + " Must be from 0 to 59");
 		}
+		this.minutes = minutes;
 	}
 
 	public int getSeconds() {
@@ -57,11 +55,10 @@ public class Time {
 	}
 
 	public void setSeconds(int seconds) throws Exception {
-		if (isCorrectValue(seconds)) {
-			this.seconds = seconds;
-		} else {
+		if (!isCorrectValue(seconds)) {
 			throw new Exception("Illegal argument value seconds : " + seconds + " Must be from 0 to 59");
 		}
+		this.seconds = seconds;
 	}
 
 	private boolean isCorrectValue(int value) {
@@ -75,44 +72,43 @@ public class Time {
 	public void addHourToTime(int hour) throws Exception {
 		if (!isCorrectHour(hour)) {
 			throw new Exception("Illegal argument value hours : " + hours + " Must be from 0 to 23");
-		} else {
-			int summaryHour = hours + hour;
-			if (summaryHour == MAX_HOUR_VALUE) {
-				hours = 0;
-			} else if (summaryHour > MAX_HOUR_VALUE) {
-				hours = summaryHour - MAX_HOUR_VALUE;
-			} else {
-				hours = summaryHour;
-			}
 		}
+		int summaryHour = hours + hour;
+		if (summaryHour == MAX_HOUR_VALUE) {
+			hours = 0;
+			return;
+		}
+		if (summaryHour > MAX_HOUR_VALUE) {
+			hours = summaryHour - MAX_HOUR_VALUE;
+			return;
+		}
+		hours = summaryHour;
 	}
 
 	public void addMinutesToTime(int minut) throws Exception {
-		if (isCorrectValue(minut)) {
-			int summaryMinutes = minutes + minut;
-			if (summaryMinutes > 59) {
-				addHourToTime(1);
-				minutes = summaryMinutes - 60;
-			} else {
-				minutes = summaryMinutes;
-			}
-		} else {
+		if (!isCorrectValue(minut)) {
 			throw new Exception("Illegal argument value minutes : " + minut + " Must be from 0 to 59");
 		}
+		int summaryMinutes = minutes + minut;
+		if (summaryMinutes > 59) {
+			addHourToTime(1);
+			minutes = summaryMinutes - 60;
+			return;
+		}
+		minutes = summaryMinutes;
 	}
 
 	public void addSecondsToTime(int sec) throws Exception {
-		if (isCorrectValue(sec)) {
-			int summarySeconds = seconds + sec;
-			if (summarySeconds > 59) {
-				addMinutesToTime(1);
-				seconds = summarySeconds - 60;
-			} else {
-				seconds = summarySeconds;
-			}
-		} else {
+		if (!isCorrectValue(sec)) {
 			throw new Exception("Illegal argument value seconds : " + sec + " Must be from 0 to 60");
 		}
+		int summarySeconds = seconds + sec;
+		if (summarySeconds > 59) {
+			addMinutesToTime(1);
+			seconds = summarySeconds - 60;
+			return;
+		}
+		seconds = summarySeconds;
 	}
 
 	@Override

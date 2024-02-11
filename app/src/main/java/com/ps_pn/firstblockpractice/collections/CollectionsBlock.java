@@ -70,16 +70,14 @@ public class CollectionsBlock<T extends Comparable> {
 
 		if (firstList == null || secondList == null) {
 			throw new NullPointerException();
-		} else if (firstList.isEmpty() && secondList.isEmpty()) {
-			return true;
-		} else {
-			if (firstList.size() > secondList.size()) {
-				return firstList.containsAll(secondList);
-			} else {
-				return secondList.containsAll(firstList);
-			}
 		}
-
+		if (firstList.isEmpty() && secondList.isEmpty()) {
+			return true;
+		}
+		if (firstList.size() > secondList.size()) {
+			return firstList.containsAll(secondList);
+		}
+		return secondList.containsAll(firstList);
 	}
 
 	/**

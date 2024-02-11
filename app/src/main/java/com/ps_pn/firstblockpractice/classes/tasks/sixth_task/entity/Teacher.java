@@ -17,10 +17,13 @@ public class Teacher {
 	private Mark getMark(int rightAnswers) {
 		if (rightAnswers < 5) {
 			return Mark.UNSATISFACTORY;
-		} else if (rightAnswers < 6) {
+		}
+		if (rightAnswers < 6) {
 			return Mark.SATISFACTORY;
-		} else if (rightAnswers < 8) {
+		}
+		if (rightAnswers < 8) {
 			return Mark.GOOD;
-		} else return Mark.GREAT;
+		}
+		return Mark.GREAT;
 	}
 }

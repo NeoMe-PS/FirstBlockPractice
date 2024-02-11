@@ -68,11 +68,10 @@ public class StringsTraining {
 	 * @return количество цифр в строке
 	 */
 	public int getNumbersCount(String text) {
-		if (text != null) {
-			return text.replaceAll("\\D", "").length();
-		} else {
+		if (text == null || text.isEmpty()) {
 			return 0;
 		}
+		return text.replaceAll("\\D", "").length();
 	}
 
 	/**
@@ -83,20 +82,22 @@ public class StringsTraining {
 	 * @return текст, где цифры заменены словами
 	 */
 	public String replaceAllNumbers(String text) {
-		if (text != null) {
-			return text.replaceAll("1", "one")
-					.replaceAll("2", "two")
-					.replaceAll("3", "three")
-					.replaceAll("4", "four")
-					.replaceAll("5", "five")
-					.replaceAll("6", "six")
-					.replaceAll("7", "seven")
-					.replaceAll("8", "eight")
-					.replaceAll("9", "nine")
-					.replaceAll("0", "zero");
-		} else {
+		if (text == null) {
 			return null;
 		}
+		if (text.isEmpty()) {
+			return text;
+		}
+		return text.replaceAll("1", "one")
+				.replaceAll("2", "two")
+				.replaceAll("3", "three")
+				.replaceAll("4", "four")
+				.replaceAll("5", "five")
+				.replaceAll("6", "six")
+				.replaceAll("7", "seven")
+				.replaceAll("8", "eight")
+				.replaceAll("9", "nine")
+				.replaceAll("0", "zero");
 	}
 
 	/**
@@ -115,9 +116,9 @@ public class StringsTraining {
 			char c = chars[i];
 			if (Character.isUpperCase(c)) {
 				chars[i] = Character.toLowerCase(c);
-			} else if (Character.isLowerCase(c)) {
-				chars[i] = Character.toUpperCase(c);
+				continue;
 			}
+			chars[i] = Character.toUpperCase(c);
 		}
 		return String.valueOf(chars);
 	}

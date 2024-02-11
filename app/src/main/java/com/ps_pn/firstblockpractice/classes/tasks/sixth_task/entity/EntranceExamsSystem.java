@@ -12,7 +12,7 @@ public class EntranceExamsSystem {
 		return enteredTheFaculty;
 	}
 
-	public void  makeDecisionOnAdmission(List<Enrollee> enrollees,Teacher teacher) {
+	public void makeDecisionOnAdmission(List<Enrollee> enrollees, Teacher teacher) {
 
 		for (Enrollee enrollee : enrollees) {
 			List<Mark> marks = teacher.checkEnrollee(enrollee);
@@ -21,15 +21,15 @@ public class EntranceExamsSystem {
 			decide(enrollee);
 		}
 	}
-	
-	private void decide(Enrollee enrollee){
-		if (checkAvg(enrollee)) {
-			enrollee.setEnrolled(true);
-			enteredTheFaculty.add(enrollee);
-			enrollee.getFaculty().getEnrollees().add(enrollee);
-		} else {
+
+	private void decide(Enrollee enrollee) {
+		if (!checkAvg(enrollee)) {
 			enrollee.setEnrolled(false);
+			return;
 		}
+		enrollee.setEnrolled(true);
+		enteredTheFaculty.add(enrollee);
+		enrollee.getFaculty().getEnrollees().add(enrollee);
 	}
 
 	private boolean checkAvg(Enrollee enrollee) {

@@ -36,9 +36,9 @@ public class Array<T> {
 		if (capacity > 0) {
 			this.capacity = capacity;
 			this.array = new Object[capacity];
-		} else {
-			this.array = new Object[DEFAULT_CAPACITY];
+			return;
 		}
+		this.array = new Object[DEFAULT_CAPACITY];
 	}
 
 	public Array() {
@@ -105,9 +105,8 @@ public class Array<T> {
 		for (int i = 0; i < size; i++) {
 			if (i == size - 1) {
 				System.out.print(this.array[i]);
-			} else {
-				System.out.print(this.array[i] + ", ");
 			}
+			System.out.print(this.array[i] + ", ");
 		}
 		System.out.println();
 	}
