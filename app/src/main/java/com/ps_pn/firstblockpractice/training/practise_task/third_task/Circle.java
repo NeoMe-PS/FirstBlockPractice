@@ -4,7 +4,6 @@ public class Circle implements Shape {
 
 	private int diameter;
 
-
 	public Circle(int diameter) {
 		this.diameter = diameter;
 	}

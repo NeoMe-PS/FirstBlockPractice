@@ -9,22 +9,24 @@ import java.util.Arrays;
 
 public class Main {
 
-
 	public static void main(String[] args) {
 
 		Main main = new Main();
+
 		main.moveToTreasure();
 	}
 
 	public int[] moveToTreasure() {
+
 		int[] location = new int[]{0, 0};
+
 		Directions[] treasureMap = new Directions[]{
 				UP, UP, LEFT, DOWN, LEFT, DOWN, DOWN, RIGHT, RIGHT, DOWN, RIGHT};
+
 		for (Directions direction : treasureMap) {
 			moveTo(direction, location);
 			System.out.println(Arrays.toString(location));
 		}
-
 		return location;
 	}
 
