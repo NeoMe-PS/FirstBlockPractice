@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FirstBlockPractice</string>
+    <string name="app_name">Хочу помочь</string>
     <string name="splash_load">Загрузка…</string>
     <string name="company_logo">Company logo</string>
     <string name="app_logo">App logo</string>
@@ -17,4 +17,5 @@
     <string name="logout_btn">Выйти из аккаунта</string>
     <string name="content_desc_help_fab">Menu button - help</string>
     <string name="content_desc_user_profile_img">User profile image</string>
+    <string name="app_bar_label_profile">Профиль</string>
 </resources>

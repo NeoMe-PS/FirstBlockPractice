@@ -5,8 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.ps_pn.firstblockpractice.databinding.ActivityMainBinding
 
@@ -28,16 +26,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation(navController: NavController) {
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.profileFragment,
-                R.id.historyFragment,
-                R.id.helpFragment,
-                R.id.searchFragment,
-                R.id.newsFragment,
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 
@@ -48,11 +36,10 @@ class MainActivity : AppCompatActivity() {
 
             when (currentFragment) {
                 splashFragment -> {
-                    supportActionBar?.hide()
                     binding.mainActivityCoordinator.visibility = View.GONE }
                 else -> {
-                    supportActionBar?.show()
-                    binding.mainActivityCoordinator.visibility = View.VISIBLE }
+                    binding.mainActivityCoordinator.visibility = View.VISIBLE
+                }
             }
         }
     }

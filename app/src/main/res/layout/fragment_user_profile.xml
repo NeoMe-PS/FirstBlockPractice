@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,107 +8,139 @@
     android:orientation="vertical"
     tools:context=".UserProfileFragment">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/profile_img_height"
-            android:src="@drawable/image_man"
-            android:contentDescription="@string/content_desc_user_profile_img" />
-
-        <TextView
-            android:id="@+id/user_name_tv"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_20dp"
-            android:text="Some user name"
-            style="@style/UserNameTextStyle"/>
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|enterAlways">
 
-        <TextView
-            android:id="@+id/birthDay_label_tv"
-            style="@style/TextLabelStyle"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/app_bar_label_profile"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_21sp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_16dp"
-            android:text="@string/fragment_label_birthday" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/birthDay_tv"
-            style="@style/TextInfoStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:text="27.07.1994" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_img_height"
+                android:contentDescription="@string/content_desc_user_profile_img"
+                android:src="@drawable/image_man"
+                android:scaleType="centerCrop"
+                />
 
-        <TextView
-            android:id="@+id/activity_label_tv"
-            style="@style/TextLabelStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_16dp"
-            android:text="@string/fragment_label_user_activity" />
+            <TextView
+                android:id="@+id/user_name_tv"
+                style="@style/UserNameTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_20dp"
+                tools:text="Some user name" />
 
-        <TextView
-            android:id="@+id/activity_tv"
-            style="@style/TextInfoStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:text="Хирургия, травмотология" />
+            <TextView
+                android:id="@+id/birthDay_label_tv"
+                style="@style/TextLabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:text="@string/fragment_label_birthday" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch1"
-            style="@style/TextInfoStyle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_0dp"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_28dp"
-            android:layout_marginEnd="@dimen/_26dp"
-            android:text="@string/fragment_label_notification" />
+            <TextView
+                android:id="@+id/birthDay_tv"
+                style="@style/TextInfoStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                tools:text="27.07.1994" />
+
+            <TextView
+                android:id="@+id/activity_label_tv"
+                style="@style/TextLabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:text="@string/fragment_label_user_activity" />
+
+            <TextView
+                android:id="@+id/activity_tv"
+                style="@style/TextInfoStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                tools:text="Хирургия, травмотология" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch1"
+                style="@style/TextInfoStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_0dp"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_28dp"
+                android:layout_marginEnd="@dimen/_26dp"
+                android:text="@string/fragment_label_notification" />
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/delimiter_height_1dp"
-            android:layout_marginTop="@dimen/_18dp"
-            android:background="#aabbbb" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/delimiter_height_1dp"
+                android:layout_marginTop="@dimen/_18dp"
+                android:background="#aabbbb" />
 
-        <TextView
-            android:id="@+id/friends_label_tv"
-            style="@style/TextLabelStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_16dp"
-            android:text="@string/fragment_label_friends" />
+            <TextView
+                android:id="@+id/friends_label_tv"
+                style="@style/TextLabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:text="@string/fragment_label_friends" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/fragment_profile_rv_height"
-            android:layout_marginTop="@dimen/_16dp"
-            tools:listitem="@layout/friend_item" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fragment_profile_rv_height"
+                android:layout_marginTop="@dimen/_16dp"
+                tools:listitem="@layout/friend_item" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/delimiter_height_1dp"
-            android:layout_marginTop="@dimen/_20dp"
-            android:background="#aabbbb" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/delimiter_height_1dp"
+                android:layout_marginTop="@dimen/_20dp"
+                android:background="#aabbbb" />
 
-        <Button
-            android:id="@+id/logout_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_20dp"
-            android:layout_marginBottom="@dimen/_38dp"
-            android:text="@string/logout_btn" />
-    </LinearLayout>
-
-</ScrollView>
+            <Button
+                android:id="@+id/logout_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_20dp"
+                android:layout_marginBottom="@dimen/_38dp"
+                android:text="@string/logout_btn" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
