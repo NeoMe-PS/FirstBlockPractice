@@ -18,5 +18,7 @@
     <dimen name="_24sp">24sp</dimen>
     <dimen name="_16sp">16sp</dimen>
     <dimen name="_21sp">21sp</dimen>
+    <dimen name="_22dp">22dp</dimen>
+    <dimen name="edit_icon">18dp</dimen>
 
 </resources>
