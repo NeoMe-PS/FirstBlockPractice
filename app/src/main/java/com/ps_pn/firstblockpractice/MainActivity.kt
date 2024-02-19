@@ -9,7 +9,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.ps_pn.firstblockpractice.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     private var _binding: ActivityMainBinding? = null
 
     private val binding: ActivityMainBinding
@@ -36,7 +35,8 @@ class MainActivity : AppCompatActivity() {
 
             when (currentFragment) {
                 splashFragment -> {
-                    binding.mainActivityCoordinator.visibility = View.GONE }
+                    binding.mainActivityCoordinator.visibility = View.GONE
+                }
                 else -> {
                     binding.mainActivityCoordinator.visibility = View.VISIBLE
                 }
