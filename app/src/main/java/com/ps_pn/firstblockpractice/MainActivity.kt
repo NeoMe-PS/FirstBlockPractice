@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -22,13 +21,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.hide()
-        setupBottomNavigation()
-        hideBottomMenuOnSplash()
+
+        val navController = findNavController(R.id.nav_host_fragment)
+        setupBottomNavigation(navController)
+        hideBottomMenuOnSplash(navController)
     }
 
-    private fun setupBottomNavigation() {
-        val navController = findNavController(R.id.nav_host_fragment)
+    private fun setupBottomNavigation(navController: NavController) {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.profileFragment,
@@ -42,20 +41,18 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 
-    private fun hideBottomMenuOnSplash() {
-        val navController: NavController =
-            Navigation.findNavController(this, R.id.nav_host_fragment)
-
+    private fun hideBottomMenuOnSplash(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val currentFragment = destination.id
             val splashFragment = R.id.splashFragment
 
-            if (currentFragment == splashFragment) {
-                supportActionBar?.hide()
-                binding.mainActivityCoordinator.visibility = View.GONE
-            } else {
-                supportActionBar?.show()
-                binding.mainActivityCoordinator.visibility = View.VISIBLE
+            when (currentFragment) {
+                splashFragment -> {
+                    supportActionBar?.hide()
+                    binding.mainActivityCoordinator.visibility = View.GONE }
+                else -> {
+                    supportActionBar?.show()
+                    binding.mainActivityCoordinator.visibility = View.VISIBLE }
             }
         }
     }

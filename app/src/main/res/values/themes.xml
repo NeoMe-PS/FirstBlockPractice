@@ -4,18 +4,10 @@
         <!-- Customize your light theme here. -->
     </style>
 
-    <style name="Theme.FirstBlockPractice" parent="Base.Theme.FirstBlockPractice"
-        >
+    <style name="Theme.FirstBlockPractice" parent="Base.Theme.FirstBlockPractice">
         <item name="colorPrimary">@color/turtle_green</item>
-        <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/turtle_green</item>
         <item name="colorPrimaryDark">@color/laef</item>
-
-    </style>
-    
-    <style name="navFabStyle" parent="ThemeOverlay.Material3.FloatingActionButton.Primary">
-        <item name="android:backgroundTint">@color/melon</item>
-        <item name="tint">#FFFFFF</item>
     </style>
 
 </resources>

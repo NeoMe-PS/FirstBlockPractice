@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".UserProfileFragment">
 
@@ -14,94 +15,89 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:src="@drawable/image_man" />
+            android:layout_height="@dimen/profile_img_height"
+            android:src="@drawable/image_man"
+            android:contentDescription="@string/content_desc_user_profile_img" />
 
         <TextView
             android:id="@+id/user_name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:text="User name"
-            android:textColor="#de000000"
-            android:textSize="24sp" />
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:text="Some user name"
+            style="@style/UserNameTextStyle"/>
 
         <TextView
             android:id="@+id/birthDay_label_tv"
+            style="@style/TextLabelStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:text="Дата рождения"
-            android:textColor="#61000000"
-            android:textSize="12sp" />
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="@string/fragment_label_birthday" />
 
         <TextView
             android:id="@+id/birthDay_tv"
+            style="@style/TextInfoStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="27.07.1994"
-            android:textColor="#de000000"
-            android:textSize="16sp" />
+            android:layout_marginStart="@dimen/_20dp"
+            android:text="27.07.1994" />
 
         <TextView
             android:id="@+id/activity_label_tv"
+            style="@style/TextLabelStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:text="Сфера деятельности"
-            android:textColor="#61000000"
-            android:textSize="12sp" />
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="@string/fragment_label_user_activity" />
 
         <TextView
             android:id="@+id/activity_tv"
+            style="@style/TextInfoStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="Хирургия, травмотология"
-            android:textColor="#de000000"
-            android:textSize="16sp" />
+            android:layout_marginStart="@dimen/_20dp"
+            android:text="Хирургия, травмотология" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch1"
-            android:layout_width="277dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="28dp"
-            android:text="Получать уведомления"
-            android:textColor="#de000000"
-            android:textSize="16sp" />
+            style="@style/TextInfoStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_0dp"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_28dp"
+            android:layout_marginEnd="@dimen/_26dp"
+            android:text="@string/fragment_label_notification" />
 
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="18dp"
+            android:layout_height="@dimen/delimiter_height_1dp"
+            android:layout_marginTop="@dimen/_18dp"
             android:background="#aabbbb" />
 
         <TextView
             android:id="@+id/friends_label_tv"
+            style="@style/TextLabelStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:text="Ваши друзья"
-            android:textColor="#61000000"
-            android:textSize="12sp" />
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="@string/fragment_label_friends" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="164dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="@dimen/fragment_profile_rv_height"
+            android:layout_marginTop="@dimen/_16dp"
             tools:listitem="@layout/friend_item" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="@dimen/delimiter_height_1dp"
+            android:layout_marginTop="@dimen/_20dp"
             android:background="#aabbbb" />
 
         <Button
@@ -109,9 +105,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="38dp"
-            android:text="Выйти из аккаунта" />
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginBottom="@dimen/_38dp"
+            android:text="@string/logout_btn" />
     </LinearLayout>
 
 </ScrollView>
