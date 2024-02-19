@@ -20,13 +20,12 @@
             app:layout_scrollFlags="scroll|enterAlways">
 
             <TextView
+                style="@style/ToolbarLabelStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/app_bar_label_profile"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_21sp"
-                android:textStyle="bold" />
+                android:text="@string/app_bar_label_profile" />
+
             <ImageButton
                 android:id="@+id/image_button_edit_profile"
                 android:layout_width="@dimen/edit_icon"
@@ -36,11 +35,11 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/_22dp"
                 android:background="@android:color/transparent"
+                android:contentDescription="@string/btn_desc_edit_profile"
                 android:contextClickable="true"
-                android:src="@drawable/edit"
                 android:scaleType="centerInside"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:contentDescription="@string/btn_desc_edit_profile" />
+                android:src="@drawable/edit"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -62,9 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/profile_img_height"
                 android:contentDescription="@string/content_desc_user_profile_img"
-                android:src="@drawable/image_man"
                 android:scaleType="centerCrop"
-                />
+                android:src="@drawable/image_man" />
 
             <TextView
                 android:id="@+id/user_name_tv"

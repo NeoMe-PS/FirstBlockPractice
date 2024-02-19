@@ -62,11 +62,11 @@
             android:layout_width="@dimen/fab_size"
             android:layout_height="@dimen/fab_size"
             android:layout_marginBottom="@dimen/_20dp"
+            android:contentDescription="@string/content_desc_help_fab"
             android:src="@drawable/heart"
             app:backgroundTint="@color/white"
             app:fabCustomSize="@dimen/fab_size"
-            app:layout_anchor="@id/bottomAppBar"
-            android:contentDescription="@string/content_desc_help_fab" />
+            app:layout_anchor="@id/bottomAppBar" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
