@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- specific sizes -->
+        <!-- activity_main sizes -->
+    <dimen name="ab_size">44dp</dimen>
+    <dimen name="fab_shadow_width">50dp</dimen>
+    <dimen name="fab_shadow_height">27.5dp</dimen>
+    <dimen name="fab_shadow_margin">47dp</dimen>
+
+        <!-- fragment_user sizes -->
+    <dimen name="rv_height">164dp</dimen>
+    <dimen name="bot_guideline_spacing">102dp</dimen>
+    <dimen name="logout_spacing">47dp</dimen>
+    <dimen name="delimiter_height_1dp">1dp</dimen>
+
+        <!-- fragment_splash sizes -->
+    <dimen name="fragment_splash_logo_spacing">154dp</dimen>
+    <dimen name="fragment_splash_progress_spacing">83dp</dimen>
+    <dimen name="fragment_splash_company_spacing">124dp</dimen>
+
+    <!-- font sizes -->
+    <dimen name="font_xs">12sp</dimen>
+    <dimen name="font_small">14sp</dimen>
+    <dimen name="font_medium">16sp</dimen>
+    <dimen name="font_large">21sp</dimen>
+    <dimen name="font_xl">24sp</dimen>
+
+    <!-- spacing between views -->
+    <dimen name="spacing_xxs">2dp</dimen>
+    <dimen name="spacing_xs">10dp</dimen>
+    <dimen name="spacing_small">16dp</dimen>
+    <dimen name="spacing_medium">18dp</dimen>
+    <dimen name="spacing_large">20dp</dimen>
+    <dimen name="spacing_xl">22dp</dimen>
+    <dimen name="spacing_xxl">26dp</dimen>
+    <dimen name="spacing_xxxl">28dp</dimen>
+
+    <!-- sizes of views -->
+    <dimen name="_0dp">0dp</dimen>
+    <dimen name="height_small">48dp</dimen>
+
+    <!-- sizes of icons -->
+    <dimen name="icon_small">18dp</dimen>
+    <dimen name="cont_bot_spacing">48dp</dimen>
+</resources>
