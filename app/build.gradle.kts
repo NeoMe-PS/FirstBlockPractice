@@ -64,20 +64,14 @@ dependencies {
     testImplementation("junit:junit:$junitVersion")
     androidTestImplementation("androidx.test.ext:junit:$testJunitVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$testEspressoVersion")
-}
 
-// Retrofit
-dependencies {
+    // Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-}
 
-// Navigation Components
-dependencies {
+    // Navigation Components
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
-}
 
-// SplashScreen
-dependencies {
+    // SplashScreen
     implementation("androidx.core:core-splashscreen:$splashVersion")
 }

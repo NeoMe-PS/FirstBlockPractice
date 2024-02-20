@@ -12,7 +12,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="@dimen/cont_bot_spacing"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,13 +59,13 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             style="@style/navFabStyle"
-            android:layout_width="@dimen/fab_size"
-            android:layout_height="@dimen/fab_size"
-            android:layout_marginBottom="@dimen/_20dp"
-            android:contentDescription="@string/content_desc_help_fab"
+            android:layout_width="@dimen/ab_size"
+            android:layout_height="@dimen/ab_size"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:contentDescription="@string/desc_help_fab"
             android:src="@drawable/heart"
             app:backgroundTint="@color/white"
-            app:fabCustomSize="@dimen/fab_size"
+            app:fabCustomSize="@dimen/ab_size"
             app:layout_anchor="@id/bottomAppBar" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

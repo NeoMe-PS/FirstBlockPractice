@@ -9,5 +9,6 @@
     <color name="black_87">#de000000</color>
     <color name="black_38">#61000000</color>
     <color name="melon">#FE7460</color>
+    <color name="delimeter_color">#aabbbb</color>
 
 </resources>

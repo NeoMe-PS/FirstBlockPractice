@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eff3f6"
-    tools:context=".SplashFragment">
+    android:background="@color/splash_background"
+    tools:context=".presentation.fragments.splash.SplashFragment">
 
     <ImageView
         android:id="@+id/splash_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="154dp"
+        android:layout_marginTop="@dimen/fragment_splash_logo_spacing"
         android:contentDescription="@string/app_logo"
         android:src="@drawable/icon_logo" />
 
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/splash_logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="83dp" />
+        android:layout_marginTop="@dimen/fragment_splash_progress_spacing" />
 
     <TextView
         android:id="@+id/splash_load_label"
@@ -30,19 +30,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/splash_progressBar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/spacing_large"
         android:text="@string/splash_load"
-        android:textSize="14sp" />
+        android:textSize="@dimen/font_small" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/splash_company_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/splash_load_label"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="@dimen/fragment_splash_company_spacing"
         android:contentDescription="@string/company_logo"
         android:src="@drawable/logo_mss" />
-
 
 </RelativeLayout>

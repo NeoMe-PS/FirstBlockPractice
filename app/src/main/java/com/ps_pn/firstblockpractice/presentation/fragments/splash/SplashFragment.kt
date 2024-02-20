@@ -1,4 +1,4 @@
-package com.ps_pn.firstblockpractice
+package com.ps_pn.firstblockpractice.presentation.fragments.splash
 
 import android.os.Bundle
 import android.os.Handler
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FragmentSplashBinding
 
 private const val SLEEP_TIME: Long = 2000

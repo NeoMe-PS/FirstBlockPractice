@@ -5,25 +5,25 @@
         android:id="@+id/newsFragment"
         android:icon="@drawable/news"
         app:showAsAction="withText"
-        android:title="@string/news"
+        android:title="@string/label_news"
          />
     <item
         android:id="@+id/searchFragment"
         android:icon="@drawable/search"
-        android:title="@string/search"
+        android:title="@string/label_search"
         />
     <item
         android:id="@+id/helpFragment"
-        android:title="@string/help"
+        android:title="@string/label_help"
         />
     <item
         android:id="@+id/historyFragment"
         android:icon="@drawable/history_2"
-        android:title="@string/history"
+        android:title="@string/label_history"
         />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/profile"
-        android:title="@string/profile"
+        android:title="@string/label_profile"
          />
 </menu>

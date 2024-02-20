@@ -1,4 +1,4 @@
-package com.ps_pn.firstblockpractice
+package com.ps_pn.firstblockpractice.presentation.fragments.news
 
 import android.os.Bundle
 import android.view.LayoutInflater
