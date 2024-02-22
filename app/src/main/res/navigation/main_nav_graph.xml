@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_component"
+    app:startDestination="@id/splashFragment">
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.ps_pn.firstblockpractice.presentation.fragments.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_userProfileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.ps_pn.firstblockpractice.presentation.fragments.user.UserProfileFragment"
+        android:label="Профиль"
+        tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.ps_pn.firstblockpractice.presentation.fragments.history.HistoryFragment"
+        android:label="История"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.ps_pn.firstblockpractice.presentation.fragments.search.SearchFragment"
+        android:label="Поиск"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.ps_pn.firstblockpractice.presentation.fragments.news.NewsFragment"
+        android:label="Новости"
+        tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.ps_pn.firstblockpractice.presentation.fragments.help.HelpFragment"
+        android:label="Помочь"
+        tools:layout="@layout/fragment_help" />
+
+</navigation>
