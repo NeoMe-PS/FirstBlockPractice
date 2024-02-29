@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/profile_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_collapseMode="pin"
@@ -73,9 +73,9 @@
                 android:id="@+id/userImageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/desc_user_profile_img"
                 android:src="@drawable/image_man"
-                android:adjustViewBounds="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -155,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/delimiter_height_1dp"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:background="@color/delimeter_color"
+                android:background="@color/cool_grey"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/notification_switch" />
 
@@ -175,14 +175,14 @@
                 android:id="@+id/friend_rv"
                 android:layout_width="@dimen/_0dp"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/rv_height"
                 android:layout_marginTop="@dimen/spacing_small"
+                android:minHeight="@dimen/rv_height"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/bot_delimiter"
                 app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="@+id/guidelineStart"
                 app:layout_constraintTop_toBottomOf="@+id/friends_label_tv"
-                app:layout_constraintBottom_toTopOf="@id/bot_delimiter"
                 tools:listitem="@layout/friend_item" />
 
             <View
@@ -190,9 +190,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/delimiter_height_1dp"
                 android:layout_marginTop="@dimen/spacing_large"
-                android:background="@color/delimeter_color"
-                app:layout_constraintTop_toBottomOf="@+id/friend_rv"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:background="@color/cool_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/friend_rv" />
 
             <Button
                 android:id="@+id/logout_btn"
@@ -202,10 +202,10 @@
                 android:layout_marginTop="@dimen/spacing_large"
                 android:layout_marginBottom="@dimen/logout_spacing"
                 android:text="@string/button_logout"
-                app:layout_constraintTop_toBottomOf="@+id/bot_delimiter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bot_delimiter" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

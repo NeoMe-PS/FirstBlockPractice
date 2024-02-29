@@ -20,5 +20,5 @@
         android:layout_marginStart="@dimen/spacing_large"
         android:textColor="@color/black_87"
         android:textSize="@dimen/font_medium"
-        tools:text="Дмитрий Валерьевич" />
+        />
 </LinearLayout>

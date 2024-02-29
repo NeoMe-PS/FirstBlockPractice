@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/spec_spacing_xxs"
+    android:layout_marginBottom="@dimen/spec_spacing_xs"
+    app:cardBackgroundColor="@color/light_grey"
+    app:cardCornerRadius="@dimen/_0dp"
+    app:cardElevation="@dimen/_0dp">
+
+    <ImageView
+        android:id="@+id/category_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spec_spacing_small"
+        android:paddingBottom="@dimen/spec_spacing_xxxl"
+        android:src="@drawable/icon_event"
+        android:contentDescription="@string/desc_category_icon" />
+
+    <TextView
+        android:id="@+id/category_label_tv"
+        style="@style/TextCategoryStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/spec_spacing_small"
+        android:text="@string/label_category_events" />
+</androidx.cardview.widget.CardView>

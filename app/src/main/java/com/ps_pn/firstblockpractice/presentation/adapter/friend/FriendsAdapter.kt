@@ -22,16 +22,14 @@ class FriendsAdapter : ListAdapter<Friend, FriendViewHolder>(FriendDiffUtil()) {
 
     override fun onBindViewHolder(holder: FriendViewHolder, position: Int) {
         val item = getItem(position)
-
-        //Пока устанваливаю тестово
         holder.binding.friendNameTv.text = item.name
         val imageRes =
             when (item.id) {
-            1 -> R.drawable.avatar_1
-            2 -> R.drawable.avatar_2
-            3 -> R.drawable.avatar_3
-            else -> R.drawable.avatar_1
-        }
+                1 -> R.drawable.avatar_1
+                2 -> R.drawable.avatar_2
+                3 -> R.drawable.avatar_3
+                else -> R.drawable.avatar_1
+            }
         holder.binding.friendAvatarImg.setBackgroundResource(imageRes)
     }
 }

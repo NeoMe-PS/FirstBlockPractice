@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
-    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -39,6 +38,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -46,6 +46,7 @@ val coreKtxVersion = "1.12.0"
 val appcompatVersion = "1.6.1"
 val materialVersion = "1.11.0"
 val constraintlayoutVersion = "2.1.4"
+val fragmentKtxVersion = "1.6.2"
 
 val junitVersion = "4.13.2"
 val testJunitVersion = "1.1.5"
@@ -54,6 +55,7 @@ val testEspressoVersion = "3.5.1"
 val retrofitVersion = "2.9.0"
 val navVersion = "2.7.7"
 val splashVersion = "1.0.1"
+val javaFakerVersion = "1.0.2"
 
 dependencies {
 
@@ -68,10 +70,9 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
 
-    // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+    //FragmentKTX
+    implementation("androidx.fragment:fragment-ktx:$fragmentKtxVersion")
 
-    // SplashScreen
-    implementation("androidx.core:core-splashscreen:$splashVersion")
+    //faker - for generates fake data
+    implementation ("com.github.javafaker:javafaker:$javaFakerVersion")
 }

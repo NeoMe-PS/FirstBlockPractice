@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey_two"
+    android:orientation="vertical"
+    tools:context=".presentation.fragments.search.EventsSearchFragment">
+
+    <ImageView
+        android:id="@+id/search_big_logo"
+        android:layout_width="@dimen/icon_big_search_size"
+        android:layout_height="@dimen/icon_big_search_size"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spec_spacing_search"
+        android:src="@drawable/icon_zoom"
+        android:contentDescription="@string/desc_search_icon" />
+
+    <TextView
+        android:id="@+id/big_hint_search"
+        style="@style/TextInfoStyleBlacked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/spec_spacing_bsearch_hrz"
+        android:layout_marginTop="@dimen/spec_spacing_big_hint_search"
+        android:gravity="center"
+        android:text="@string/label_big_hint_event" />
+
+    <TextView
+        android:id="@+id/small_hint_refer_search"
+        style="@style/TextInfoStyleBlacked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/spec_spacing_bsearch_hrz"
+        android:layout_marginTop="@dimen/spacing_xxs"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/label_refer_hint_event" />
+
+</LinearLayout>
