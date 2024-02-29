@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- specific sizes -->
-        <!-- activity_main sizes -->
+    <!-- activity_main sizes -->
     <dimen name="ab_size">44dp</dimen>
     <dimen name="fab_shadow_width">50dp</dimen>
     <dimen name="fab_shadow_height">27.5dp</dimen>
     <dimen name="fab_shadow_margin">47dp</dimen>
+    <dimen name="cont_bot_spacing">48dp</dimen>
+    <dimen name="nav_bot_spacing">57dp</dimen>
 
-        <!-- fragment_user sizes -->
+    <!-- fragment_user sizes -->
     <dimen name="rv_height">164dp</dimen>
     <dimen name="bot_guideline_spacing">102dp</dimen>
     <dimen name="logout_spacing">47dp</dimen>
     <dimen name="delimiter_height_1dp">1dp</dimen>
 
-        <!-- fragment_splash sizes -->
+    <!-- fragment_splash sizes -->
     <dimen name="fragment_splash_logo_spacing">154dp</dimen>
     <dimen name="fragment_splash_progress_spacing">83dp</dimen>
     <dimen name="fragment_splash_company_spacing">124dp</dimen>
@@ -26,8 +28,8 @@
     <dimen name="font_xl">24sp</dimen>
 
     <!-- spacing between views -->
-    <dimen name="spacing_xxs">2dp</dimen>
-    <dimen name="spacing_xs">10dp</dimen>
+    <dimen name="spacing_xxs">10dp</dimen>
+    <dimen name="spacing_xs">13dp</dimen>
     <dimen name="spacing_small">16dp</dimen>
     <dimen name="spacing_medium">18dp</dimen>
     <dimen name="spacing_large">20dp</dimen>
@@ -35,11 +37,33 @@
     <dimen name="spacing_xxl">26dp</dimen>
     <dimen name="spacing_xxxl">28dp</dimen>
 
+    <!-- specific spacing between views -->
+    <dimen name="spec_spacing_xxs">4dp</dimen>
+    <dimen name="spec_spacing_xs">8dp</dimen>
+    <dimen name="spec_spacing_small">12dp</dimen>
+    <dimen name="spec_spacing_medium">8dp</dimen>
+    <dimen name="spec_spacing_large">24dp</dimen>
+    <dimen name="spec_spacing_xxl">36dp</dimen>
+    <dimen name="spec_spacing_xxxl">36dp</dimen>
+
     <!-- sizes of views -->
     <dimen name="_0dp">0dp</dimen>
     <dimen name="height_small">48dp</dimen>
 
     <!-- sizes of icons -->
     <dimen name="icon_small">18dp</dimen>
-    <dimen name="cont_bot_spacing">48dp</dimen>
+    <dimen name="icon_edited_size">136dp</dimen>
+    <dimen name="_1dp">1dp</dimen>
+    <dimen name="spec_label_activity_spacing">127dp</dimen>
+    <dimen name="icon_big_search_size">187dp</dimen>
+    <dimen name="spec_spacing_search">53dp</dimen>
+    <dimen name="spec_spacing_big_hint_search">37.5dp</dimen>
+    <dimen name="spec_spacing_bsearch_hrz">58dp</dimen>
+    <dimen name="spec_spacing_search_bot">108dp</dimen>
+    <dimen name="spec_elevation_large">5dp</dimen>
+    <dimen name="spec_spacing_31dp">31dp</dimen>
+    <dimen name="spec_spacing_43dp">43dp</dimen>
+    <dimen name="spec_spacing_68dp">68dp</dimen>
+    <dimen name="spec_result_item_spacing">17dp</dimen>
+    <dimen name="spec_search_bot_small_spacing">70dp</dimen>
 </resources>

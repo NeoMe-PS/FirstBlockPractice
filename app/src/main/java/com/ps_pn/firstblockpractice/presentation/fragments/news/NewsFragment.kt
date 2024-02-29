@@ -24,4 +24,7 @@ class NewsFragment : Fragment() {
         _binding = FragmentNewsBinding.inflate(inflater, container, false)
         return binding.root
     }
+    companion object {
+        fun newInstance() = NewsFragment()
+    }
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/choose_photo_tv"
+        style="@style/TextInfoStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xxl"
+        android:layout_marginTop="@dimen/spec_spacing_31dp"
+        android:drawablePadding="@dimen/spec_spacing_large"
+        android:text="@string/label_choose_photo"
+        app:drawableStartCompat="@drawable/upload" />
+
+    <TextView
+        android:id="@+id/make_photo_tv"
+        style="@style/TextInfoStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xxl"
+        android:layout_marginTop="@dimen/spec_spacing_43dp"
+        android:layout_marginEnd="@dimen/spec_spacing_68dp"
+        android:drawablePadding="@dimen/spec_spacing_large"
+        android:text="@string/label_shot"
+        app:drawableStartCompat="@drawable/camera" />
+
+    <TextView
+        android:id="@+id/delete_tv"
+        style="@style/TextInfoStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xxl"
+        android:layout_marginTop="@dimen/spec_spacing_43dp"
+        android:layout_marginBottom="@dimen/spacing_xxxl"
+        android:drawablePadding="@dimen/spec_spacing_large"
+        android:text="@string/label_delete"
+        app:drawableStartCompat="@drawable/delete" />
+
+</LinearLayout>
