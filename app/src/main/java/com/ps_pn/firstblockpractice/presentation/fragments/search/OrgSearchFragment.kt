@@ -33,6 +33,7 @@ class OrgSearchFragment : Fragment() {
     private fun setAdapter() {
         binding.searchResultRv.adapter = searchAdapter
     }
+
     private fun fillAdapter() {
         searchAdapter.submitList(StubData.fillSearchResultsStubData())
     }

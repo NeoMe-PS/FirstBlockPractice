@@ -4,7 +4,7 @@ import com.github.javafaker.Faker
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.presentation.adapter.friend.Friend
 import com.ps_pn.firstblockpractice.presentation.adapter.help.Category
-import com.ps_pn.firstblockpractice.presentation.adapter.search.SearchResult
+import com.ps_pn.firstblockpractice.presentation.adapter.search.SearchResultEntity
 
 class StubData {
     companion object {
@@ -27,11 +27,11 @@ class StubData {
             return categories
         }
 
-        fun fillSearchResultsStubData(): List<SearchResult> {
-            val results = mutableListOf<SearchResult>()
+        fun fillSearchResultsStubData(): List<SearchResultEntity> {
+            val results = mutableListOf<SearchResultEntity>()
             val randomQuantity = (0..15).random()
             for (i in 0..randomQuantity) {
-                results.add(SearchResult(title = faker.company().name()))
+                results.add(SearchResultEntity(title = faker.company().name()))
             }
             return results
         }
