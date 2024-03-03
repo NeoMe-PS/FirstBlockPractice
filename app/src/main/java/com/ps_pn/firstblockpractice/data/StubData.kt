@@ -2,13 +2,15 @@ package com.ps_pn.firstblockpractice.data
 
 import com.github.javafaker.Faker
 import com.ps_pn.firstblockpractice.R
+import com.ps_pn.firstblockpractice.presentation.adapter.Category
 import com.ps_pn.firstblockpractice.presentation.adapter.friend.Friend
-import com.ps_pn.firstblockpractice.presentation.adapter.help.Category
+import com.ps_pn.firstblockpractice.presentation.adapter.help.CategoryHelpEntity
+import com.ps_pn.firstblockpractice.presentation.adapter.news.News
 import com.ps_pn.firstblockpractice.presentation.adapter.search.SearchResultEntity
 
 class StubData {
     companion object {
-        val faker = Faker()
+        private val faker = Faker()
         fun fillFriendsStubData(): List<Friend> {
             val friends = mutableListOf<Friend>()
             friends.add(Friend(id = 1, name = "Дмитрий Валерьевич", imageUrl = ""))
@@ -17,13 +19,38 @@ class StubData {
             return friends
         }
 
-        fun fillCategoriesStubData(): List<Category> {
-            val categories = mutableListOf<Category>()
-            categories.add(Category(id = 1, name = "Дети", image = R.drawable.icon_kids))
-            categories.add(Category(id = 2, name = "Взрослые", image = R.drawable.icon_adult))
-            categories.add(Category(id = 3, name = "Пожилые", image = R.drawable.icon_elderly))
-            categories.add(Category(id = 4, name = "Животные", image = R.drawable.icon_animals))
-            categories.add(Category(id = 5, name = "Мероприятия", image = R.drawable.icon_event))
+        fun fillCategoriesStubData(): List<CategoryHelpEntity> {
+            val categories = mutableListOf<CategoryHelpEntity>()
+            categories.add(
+                CategoryHelpEntity(
+                    category = Category.KIDS,
+                    image = R.drawable.icon_kids
+                )
+            )
+            categories.add(
+                CategoryHelpEntity(
+                    category = Category.ADULT,
+                    image = R.drawable.icon_adult
+                )
+            )
+            categories.add(
+                CategoryHelpEntity(
+                    category = Category.ELDERLY,
+                    image = R.drawable.icon_elderly
+                )
+            )
+            categories.add(
+                CategoryHelpEntity(
+                    category = Category.ANIMALS,
+                    image = R.drawable.icon_animals
+                )
+            )
+            categories.add(
+                CategoryHelpEntity(
+                    category = Category.EVENT,
+                    image = R.drawable.icon_event
+                )
+            )
             return categories
         }
 
@@ -34,6 +61,31 @@ class StubData {
                 results.add(SearchResultEntity(title = faker.company().name()))
             }
             return results
+        }
+
+        fun fillNewsStubData(): List<News> {
+            val news = mutableListOf<News>()
+            news.add(
+                News(
+                    id = 1,
+                    category = Category.KIDS,
+                    label = faker.harryPotter().character(),
+                    shortDesc = faker.harryPotter().quote(),
+                    date = faker.date().birthday().toString(),
+                    image = R.drawable.img_2
+                )
+            )
+            news.add(
+                News(
+                    id = 2,
+                    category = Category.KIDS,
+                    label = faker.harryPotter().character(),
+                    shortDesc = faker.harryPotter().quote(),
+                    date = faker.date().birthday().toString(),
+                    image = R.drawable.img
+                )
+            )
+            return news
         }
     }
 }

@@ -2,17 +2,17 @@ package com.ps_pn.firstblockpractice.presentation.adapter.help
 
 import androidx.recyclerview.widget.DiffUtil
 
-class CategoryDiffUtil : DiffUtil.ItemCallback<Category>() {
+class CategoryDiffUtil : DiffUtil.ItemCallback<CategoryHelpEntity>() {
     override fun areItemsTheSame(
-        oldItem: Category,
-        newItem: Category,
+        oldItem: CategoryHelpEntity,
+        newItem: CategoryHelpEntity,
     ): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.category.id == newItem.category.id
     }
 
     override fun areContentsTheSame(
-        oldItem: Category,
-        newItem: Category,
+        oldItem: CategoryHelpEntity,
+        newItem: CategoryHelpEntity,
     ): Boolean {
         return oldItem == newItem
     }

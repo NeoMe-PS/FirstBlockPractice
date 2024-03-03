@@ -63,5 +63,6 @@
     <string name="label_history">История</string>
     <string name="label_profile">Профиль</string>
     <string name="desc_category_icon">Иконка категории</string>
+    <string name="desc_news_filter">Фильтр новостей</string>
 
 </resources>

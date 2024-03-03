@@ -14,7 +14,7 @@ class HelpFragment : Fragment() {
     private val binding: FragmentHelpBinding
         get() = _binding ?: throw RuntimeException("FragmentHelpBinding is null")
 
-    private val friendAdapter: CategoryAdapter = CategoryAdapter()
+    private val categoryAdapter: CategoryAdapter = CategoryAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,12 +27,12 @@ class HelpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.categoryRv.adapter = friendAdapter
+        binding.categoryRv.adapter = categoryAdapter
         fillAdapter()
     }
 
     private fun fillAdapter() {
-        friendAdapter.submitList(StubData.fillCategoriesStubData())
+        categoryAdapter.submitList(StubData.fillCategoriesStubData())
     }
 
     companion object {

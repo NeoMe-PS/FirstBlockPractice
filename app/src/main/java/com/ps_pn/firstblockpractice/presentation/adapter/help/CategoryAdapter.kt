@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.ps_pn.firstblockpractice.databinding.CategoryItemBinding
 
-class CategoryAdapter : ListAdapter<Category, CategoryViewHolder>(CategoryDiffUtil()) {
+class CategoryAdapter : ListAdapter<CategoryHelpEntity, CategoryViewHolder>(CategoryDiffUtil()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -21,7 +21,7 @@ class CategoryAdapter : ListAdapter<Category, CategoryViewHolder>(CategoryDiffUt
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val item = getItem(position)
-        holder.binding.categoryLabelTv.text = item.name
+        holder.binding.categoryLabelTv.text = item.category.label
         holder.binding.categoryImg.setImageResource(item.image)
     }
 }
