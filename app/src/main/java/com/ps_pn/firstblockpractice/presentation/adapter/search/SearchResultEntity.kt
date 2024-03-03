@@ -1,5 +1,5 @@
 package com.ps_pn.firstblockpractice.presentation.adapter.search
 
-data class SearchResult(
+data class SearchResultEntity(
     val title: String
 )

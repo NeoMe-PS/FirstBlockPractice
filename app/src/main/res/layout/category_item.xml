@@ -16,7 +16,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/spec_spacing_small"
         android:paddingBottom="@dimen/spec_spacing_xxxl"
-        android:src="@drawable/icon_event"
         android:contentDescription="@string/desc_category_icon" />
 
     <TextView
@@ -25,6 +24,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="@dimen/spec_spacing_small"
-        android:text="@string/label_category_events" />
+        android:layout_marginBottom="@dimen/spec_spacing_small" />
 </androidx.cardview.widget.CardView>
