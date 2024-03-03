@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -22,7 +24,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -33,18 +35,44 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 }
+
+val coreKtxVersion = "1.12.0"
+val appcompatVersion = "1.6.1"
+val materialVersion = "1.11.0"
+val constraintlayoutVersion = "2.1.4"
+val fragmentKtxVersion = "1.6.2"
+
+val junitVersion = "4.13.2"
+val testJunitVersion = "1.1.5"
+val testEspressoVersion = "3.5.1"
+
+val retrofitVersion = "2.9.0"
+val navVersion = "2.7.7"
+val splashVersion = "1.0.1"
+val javaFakerVersion = "1.0.2"
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation("androidx.core:core-ktx:$coreKtxVersion")
+    implementation("androidx.appcompat:appcompat:$appcompatVersion")
+    implementation("com.google.android.material:material:$materialVersion")
+    implementation("androidx.constraintlayout:constraintlayout:$constraintlayoutVersion")
+    testImplementation("junit:junit:$junitVersion")
+    androidTestImplementation("androidx.test.ext:junit:$testJunitVersion")
+    androidTestImplementation("androidx.test.espresso:espresso-core:$testEspressoVersion")
 
-    //Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+
+    //FragmentKTX
+    implementation("androidx.fragment:fragment-ktx:$fragmentKtxVersion")
+
+    //faker - for generates fake data
+    implementation ("com.github.javafaker:javafaker:$javaFakerVersion")
 }

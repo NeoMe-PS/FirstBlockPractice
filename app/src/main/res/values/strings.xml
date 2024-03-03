@@ -1,3 +1,67 @@
 <resources>
-    <string name="app_name">FirstBlockPractice</string>
+    <!-- fragment_splash  -->
+    <string name="app_name">Хочу помочь</string>
+    <string name="splash_load">Загрузка…</string>
+    <string name="company_logo">Company logo</string>
+    <string name="app_logo">App logo</string>
+
+    <!-- fragment_profile  -->
+    <string name="desc_profile_logo">Profile logo</string>
+    <string name="label_user_activity">Сфера деятельности</string>
+    <string name="label_birthday">Дата рождения</string>
+    <string name="label_notification">Получать push-уведомления</string>
+    <string name="label_friends">Ваши друзья</string>
+    <string name="button_logout">Выйти из аккаунта</string>
+    <string name="desc_help_fab">Menu button - help</string>
+    <string name="desc_user_profile_img">User profile image</string>
+    <string name="app_bar_label_profile">Профиль</string>
+    <string name="desc_edit_profile">Edit profile</string>
+    <string name="user_activity">Хирургия, травмотология</string>
+    <string name="user_birthday">27.07.1994</string>
+    <string name="user_name">Константинов Денис</string>
+
+    <!-- fragment_profile_edit  -->
+    <string name="label_family">Ваша фамилия</string>
+    <string name="hint_family">Введите фамилию</string>
+    <string name="hint_name">Введите имя</string>
+    <string name="label_name">Ваше имя</string>
+    <string name="hint_birthday">Введите дату рождения</string>
+    <string name="label_edit_activity">Заполните Вашу сферу деятельности, чтобы быть наиболее полезным</string>
+    <string name="hint_activity">Ваша сфера деятельности</string>
+    <string name="label_password">Пароль</string>
+    <string name="hint_password">Введите пароль</string>
+    <string name="label_email">E-mail для уведомлений</string>
+    <string name="hint_email">Введите email</string>
+    <string name="label_choose_photo">Выбрать фото</string>
+    <string name="label_shot">Сделать снимок</string>
+    <string name="label_delete">Удалить</string>
+
+    <!-- fragment_categories  -->
+    <string name="label_choose_category">Выберите категорию помощи</string>
+    <string name="label_children">Дети</string>
+    <string name="label_category_adult">Взрослые</string>
+    <string name="label_category_elderly">Пожилые</string>
+    <string name="label_category_animal">Животные</string>
+    <string name="label_category_events">Мероприятия</string>
+
+    <!-- fragment_search  -->
+    <string name="label_big_hint_event">Напишите в строке поиска название мероприятия или ключевые слова.</string>
+    <string name="label_refer_hint_event">Например, <u><font color='#66a636'>мастер-класс, помощь</font></u></string>
+    <string name="label_keywords">Ключевые слова:</string>
+    <string name="label_search_results">Результаты поиска:</string>
+    <string name="label_events_pager">По мероприятиям</string>
+    <string name="label_org_pager">По НКО</string>
+    <string name="desc_search_icon">Search icon</string>
+    <string name="hint_search_org">Введите название организации</string>
+    <string name="desc_more_informtion">Больше информации</string>
+
+    <!-- other  -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_news">Новости</string>
+    <string name="label_search">Поиск</string>
+    <string name="label_help">Помочь</string>
+    <string name="label_history">История</string>
+    <string name="label_profile">Профиль</string>
+    <string name="desc_category_icon">Иконка категории</string>
+
 </resources>
