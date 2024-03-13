@@ -27,6 +27,16 @@
         <item name="fontFamily">@font/officina_sans_extra_bold</item>
     </style>
 
+    <style name="TextReferenceStyle">
+        <item name="android:textColor">@color/laef</item>
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+    <style name="TextStyle11">
+        <item name="android:textColor">@color/black_40</item>
+        <item name="android:textSize">@dimen/font_xxs</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="TextLabelSearchStyle">
         <item name="android:textColor">@color/black_54</item>
         <item name="android:textSize">14sp</item>
@@ -63,6 +73,12 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="filter_category_item_style">
+        <item name="android:checked">true</item>
+        <item name="android:layout_marginStart">@dimen/spacing_large</item>
+        <item name="android:layout_marginEnd">@dimen/spacing_small</item>
     </style>
 
 </resources>

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentOrgSearchBinding
-import com.ps_pn.firstblockpractice.presentation.adapter.search.SearchResultAdapter
+import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchResultAdapter
 
 class OrgSearchFragment : Fragment() {
     private var _binding: FragmentOrgSearchBinding? = null

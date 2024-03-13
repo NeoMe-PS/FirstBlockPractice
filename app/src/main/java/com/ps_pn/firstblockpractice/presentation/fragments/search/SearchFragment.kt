@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FragmentSearchBinding
-import com.ps_pn.firstblockpractice.presentation.adapter.search.SearchViewPagerAdapter
+import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchViewPagerAdapter
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null

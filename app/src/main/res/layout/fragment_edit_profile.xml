@@ -6,13 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragments.user.EditProfileFragment">
 
-    <include
-        android:id="@+id/edit_toolbar"
-        layout="@layout/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/ToolbarLabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/label_edit_fragment" />
+
+            <ImageButton
+                android:id="@+id/image_button_back"
+                android:layout_width="@dimen/icon_xs"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/spec_spacing_large"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_back"
+                android:contextClickable="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_back" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"
@@ -35,7 +64,7 @@
         android:layout_marginTop="@dimen/font_medium"
         android:src="@drawable/image_man_small"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/edit_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         app:strokeWidth="@dimen/_1dp" />
 

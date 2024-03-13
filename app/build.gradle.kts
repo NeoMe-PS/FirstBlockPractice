@@ -29,6 +29,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -56,6 +57,10 @@ val retrofitVersion = "2.9.0"
 val navVersion = "2.7.7"
 val splashVersion = "1.0.1"
 val javaFakerVersion = "1.0.2"
+val desugaringVersion = "2.0.3"
+val dataStoreVersion = "1.0.0"
+val gsonVersion = "2.10.1"
+val preferenceVersion = "1.2.1"
 
 dependencies {
 
@@ -74,5 +79,21 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:$fragmentKtxVersion")
 
     //faker - for generates fake data
-    implementation ("com.github.javafaker:javafaker:$javaFakerVersion")
+    implementation("com.github.javafaker:javafaker:$javaFakerVersion")
+
+    // kotlinx-datetime
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2")
+
+    // Java 8+ API desugaring support
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:$desugaringVersion")
+
+    // Preference
+    implementation("androidx.preference:preference-ktx:$preferenceVersion")
+
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:$dataStoreVersion")
+    implementation("androidx.datastore:datastore:$dataStoreVersion")
+
+    // Gson
+    implementation ("com.google.code.gson:gson:$gsonVersion")
 }

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.fragments.news.NewsDetailFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/toolbar_label_detailed_news_tv"
+                style="@style/ToolbarLabelStyle"
+                android:layout_width="@dimen/tollbar_label_event_detail_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:scrollHorizontally="true" />
+
+            <ImageButton
+                android:id="@+id/image_button_apply_filter"
+                android:layout_width="@dimen/icon_medium"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_share_icon"
+                android:contextClickable="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/share" />
+
+            <ImageButton
+                android:id="@+id/image_button_back"
+                android:layout_width="@dimen/icon_xs"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/spec_spacing_large"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_back"
+                android:contextClickable="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_back" />
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_coord_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/spacing_large" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/spacing_large" />
+
+            <TextView
+                android:id="@+id/news_title_tv"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:textColor="@color/blue_grey"
+                android:textSize="@dimen/font_large"
+                app:fontFamily="@font/officina_sans_extra_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/timer_tv"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:drawablePadding="@dimen/spacing_xxs"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_xs"
+                app:drawableStartCompat="@drawable/icon_calendar"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/news_title_tv" />
+
+            <TextView
+                android:id="@+id/fond_name_tv"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:textColor="@color/black_60"
+                android:textSize="@dimen/font_xs"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/timer_tv" />
+
+            <ImageView
+                android:id="@+id/nav_icon"
+                android:layout_width="@dimen/icon_xs"
+                android:layout_height="@dimen/icon_xs"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:contentDescription="@string/desc_nav_icon"
+                android:src="@drawable/nav"
+                app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/fond_name_tv" />
+
+            <TextView
+                android:id="@+id/address_tv"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:textColor="@color/black_70"
+                android:textSize="@dimen/font_small"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toEndOf="@+id/nav_icon"
+                app:layout_constraintTop_toTopOf="@+id/nav_icon" />
+
+            <ImageView
+                android:id="@+id/phone_icon"
+                android:layout_width="@dimen/icon_xs"
+                android:layout_height="@dimen/icon_xs"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:contentDescription="@string/desc_phone_icon"
+                android:src="@drawable/phone"
+                app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/address_tv" />
+
+
+            <TextView
+                android:id="@+id/phones_tv"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:textColor="@color/black_70"
+                android:textSize="@dimen/font_small"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toEndOf="@+id/phone_icon"
+                app:layout_constraintTop_toBottomOf="@+id/address_tv" />
+
+            <ImageView
+                android:id="@+id/email_icon"
+                android:layout_width="@dimen/icon_xs"
+                android:layout_height="@dimen/icon_xs"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:contentDescription="@string/desc_mail_icon"
+                android:src="@drawable/mail"
+                app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/phones_tv" />
+
+            <TextView
+                android:id="@+id/email_question_tv"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="@string/title_email_question"
+                android:textColor="@color/black_70"
+                android:textSize="@dimen/font_small"
+                app:layout_constraintStart_toEndOf="@+id/email_icon"
+                app:layout_constraintTop_toBottomOf="@+id/phones_tv" />
+
+            <TextView
+                android:id="@+id/email_reference_tv"
+                style="@style/TextReferenceStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5dp"
+                android:text="@string/label_email_reference"
+                app:layout_constraintStart_toEndOf="@+id/email_question_tv"
+                app:layout_constraintTop_toTopOf="@+id/email_question_tv" />
+
+            <GridLayout
+                android:id="@+id/news_images_grid"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:columnCount="3"
+                android:rowCount="2"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/email_reference_tv">
+
+                <ImageView
+                    android:id="@+id/photo_news_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_rowSpan="2"
+                    android:layout_columnWeight="2"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/desc_news_img"
+                    android:src="@drawable/cardimage_1" />
+
+                <ImageView
+                    android:id="@+id/photo_news_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="@dimen/spacing_xxs"
+                    android:layout_marginBottom="@dimen/spacing_xxs"
+                    android:contentDescription="@string/desc_news_img"
+                    android:src="@drawable/cardimage_2" />
+
+                <ImageView
+                    android:id="@+id/photo_news_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_row="1"
+                    android:layout_rowWeight="1"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="@dimen/spacing_xxs"
+                    android:contentDescription="@string/desc_news_img"
+                    android:src="@drawable/cardimage_3" />
+            </GridLayout>
+
+            <TextView
+                android:id="@+id/news_text_first_part_tv"
+                style="@style/TextInfoStyleBlacked"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/news_images_grid" />
+
+            <TextView
+                android:id="@+id/news_text_second_part_tv"
+                style="@style/TextInfoStyleBlacked"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xxs"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/news_text_first_part_tv" />
+
+            <TextView
+                android:id="@+id/site_reference_tv"
+                style="@style/TextReferenceStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:text="@string/label_site_reference"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/news_text_second_part_tv" />
+
+            <LinearLayout
+                android:id="@+id/users_list_layout"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30dp"
+                android:background="@color/light_grey_two"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/spacing_large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/site_reference_tv">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:contentDescription="@string/desc_user_profile_img"
+                    android:src="@drawable/photo_1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc_user_profile_img"
+                    android:src="@drawable/photo_2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc_user_profile_img"
+                    android:src="@drawable/photo_3" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc_user_profile_img"
+                    android:src="@drawable/photo_4" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc_user_profile_img"
+                    android:src="@drawable/photo_5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/members_count" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/bottom_nav_coord_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetStart="@dimen/_0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:id="@+id/help_bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detailed_nav_bar_height"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="SmallSP">
+
+                <TextView
+                    style="@style/TextStyle11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/_7dp"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:paddingTop="@dimen/_9dp"
+                    android:text="@string/menu_label_money_help_two_lines"
+                    app:drawableTopCompat="@drawable/shirt" />
+
+                <View
+                    android:id="@+id/become_volunteer"
+                    android:layout_width="@dimen/_1dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/separator_1" />
+
+                <TextView
+                    style="@style/TextStyle11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/_7dp"
+                    android:lines="2"
+                    android:paddingTop="@dimen/_9dp"
+                    android:text="@string/menu_label_volunteer_two_lines"
+                    app:drawableTopCompat="@drawable/hands" />
+
+                <View
+                    android:layout_width="@dimen/_1dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/separator_1" />
+
+                <TextView
+                    style="@style/TextStyle11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/_7dp"
+                    android:lines="2"
+                    android:paddingTop="@dimen/_9dp"
+                    android:text="@string/menu_label_prof_two_lines"
+                    app:drawableTopCompat="@drawable/tools" />
+
+                <View
+                    android:layout_width="@dimen/_1dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/separator_1" />
+
+                <TextView
+                    style="@style/TextStyle11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/_5dp"
+                    android:lines="2"
+                    android:paddingTop="@dimen/_9dp"
+                    android:text="@string/menu_label_money_two_lines"
+                    app:drawableTopCompat="@drawable/coins" />
+
+            </LinearLayout>
+        </com.google.android.material.bottomappbar.BottomAppBar>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

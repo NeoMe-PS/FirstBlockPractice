@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentHelpBinding
-import com.ps_pn.firstblockpractice.presentation.adapter.help.CategoryAdapter
+import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapter
 
 class HelpFragment : Fragment() {
     private var _binding: FragmentHelpBinding? = null
@@ -38,6 +38,7 @@ class HelpFragment : Fragment() {
     companion object {
         fun newInstance() = HelpFragment()
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "label": "Дети",
+    "img": "icon_kids"
+  },
+  {
+    "id": 2,
+    "label": "Взрослые",
+    "img": "icon_adult"
+  },
+  {
+    "id": 3,
+    "label": "Пожилые",
+    "img": "icon_elderly"
+  },
+  {
+    "id": 4,
+    "label": "Животные",
+    "img": "icon_animals"
+  },
+  {
+    "id": 5,
+    "label": "Мероприятия",
+    "img": "icon_event"
+  }
+]

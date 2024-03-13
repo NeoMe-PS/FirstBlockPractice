@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentNewsBinding
-import com.ps_pn.firstblockpractice.presentation.adapter.news.NewsAdapter
+import com.ps_pn.firstblockpractice.presentation.adapters.news.NewsAdapter
+import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
+import com.ps_pn.firstblockpractice.presentation.utills.navigator
 
 class NewsFragment : Fragment() {
     private var _binding: FragmentNewsBinding? = null
@@ -15,6 +17,8 @@ class NewsFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentNewsBinding is null")
 
     private val newsAdapter: NewsAdapter = NewsAdapter()
+    private val fullDataList = StubData.fillNewsStubData()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,13 +30,35 @@ class NewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setAdapterOnClickListener()
         binding.newsRv.adapter = newsAdapter
-        fillAdapter()
+        updateNewsByFilter()
+        setFilterButtonOnClick()
     }
 
-    private fun fillAdapter() {
-        newsAdapter.submitList(StubData.fillNewsStubData())
+    private fun setFilterButtonOnClick() {
+        binding.imageButtonFilter.setOnClickListener {
+            this.navigator().openNewsFilterFragment()
+        }
+    }
+
+    private fun setAdapterOnClickListener() {
+        newsAdapter.onNewsClickListener = { newsItem ->
+            this.navigator().openNewsDetailFragment(newsItem)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateNewsByFilter()
+    }
+
+    private fun updateNewsByFilter() {
+        val filteredList = StubData.filterNewsStubData(
+            fullDataList,
+            PreferenceManager.getFilterPreference()
+        )
+        newsAdapter.submitList(filteredList)
     }
 
     companion object {

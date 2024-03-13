@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
-import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentUserProfileBinding
-import com.ps_pn.firstblockpractice.presentation.adapter.friend.FriendsAdapter
+import com.ps_pn.firstblockpractice.presentation.adapters.friend.FriendsAdapter
+import com.ps_pn.firstblockpractice.presentation.utills.navigator
 
 class UserProfileFragment : Fragment() {
     private var _binding: FragmentUserProfileBinding? = null
@@ -42,13 +41,7 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun openEditProfileFragment() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(
-                requireActivity().findViewById<FragmentContainerView>(R.id.nav_host_fragment).id,
-                EditProfileFragment.newInstance()
-            )
-            .addToBackStack(null)
-            .commit()
+        this.navigator().openUserEditFragment()
     }
 
     private fun fillAdapter() {

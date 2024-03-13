@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- specific sizes -->
     <!-- activity_main sizes -->
     <dimen name="ab_size">44dp</dimen>
     <dimen name="fab_shadow_width">50dp</dimen>
@@ -20,7 +19,17 @@
     <dimen name="fragment_splash_progress_spacing">83dp</dimen>
     <dimen name="fragment_splash_company_spacing">124dp</dimen>
 
+    <!-- fragment_news sizes -->
+    <dimen name="news_short_desc_width">267dp</dimen>
+    <dimen name="news_decor_width">113dp</dimen>
+    <dimen name="news_decor_height">20dp</dimen>
+
+    <!-- fragment_news_detailed sizes -->
+    <dimen name="tollbar_label_event_detail_width">225dp</dimen>
+    <dimen name="detailed_nav_bar_height">70dp</dimen>
+
     <!-- font sizes -->
+    <dimen name="font_xxs">10sp</dimen>
     <dimen name="font_xs">12sp</dimen>
     <dimen name="font_small">14sp</dimen>
     <dimen name="font_medium">16sp</dimen>
@@ -40,6 +49,7 @@
     <!-- specific spacing between views -->
     <dimen name="spec_spacing_xxs">4dp</dimen>
     <dimen name="spec_spacing_xs">8dp</dimen>
+    <dimen name="spec_spacing_ms">10dp</dimen>
     <dimen name="spec_spacing_small">12dp</dimen>
     <dimen name="spec_spacing_medium">8dp</dimen>
     <dimen name="spec_spacing_large">24dp</dimen>
@@ -52,11 +62,23 @@
 
     <!-- sizes of icons -->
     <dimen name="icon_small">18dp</dimen>
+    <dimen name="icon_xs">16dp</dimen>
     <dimen name="icon_medium">24dp</dimen>
     <dimen name="icon_edited_size">136dp</dimen>
-    <dimen name="_1dp">1dp</dimen>
-    <dimen name="spec_label_activity_spacing">127dp</dimen>
     <dimen name="icon_big_search_size">187dp</dimen>
+
+
+    <!-- other sizes -->
+    <dimen name="_1dp">1dp</dimen>
+    <dimen name="_2dp">2dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_7dp">7dp</dimen>
+    <dimen name="_9dp">9dp</dimen>
+    <dimen name="_17dp">17dp</dimen>
+    <dimen name="_30dp">30dp</dimen>
+
+    <!-- specific sizes -->
+    <dimen name="spec_label_activity_spacing">127dp</dimen>
     <dimen name="spec_spacing_search">53dp</dimen>
     <dimen name="spec_spacing_big_hint_search">37.5dp</dimen>
     <dimen name="spec_spacing_bsearch_hrz">58dp</dimen>
@@ -67,5 +89,5 @@
     <dimen name="spec_spacing_68dp">68dp</dimen>
     <dimen name="spec_result_item_spacing">17dp</dimen>
     <dimen name="spec_search_bot_small_spacing">70dp</dimen>
-    <dimen name="_2dp">2dp</dimen>
+
 </resources>

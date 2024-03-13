@@ -8,7 +8,9 @@
     <color name="unactive_text">#66000000</color>
     <color name="black_87">#de000000</color>
     <color name="black_38">#61000000</color>
+    <color name="black_60">#99000000</color>
     <color name="black_70">#b3000000</color>
+    <color name="black_40">#66000000</color>
     <color name="black_54">#8a000000</color>
     <color name="melon">#FE7460</color>
     <color name="cool_grey">#aabbbb</color>
@@ -18,6 +20,7 @@
     <color name="macaroni_and_cheese">#f2b630</color>
     <color name="white_70">#b3ffffff</color>
     <color name="blue_grey">#627f8f</color>
+    <color name="grey">#94998a</color>
 
 
 </resources>

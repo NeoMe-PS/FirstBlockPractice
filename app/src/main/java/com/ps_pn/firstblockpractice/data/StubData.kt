@@ -1,14 +1,14 @@
 package com.ps_pn.firstblockpractice.data
 
 import com.github.javafaker.Faker
-import com.ps_pn.firstblockpractice.R
-import com.ps_pn.firstblockpractice.presentation.adapter.Category
-import com.ps_pn.firstblockpractice.presentation.adapter.friend.Friend
-import com.ps_pn.firstblockpractice.presentation.adapter.help.CategoryHelpEntity
-import com.ps_pn.firstblockpractice.presentation.adapter.news.News
-import com.ps_pn.firstblockpractice.presentation.adapter.search.SearchResultEntity
+import com.ps_pn.firstblockpractice.presentation.adapters.friend.Friend
+import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapterEntity
+import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchResultEntity
+import com.ps_pn.firstblockpractice.presentation.models.Event
+import com.ps_pn.firstblockpractice.presentation.models.Filter
 
 class StubData {
+
     companion object {
         private val faker = Faker()
         fun fillFriendsStubData(): List<Friend> {
@@ -19,39 +19,9 @@ class StubData {
             return friends
         }
 
-        fun fillCategoriesStubData(): List<CategoryHelpEntity> {
-            val categories = mutableListOf<CategoryHelpEntity>()
-            categories.add(
-                CategoryHelpEntity(
-                    category = Category.KIDS,
-                    image = R.drawable.icon_kids
-                )
-            )
-            categories.add(
-                CategoryHelpEntity(
-                    category = Category.ADULT,
-                    image = R.drawable.icon_adult
-                )
-            )
-            categories.add(
-                CategoryHelpEntity(
-                    category = Category.ELDERLY,
-                    image = R.drawable.icon_elderly
-                )
-            )
-            categories.add(
-                CategoryHelpEntity(
-                    category = Category.ANIMALS,
-                    image = R.drawable.icon_animals
-                )
-            )
-            categories.add(
-                CategoryHelpEntity(
-                    category = Category.EVENT,
-                    image = R.drawable.icon_event
-                )
-            )
-            return categories
+        fun fillCategoriesStubData(): List<CategoryAdapterEntity> {
+            return JSONParser.getCategoriesFromJson()
+                .map { Mapper.mapJSONCategoryToPresentation(it) }
         }
 
         fun fillSearchResultsStubData(): List<SearchResultEntity> {
@@ -63,29 +33,30 @@ class StubData {
             return results
         }
 
-        fun fillNewsStubData(): List<News> {
-            val news = mutableListOf<News>()
-            news.add(
-                News(
-                    id = 1,
-                    category = Category.KIDS,
-                    label = faker.harryPotter().character(),
-                    shortDesc = faker.harryPotter().quote(),
-                    date = faker.date().birthday().toString(),
-                    image = R.drawable.img_2
-                )
-            )
-            news.add(
-                News(
-                    id = 2,
-                    category = Category.KIDS,
-                    label = faker.harryPotter().character(),
-                    shortDesc = faker.harryPotter().quote(),
-                    date = faker.date().birthday().toString(),
-                    image = R.drawable.img
-                )
-            )
-            return news
+        fun fillNewsStubData(): List<Event> {
+            return JSONParser.getNewsFromJson().toMutableList()
+                .map { Mapper.mapJSONEventToPresentation(it) }
+        }
+
+        fun filterNewsStubData(
+            currentList: List<Event>,
+            filterCategories: List<Filter>
+        ): List<Event> {
+            val activeFilters = filterCategories.filter { it.isActive }.map { it.id }
+            if (activeFilters.isEmpty()) {
+                return emptyList()
+            }
+            val result = mutableListOf<Event>()
+            for (news in currentList) {
+                val filtersInNewsItem = news.categories.map { it.id }
+                for (filterInItem in filtersInNewsItem) {
+                    if (activeFilters.any { activeFilter -> activeFilter == filterInItem }) {
+                        result.add(news)
+                        break
+                    }
+                }
+            }
+            return result
         }
     }
 }
