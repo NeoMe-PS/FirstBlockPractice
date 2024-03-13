@@ -14,7 +14,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -179,13 +178,12 @@ class EditImageDialog : DialogFragment() {
     }
 
     private fun Bitmap.fixRotation(uri: Uri): Bitmap {
-        val ei = ExifInterface(uri.path!!)
+        val ei = ExifInterface(uri.path ?: throw Exception("Wrong file uri path: $uri"))
 
         val orientation: Int = ei.getAttributeInt(
             ExifInterface.TAG_ORIENTATION,
             ExifInterface.ORIENTATION_UNDEFINED
         )
-        Log.i("TestLOG", "orientation : $orientation")
         return when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(90f)
             ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(180f)
@@ -212,7 +210,7 @@ class EditImageDialog : DialogFragment() {
         ) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), READ_EXTERNAL_REQUEST_CODE
             )
         }
         if (ContextCompat.checkSelfPermission(
@@ -222,7 +220,7 @@ class EditImageDialog : DialogFragment() {
         ) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_REQUEST_CODE
             )
         }
         if (ContextCompat.checkSelfPermission(
@@ -232,8 +230,14 @@ class EditImageDialog : DialogFragment() {
         ) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                arrayOf(Manifest.permission.CAMERA), 1
+                arrayOf(Manifest.permission.CAMERA), CAMERA_REQUEST_CODE
             )
         }
+    }
+
+    companion object {
+        const val READ_EXTERNAL_REQUEST_CODE = 100
+        const val WRITE_EXTERNAL_REQUEST_CODE = 101
+        const val CAMERA_REQUEST_CODE = 102
     }
 }

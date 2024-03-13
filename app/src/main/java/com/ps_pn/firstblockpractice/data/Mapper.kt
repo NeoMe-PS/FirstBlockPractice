@@ -2,13 +2,9 @@ package com.ps_pn.firstblockpractice.data
 
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapterEntity
-import com.ps_pn.firstblockpractice.presentation.models.Adults
-import com.ps_pn.firstblockpractice.presentation.models.Animals
 import com.ps_pn.firstblockpractice.presentation.models.Category
-import com.ps_pn.firstblockpractice.presentation.models.Elderly
 import com.ps_pn.firstblockpractice.presentation.models.Event
-import com.ps_pn.firstblockpractice.presentation.models.Events
-import com.ps_pn.firstblockpractice.presentation.models.Kids
+import com.ps_pn.firstblockpractice.presentation.models.Filter
 import com.ps_pn.firstblockpractice.presentation.utills.TimeFormatter
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimePeriod
@@ -21,11 +17,11 @@ class Mapper {
     companion object {
         fun mapJSONCategoryToPresentation(category: Category): CategoryAdapterEntity {
             val imgResId = when (category.id) {
-                Kids.id -> R.drawable.icon_kids
-                Adults.id -> R.drawable.icon_adult
-                Elderly.id -> R.drawable.icon_elderly
-                Animals.id -> R.drawable.icon_animals
-                Events.id -> R.drawable.icon_event
+                Filter.Kids.id -> R.drawable.icon_kids
+                Filter.Adults.id -> R.drawable.icon_adult
+                Filter.Elderly.id -> R.drawable.icon_elderly
+                Filter.Animals.id -> R.drawable.icon_animals
+                Filter.Events.id -> R.drawable.icon_event
                 else -> R.drawable.bg_white_rounded
             }
             return CategoryAdapterEntity(id = category.id, name = category.label, image = imgResId)

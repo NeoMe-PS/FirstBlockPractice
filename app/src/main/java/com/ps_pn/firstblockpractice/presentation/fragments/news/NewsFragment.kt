@@ -56,7 +56,7 @@ class NewsFragment : Fragment() {
     private fun updateNewsByFilter() {
         val filteredList = StubData.filterNewsStubData(
             fullDataList,
-            PreferenceManager.getFilterPreference()
+            PreferenceManager.filterList
         )
         newsAdapter.submitList(filteredList)
     }

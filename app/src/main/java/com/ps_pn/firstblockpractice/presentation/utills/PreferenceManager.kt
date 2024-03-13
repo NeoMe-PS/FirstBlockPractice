@@ -6,12 +6,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.ps_pn.firstblockpractice.presentation.App
 import com.ps_pn.firstblockpractice.presentation.FILTER_PREFERENCES
-import com.ps_pn.firstblockpractice.presentation.models.Adults
-import com.ps_pn.firstblockpractice.presentation.models.Animals
-import com.ps_pn.firstblockpractice.presentation.models.Elderly
-import com.ps_pn.firstblockpractice.presentation.models.Events
 import com.ps_pn.firstblockpractice.presentation.models.Filter
-import com.ps_pn.firstblockpractice.presentation.models.Kids
 
 object PreferenceManager {
 
@@ -23,7 +18,9 @@ object PreferenceManager {
     private val filterPrefs =
         App.instance.getSharedPreferences(FILTER_PREFERENCES, Context.MODE_PRIVATE)
 
-    fun getFilterPreference(): List<Filter> {
+    val filterList = getListFilterPreference()
+
+    private fun getListFilterPreference(): List<Filter> {
         val settings: MutableList<Filter> = mutableListOf()
 
         val string = filterPrefs.getString(FILTER_PREFERENCES, "")
@@ -32,18 +29,23 @@ object PreferenceManager {
             val json = filteredGson.fromJson<List<Filter>>(string, type)
             settings.addAll(json)
         } else {
-            settings.add(Kids)
-            settings.add(Adults)
-            settings.add(Elderly)
-            settings.add(Animals)
-            settings.add(Events)
+            settings.add(Filter.Kids)
+            settings.add(Filter.Adults)
+            settings.add(Filter.Elderly)
+            settings.add(Filter.Animals)
+            settings.add(Filter.Events)
         }
         return settings
     }
 
-    fun saveFilterSettings(settings: List<Filter>) {
+    fun getFilterPref(typeId: Int): Filter {
+        return filterList.find { it.id == typeId }
+            ?: throw Exception("Filter id not found in save settings id: $typeId")
+    }
+
+    fun saveFilterSettings() {
         filterPrefs.edit {
-            val jsonSettings = filteredGson.toJson(settings)
+            val jsonSettings = filteredGson.toJson(filterList)
             putString(FILTER_PREFERENCES, jsonSettings).apply()
         }
     }

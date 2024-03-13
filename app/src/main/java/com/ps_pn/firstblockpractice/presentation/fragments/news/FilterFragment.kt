@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FragmentFilterBinding
 import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
 import com.ps_pn.firstblockpractice.presentation.models.Filter
 import com.ps_pn.firstblockpractice.presentation.utills.navigator
-
 
 class FilterFragment : Fragment() {
 
@@ -21,7 +21,7 @@ class FilterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        settings = PreferenceManager.getFilterPreference().toMutableList()
+        settings = PreferenceManager.filterList.toMutableList()
     }
 
     override fun onCreateView(
@@ -48,39 +48,39 @@ class FilterFragment : Fragment() {
 
     private fun setStartedSettingsValue() {
         with(binding) {
-            kidsSwitch.isChecked = settings[0].isActive
-            adultSwitch.isChecked = settings[1].isActive
-            elderlySwitch.isChecked = settings[2].isActive
-            animalSwitch.isChecked = settings[3].isActive
-            eventsSwitch.isChecked = settings[4].isActive
+            kidsSwitch.isChecked = PreferenceManager.getFilterPref(Filter.KIDS_ID).isActive
+            adultSwitch.isChecked = PreferenceManager.getFilterPref(Filter.ADULTS_ID).isActive
+            elderlySwitch.isChecked = PreferenceManager.getFilterPref(Filter.ELDERLY_ID).isActive
+            animalSwitch.isChecked = PreferenceManager.getFilterPref(Filter.ANIMALS_ID).isActive
+            eventsSwitch.isChecked = PreferenceManager.getFilterPref(Filter.EVENTS_ID).isActive
         }
     }
 
     private fun setSettingsListeners() {
         binding.kidsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            settings[0].isActive = isChecked
+            PreferenceManager.getFilterPref(Filter.KIDS_ID).isActive = isChecked
         }
         binding.adultSwitch.setOnCheckedChangeListener { _, isChecked ->
-            settings[1].isActive = isChecked
+            PreferenceManager.getFilterPref(Filter.ADULTS_ID).isActive = isChecked
         }
         binding.elderlySwitch.setOnCheckedChangeListener { _, isChecked ->
-            settings[2].isActive = isChecked
+            PreferenceManager.getFilterPref(Filter.ELDERLY_ID).isActive = isChecked
         }
         binding.animalSwitch.setOnCheckedChangeListener { _, isChecked ->
-            settings[3].isActive = isChecked
+            PreferenceManager.getFilterPref(Filter.ANIMALS_ID).isActive = isChecked
         }
         binding.eventsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            settings[4].isActive = isChecked
+            PreferenceManager.getFilterPref(Filter.EVENTS_ID).isActive = isChecked
         }
         binding.imageButtonApplyFilter.setOnClickListener {
             saveSettings()
         }
     }
 
-
     private fun saveSettings() {
-        PreferenceManager.saveFilterSettings(settings)
-        Toast.makeText(requireContext(), "Настройки сохранены", Toast.LENGTH_SHORT).show()
+        PreferenceManager.saveFilterSettings()
+        val toastText = resources.getText(R.string.toast_prefs_success)
+        Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

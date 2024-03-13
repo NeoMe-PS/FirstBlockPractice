@@ -29,7 +29,6 @@ android {
         }
     }
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -83,9 +82,6 @@ dependencies {
 
     // kotlinx-datetime
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2")
-
-    // Java 8+ API desugaring support
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:$desugaringVersion")
 
     // Preference
     implementation("androidx.preference:preference-ktx:$preferenceVersion")

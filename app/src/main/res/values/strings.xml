@@ -91,4 +91,5 @@
 
     <!-- other  -->
 
+    <string name="toast_prefs_success">Настройки сохранены</string>
 </resources>
