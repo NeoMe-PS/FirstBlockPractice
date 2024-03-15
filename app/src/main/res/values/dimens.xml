@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- activity_main sizes -->
+    <dimen name="ab_size">44dp</dimen>
+    <dimen name="fab_shadow_width">50dp</dimen>
+    <dimen name="fab_shadow_height">27.5dp</dimen>
+    <dimen name="fab_shadow_margin">47dp</dimen>
+    <dimen name="cont_bot_spacing">48dp</dimen>
+    <dimen name="nav_bot_spacing">57dp</dimen>
+
+    <!-- fragment_user sizes -->
+    <dimen name="rv_height">164dp</dimen>
+    <dimen name="bot_guideline_spacing">102dp</dimen>
+    <dimen name="logout_spacing">47dp</dimen>
+    <dimen name="delimiter_height_1dp">1dp</dimen>
+
+    <!-- fragment_splash sizes -->
+    <dimen name="fragment_splash_logo_spacing">154dp</dimen>
+    <dimen name="fragment_splash_progress_spacing">83dp</dimen>
+    <dimen name="fragment_splash_company_spacing">124dp</dimen>
+
+    <!-- fragment_news sizes -->
+    <dimen name="news_short_desc_width">267dp</dimen>
+    <dimen name="news_decor_width">113dp</dimen>
+    <dimen name="news_decor_height">20dp</dimen>
+
+    <!-- fragment_news_detailed sizes -->
+    <dimen name="tollbar_label_event_detail_width">225dp</dimen>
+    <dimen name="detailed_nav_bar_height">70dp</dimen>
+
+    <!-- font sizes -->
+    <dimen name="font_xxs">10sp</dimen>
+    <dimen name="font_xs">12sp</dimen>
+    <dimen name="font_small">14sp</dimen>
+    <dimen name="font_medium">16sp</dimen>
+    <dimen name="font_large">21sp</dimen>
+    <dimen name="font_xl">24sp</dimen>
+
+    <!-- spacing between views -->
+    <dimen name="spacing_xxs">10dp</dimen>
+    <dimen name="spacing_xs">13dp</dimen>
+    <dimen name="spacing_small">16dp</dimen>
+    <dimen name="spacing_medium">18dp</dimen>
+    <dimen name="spacing_large">20dp</dimen>
+    <dimen name="spacing_xl">22dp</dimen>
+    <dimen name="spacing_xxl">26dp</dimen>
+    <dimen name="spacing_xxxl">28dp</dimen>
+
+    <!-- specific spacing between views -->
+    <dimen name="spec_spacing_xxs">4dp</dimen>
+    <dimen name="spec_spacing_xs">8dp</dimen>
+    <dimen name="spec_spacing_ms">10dp</dimen>
+    <dimen name="spec_spacing_small">12dp</dimen>
+    <dimen name="spec_spacing_medium">8dp</dimen>
+    <dimen name="spec_spacing_large">24dp</dimen>
+    <dimen name="spec_spacing_xxl">36dp</dimen>
+    <dimen name="spec_spacing_xxxl">36dp</dimen>
+
+    <!-- sizes of views -->
+    <dimen name="_0dp">0dp</dimen>
+    <dimen name="height_small">48dp</dimen>
+
+    <!-- sizes of icons -->
+    <dimen name="icon_small">18dp</dimen>
+    <dimen name="icon_xs">16dp</dimen>
+    <dimen name="icon_medium">24dp</dimen>
+    <dimen name="icon_edited_size">136dp</dimen>
+    <dimen name="icon_big_search_size">187dp</dimen>
+
+
+    <!-- other sizes -->
+    <dimen name="_1dp">1dp</dimen>
+    <dimen name="_2dp">2dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_7dp">7dp</dimen>
+    <dimen name="_9dp">9dp</dimen>
+    <dimen name="_17dp">17dp</dimen>
+    <dimen name="_30dp">30dp</dimen>
+
+    <!-- specific sizes -->
+    <dimen name="spec_label_activity_spacing">127dp</dimen>
+    <dimen name="spec_spacing_search">53dp</dimen>
+    <dimen name="spec_spacing_big_hint_search">37.5dp</dimen>
+    <dimen name="spec_spacing_bsearch_hrz">58dp</dimen>
+    <dimen name="spec_spacing_search_bot">108dp</dimen>
+    <dimen name="spec_elevation_large">5dp</dimen>
+    <dimen name="spec_spacing_31dp">31dp</dimen>
+    <dimen name="spec_spacing_43dp">43dp</dimen>
+    <dimen name="spec_spacing_68dp">68dp</dimen>
+    <dimen name="spec_result_item_spacing">17dp</dimen>
+    <dimen name="spec_search_bot_small_spacing">70dp</dimen>
+
+</resources>

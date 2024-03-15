@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.fragments.user.EditProfileFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/ToolbarLabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/label_edit_fragment" />
+
+            <ImageButton
+                android:id="@+id/image_button_back"
+                android:layout_width="@dimen/icon_xs"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/spec_spacing_large"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_back"
+                android:contextClickable="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_back" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/spacing_large" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/spacing_large" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/edit_logo_img"
+        android:layout_width="@dimen/icon_edited_size"
+        android:layout_height="@dimen/icon_edited_size"
+        android:layout_marginTop="@dimen/font_medium"
+        android:src="@drawable/image_man_small"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:strokeWidth="@dimen/_1dp" />
+
+    <TextView
+        android:id="@+id/edit_label_family_tv"
+        style="@style/TextLabelStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/font_medium"
+        android:text="@string/label_family"
+        app:layout_constraintStart_toEndOf="@+id/edit_logo_img"
+        app:layout_constraintTop_toTopOf="@+id/edit_logo_img" />
+
+    <EditText
+        android:id="@+id/edit_family_et"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/font_medium"
+        android:hint="@string/hint_family"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
+        app:layout_constraintStart_toEndOf="@+id/edit_logo_img"
+        app:layout_constraintTop_toBottomOf="@+id/edit_label_family_tv" />
+
+    <TextView
+        android:id="@+id/edit_label_name_tv"
+        style="@style/TextLabelStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/font_medium"
+        android:layout_marginTop="@dimen/spacing_xxs"
+        android:text="@string/label_name"
+        app:layout_constraintStart_toEndOf="@+id/edit_logo_img"
+        app:layout_constraintTop_toBottomOf="@+id/edit_family_et" />
+
+    <EditText
+        android:id="@+id/edit_name_et"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/font_medium"
+        android:hint="@string/hint_name"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
+        app:layout_constraintStart_toEndOf="@+id/edit_logo_img"
+        app:layout_constraintTop_toBottomOf="@+id/edit_label_name_tv" />
+
+    <View
+        android:id="@+id/top_delimiter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/delimiter_height_1dp"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:background="@color/cool_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_logo_img" />
+
+    <TextView
+        android:id="@+id/edit_label_birthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="@string/label_birthday"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/top_delimiter" />
+
+    <EditText
+        android:id="@+id/edit_birthday_et"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/icon_calendar"
+        android:hint="@string/hint_birthday"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/edit_label_birthday" />
+
+    <TextView
+        android:id="@+id/label_activity"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spec_label_activity_spacing"
+        android:text="@string/label_edit_activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/edit_birthday_et" />
+
+    <EditText
+        android:id="@+id/edit_activity_et"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_activity"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/label_activity" />
+
+    <TextView
+        android:id="@+id/label_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="@string/label_password"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/edit_activity_et" />
+
+    <EditText
+        android:id="@+id/edit_password_et"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/open"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/label_password" />
+
+
+    <TextView
+        android:id="@+id/label_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="@string/label_email"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/edit_password_et" />
+
+    <EditText
+        android:id="@+id/edit_email_et"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/label_email" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

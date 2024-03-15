@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey_two"
+    android:orientation="vertical"
+    tools:context=".presentation.fragments.news.FilterFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/ToolbarLabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/label_filter" />
+
+            <ImageButton
+                android:id="@+id/image_button_apply_filter"
+                android:layout_width="@dimen/_17dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_news_filter_apply"
+                android:contextClickable="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/ok"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageButton
+                android:id="@+id/image_button_back"
+                android:layout_width="@dimen/icon_xs"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/spec_spacing_large"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_back"
+                android:contextClickable="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_back"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/filter_question_label_tv"
+        style="@style/TextInfoStyleBlacked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:paddingVertical="@dimen/spacing_large"
+        android:text="@string/label_categories_of_help" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/kids_switch"
+            style="@style/filter_category_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_category_kids" />
+
+        <include
+            layout="@layout/bot_delimeter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/spacing_large" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/adult_switch"
+            style="@style/filter_category_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_category_adult" />
+
+        <include
+            layout="@layout/bot_delimeter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/spacing_large" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/elderly_switch"
+            style="@style/filter_category_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_category_elderly" />
+
+        <include
+            layout="@layout/bot_delimeter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/spacing_large" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/animal_switch"
+            style="@style/filter_category_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_category_animal" />
+
+        <include
+            layout="@layout/bot_delimeter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/spacing_large" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/events_switch"
+            style="@style/filter_category_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_category_events" />
+
+        <include
+            layout="@layout/bot_delimeter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+    </LinearLayout>
+</LinearLayout>
