@@ -79,8 +79,7 @@ class FilterFragment : Fragment() {
 
     private fun saveSettings() {
         PreferenceManager.saveFilterSettings()
-        val toastText = resources.getText(R.string.toast_prefs_success)
-        Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), R.string.toast_prefs_success, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
