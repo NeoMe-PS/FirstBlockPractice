@@ -1,5 +1,6 @@
 package com.ps_pn.firstblockpractice.data
 
+import androidx.lifecycle.MutableLiveData
 import com.github.javafaker.Faker
 import com.ps_pn.firstblockpractice.presentation.adapters.friend.Friend
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapterEntity
@@ -11,6 +12,11 @@ class StubData {
 
     companion object {
         private val faker = Faker()
+        var categoriesData = listOf<CategoryAdapterEntity>()
+        var categoriesIsLoaded = MutableLiveData(false)
+        var newsIsLoaded = MutableLiveData(false)
+        var newsData = listOf<Event>()
+
         fun fillFriendsStubData(): List<Friend> {
             val friends = mutableListOf<Friend>()
             friends.add(Friend(id = 1, name = "Дмитрий Валерьевич", imageUrl = ""))
@@ -20,8 +26,13 @@ class StubData {
         }
 
         fun fillCategoriesStubData(): List<CategoryAdapterEntity> {
-            return JSONParser.getCategoriesFromJson()
+            if (categoriesIsLoaded.value == true) {
+                return categoriesData
+            }
+            categoriesData = JSONParser.getCategoriesFromJson()
                 .map { Mapper.mapJSONCategoryToPresentation(it) }
+            categoriesIsLoaded.postValue(true)
+            return categoriesData
         }
 
         fun fillSearchResultsStubData(): List<SearchResultEntity> {
@@ -34,8 +45,13 @@ class StubData {
         }
 
         fun fillNewsStubData(): List<Event> {
-            return JSONParser.getNewsFromJson().toMutableList()
+            if (newsIsLoaded.value == true) {
+                return newsData
+            }
+            newsData = JSONParser.getNewsFromJson().toMutableList()
                 .map { Mapper.mapJSONEventToPresentation(it) }
+            newsIsLoaded.postValue(true)
+            return newsData
         }
 
         fun filterNewsStubData(
