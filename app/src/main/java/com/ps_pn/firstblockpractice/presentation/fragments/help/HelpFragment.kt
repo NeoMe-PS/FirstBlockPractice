@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentHelpBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapter
+import java.util.concurrent.Executors
+
 
 class HelpFragment : Fragment() {
     private var _binding: FragmentHelpBinding? = null
@@ -15,6 +17,19 @@ class HelpFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentHelpBinding is null")
 
     private val categoryAdapter: CategoryAdapter = CategoryAdapter()
+    private val executorService = Executors.newSingleThreadExecutor()
+    private var isLoading = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState != null) {
+            isLoading = savedInstanceState.getBoolean(LOADING_STATE_KEY)
+        }
+        if (!isLoading) {
+            loadData()
+            isLoading = true
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,19 +43,55 @@ class HelpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.categoryRv.adapter = categoryAdapter
-        fillAdapter()
+        observeDataLoading()
     }
 
-    private fun fillAdapter() {
-        categoryAdapter.submitList(StubData.fillCategoriesStubData())
+    private fun observeDataLoading() {
+        StubData.categoriesIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
+            if (isLoaded) {
+                hideProgressBar()
+                isLoading = true
+                categoryAdapter.submitList(StubData.categoriesData)
+            } else {
+                showProgressBar()
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(LOADING_STATE_KEY, isLoading)
+    }
+
+    private fun showProgressBar() {
+        binding.categoryProgressBar.visibility = View.VISIBLE
+        binding.categoryRv.visibility = View.GONE
+    }
+
+    private fun hideProgressBar() {
+        binding.categoryProgressBar.visibility = View.GONE
+        binding.categoryRv.visibility = View.VISIBLE
+    }
+
+    private fun loadData() {
+        executorService.submit {
+            Thread.sleep(5000)
+            StubData.fillCategoriesStubData()
+        }
     }
 
     companion object {
+        private const val LOADING_STATE_KEY = "LOADING_STATE_KEY"
         fun newInstance() = HelpFragment()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        executorService.shutdown()
     }
 }
