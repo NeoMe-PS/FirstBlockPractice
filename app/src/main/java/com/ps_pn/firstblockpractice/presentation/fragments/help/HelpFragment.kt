@@ -47,13 +47,13 @@ class HelpFragment : Fragment() {
     }
 
     private fun observeDataLoading() {
-        StubData.categoriesIsLoaded.observe(viewLifecycleOwner) {
-            if (!it) {
-                showProgressBar()
-            } else {
+        StubData.categoriesIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
+            if (isLoaded) {
                 hideProgressBar()
                 isLoading = true
                 categoryAdapter.submitList(StubData.categoriesData)
+            } else {
+                showProgressBar()
             }
         }
     }
@@ -65,11 +65,11 @@ class HelpFragment : Fragment() {
 
     private fun showProgressBar() {
         binding.categoryProgressBar.visibility = View.VISIBLE
-        binding.categoryRv.visibility = View.INVISIBLE
+        binding.categoryRv.visibility = View.GONE
     }
 
     private fun hideProgressBar() {
-        binding.categoryProgressBar.visibility = View.INVISIBLE
+        binding.categoryProgressBar.visibility = View.GONE
         binding.categoryRv.visibility = View.VISIBLE
     }
 

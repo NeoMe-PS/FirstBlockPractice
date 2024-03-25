@@ -69,12 +69,12 @@ class NewsFragment : Fragment() {
     }
 
     private fun observeDataLoading() {
-        StubData.newsIsLoaded.observe(viewLifecycleOwner) {
-            if (!it) {
-                showProgressBar()
-            } else {
+        StubData.newsIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
+            if (isLoaded) {
                 newsAdapter.submitList(StubData.newsData)
                 hideProgressBar()
+            } else {
+                showProgressBar()
             }
         }
     }
@@ -98,11 +98,11 @@ class NewsFragment : Fragment() {
 
     private fun showProgressBar() {
         binding.newsProgressBar.visibility = View.VISIBLE
-        binding.newsRv.visibility = View.INVISIBLE
+        binding.newsRv.visibility = View.GONE
     }
 
     private fun hideProgressBar() {
-        binding.newsProgressBar.visibility = View.INVISIBLE
+        binding.newsProgressBar.visibility = View.GONE
         binding.newsRv.visibility = View.VISIBLE
     }
 
