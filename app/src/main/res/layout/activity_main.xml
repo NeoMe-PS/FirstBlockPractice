@@ -11,6 +11,7 @@
         android:id="@+id/nav_host_fragment"
         android:layout_width="@dimen/_0dp"
         android:layout_height="@dimen/_0dp"
+        android:scrollbars="vertical"
         android:layout_marginBottom="-20dp"
         app:layout_constraintBottom_toTopOf="@id/main_activity_coordinator"
         app:layout_constraintEnd_toEndOf="parent"

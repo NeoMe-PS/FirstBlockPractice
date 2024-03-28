@@ -5,14 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.jakewharton.rxbinding4.widget.textChanges
 import com.ps_pn.firstblockpractice.databinding.FragmentAuthorizationBinding
 import com.ps_pn.firstblockpractice.presentation.utills.navigator
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.functions.BiFunction
 
 class AuthorizationFragment : Fragment() {
 
     private var _binding: FragmentAuthorizationBinding? = null
     private val binding
         get() = _binding ?: throw RuntimeException("AuthorizationFragment is null")
+    private val disposableBag = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,16 +33,40 @@ class AuthorizationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setListeners()
+    }
+
+    private fun setListeners() {
         setBackButton()
+        setLoginButton()
+    }
+
+    private fun setLoginButton() {
+        val emailObservable = binding.emailEdit.textChanges()
+        val passObservable = binding.passEdit.textChanges()
+        val disposable = Observable.combineLatest(
+            emailObservable, passObservable, BiFunction { t1, t2 ->
+                t1.length >= 6 && t2.length >= 6
+            }).subscribe {
+            binding.loginBtn.isEnabled = it
+        }
+        disposableBag.add(disposable)
         binding.loginBtn.setOnClickListener {
             navigator().showStartState()
         }
+
     }
 
     private fun setBackButton() {
         binding.imageButtonBack.setOnClickListener {
             navigator().exit()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposableBag.clear()
     }
 
     companion object {

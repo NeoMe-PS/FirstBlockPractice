@@ -23,7 +23,6 @@ import com.ps_pn.firstblockpractice.presentation.fragments.splash.SplashFragment
 import com.ps_pn.firstblockpractice.presentation.fragments.user.EditProfileFragment
 import com.ps_pn.firstblockpractice.presentation.fragments.user.UserProfileFragment
 import com.ps_pn.firstblockpractice.presentation.models.Event
-import com.ps_pn.firstblockpractice.presentation.utills.HasCustomBottomBar
 import com.ps_pn.firstblockpractice.presentation.utills.Navigator
 
 
@@ -41,6 +40,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupBottomNavigation()
         showSplashScreen(savedInstanceState)
     }
 
@@ -56,9 +56,6 @@ class MainActivity : AppCompatActivity(), Navigator {
                 R.id.historyFragment -> openHistoryFragment()
             }
             true
-        }
-        if (supportFragmentManager.fragments.last() is HasCustomBottomBar) {
-            hideMainBottomNav()
         }
     }
 
@@ -88,6 +85,7 @@ class MainActivity : AppCompatActivity(), Navigator {
             .commit()
     }
 
+
     private fun showSplashScreen(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             val splashFragment = SplashFragment.newInstance()
@@ -114,12 +112,6 @@ class MainActivity : AppCompatActivity(), Navigator {
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         binding.mainActivityCoordinator.visibility = View.VISIBLE
     }
-
-    /*private fun setStartState(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            binding.bottomNavigationView.selectedItemId = R.id.helpFragment
-        }
-    }*/
 
     override fun openHelpFragment() {
         loadFragment(HelpFragment.newInstance())
