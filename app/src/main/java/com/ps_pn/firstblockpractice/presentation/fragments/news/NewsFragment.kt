@@ -10,12 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.ps_pn.firstblockpractice.data.LoadNewsService
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentNewsBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.news.NewsAdapter
 import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
-import com.ps_pn.firstblockpractice.presentation.utills.navigator
 
 class NewsFragment : Fragment() {
     private var _binding: FragmentNewsBinding? = null
@@ -41,12 +41,7 @@ class NewsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        requireContext().startService(LoadNewsService.newIntent(this.requireContext()))
-        Intent(requireContext(), LoadNewsService::class.java).also { intent ->
-            requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE)
-        }
-
+        startService()
     }
 
     override fun onCreateView(
@@ -68,6 +63,13 @@ class NewsFragment : Fragment() {
         setFilterButtonOnClick()
     }
 
+    private fun startService() {
+        requireContext().startService(LoadNewsService.newIntent(this.requireContext()))
+        Intent(requireContext(), LoadNewsService::class.java).also { intent ->
+            requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
     private fun observeDataLoading() {
         StubData.newsIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
             if (isLoaded) {
@@ -81,13 +83,16 @@ class NewsFragment : Fragment() {
 
     private fun setFilterButtonOnClick() {
         binding.imageButtonFilter.setOnClickListener {
-            this.navigator().openNewsFilterFragment()
+            val direction = NewsFragmentDirections.actionNewsFragmentToFilterFragment()
+            findNavController().navigate(direction)
         }
     }
 
     private fun setAdapterOnClickListener() {
         newsAdapter.onNewsClickListener = { newsItem ->
-            this.navigator().openNewsDetailFragment(newsItem)
+            val direction =
+                NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(newsItem)
+            findNavController().navigate(direction)
         }
     }
 

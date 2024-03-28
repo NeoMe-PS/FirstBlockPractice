@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FragmentEditProfileBinding
-import com.ps_pn.firstblockpractice.presentation.utills.navigator
+import com.ps_pn.firstblockpractice.presentation.utills.WithoutBottomBar
 
-class EditProfileFragment : Fragment() {
+class EditProfileFragment : Fragment(), WithoutBottomBar {
 
     private var _binding: FragmentEditProfileBinding? = null
     private val binding: FragmentEditProfileBinding
@@ -39,12 +40,16 @@ class EditProfileFragment : Fragment() {
 
     private fun setBackButton() {
         binding.imageButtonBack.setOnClickListener {
-            this.navigator().back()
+            val direction =
+                EditProfileFragmentDirections.actionEditProfileFragmentToProfileFragment()
+            findNavController().navigate(direction)
         }
     }
     private fun setOnLogoClickListener() {
         binding.editLogoImg.setOnClickListener {
-            openChoosePhotoDialog()
+            val direction =
+                EditProfileFragmentDirections.actionEditProfileFragmentToEditImageDialog()
+            findNavController().navigate(direction)
         }
     }
 

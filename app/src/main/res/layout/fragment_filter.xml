@@ -38,7 +38,7 @@
                 android:contentDescription="@string/desc_news_filter_apply"
                 android:contextClickable="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/ok"
+                android:src="@drawable/accept"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <ImageButton

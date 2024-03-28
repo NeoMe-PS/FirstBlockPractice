@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.jakewharton.rxbinding4.widget.textChanges
+import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FragmentAuthorizationBinding
+import com.ps_pn.firstblockpractice.presentation.utills.WithoutBottomBar
 import com.ps_pn.firstblockpractice.presentation.utills.navigator
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.BiFunction
 
-class AuthorizationFragment : Fragment() {
+class AuthorizationFragment : Fragment(), WithoutBottomBar {
 
     private var _binding: FragmentAuthorizationBinding? = null
     private val binding
@@ -33,7 +37,6 @@ class AuthorizationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setListeners()
     }
 
@@ -53,9 +56,13 @@ class AuthorizationFragment : Fragment() {
         }
         disposableBag.add(disposable)
         binding.loginBtn.setOnClickListener {
-            navigator().showStartState()
+            val navOptions: NavOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.authorizationFragment, true)
+                .build()
+            val direction =
+                AuthorizationFragmentDirections.actionAuthorizationFragmentToHelpFragment2()
+            findNavController().navigate(direction, navOptions)
         }
-
     }
 
     private fun setBackButton() {

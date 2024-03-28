@@ -64,6 +64,7 @@ val preferenceVersion = "1.2.1"
 val rxAndroidVersion = "3.0.2"
 val rxJavaVersion = "3.1.5"
 val rxBindingVersion = "4.0.0"
+val splashScreenVersion = "1.0.1"
 
 dependencies {
 
@@ -116,5 +117,4 @@ dependencies {
     //NavComponent
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
-
 }
