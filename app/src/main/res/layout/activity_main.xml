@@ -9,7 +9,6 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.fragments.help.HelpFragment"
         android:layout_width="@dimen/_0dp"
         android:layout_height="@dimen/_0dp"
         android:layout_marginBottom="-20dp"

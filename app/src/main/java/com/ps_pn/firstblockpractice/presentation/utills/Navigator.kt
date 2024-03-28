@@ -19,9 +19,12 @@ interface Navigator {
     fun openUserFragment()
 
     fun openUserEditFragment()
+    fun openAuthFragment()
     fun openNewsDetailFragment(event: Event)
     fun hideMainBottomNav()
     fun showMainBottomNav()
+    fun showStartState()
 
     fun back()
+    fun exit()
 }

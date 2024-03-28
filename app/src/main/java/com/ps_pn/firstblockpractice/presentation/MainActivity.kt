@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.ActivityMainBinding
+import com.ps_pn.firstblockpractice.presentation.fragments.auth.AuthorizationFragment
 import com.ps_pn.firstblockpractice.presentation.fragments.help.HelpFragment
 import com.ps_pn.firstblockpractice.presentation.fragments.history.HistoryFragment
 import com.ps_pn.firstblockpractice.presentation.fragments.news.FilterFragment
@@ -40,9 +41,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setStartState(savedInstanceState)
         showSplashScreen(savedInstanceState)
-        setupBottomNavigation()
     }
 
     private fun setupBottomNavigation() {
@@ -64,13 +63,17 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        val currentFragment = supportFragmentManager.fragments.last()
+        if (currentFragment is AuthorizationFragment) {
+            finish()
+        }
         if (binding.bottomNavigationView.selectedItemId == R.id.helpFragment) {
             finish()
         }
         showMainBottomNav()
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         binding.bottomNavigationView.selectedItemId = R.id.helpFragment
+        super.onBackPressed()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -92,6 +95,7 @@ class MainActivity : AppCompatActivity(), Navigator {
 
             Handler(Looper.getMainLooper()).postDelayed({
                 removeSplash(splashFragment)
+                openAuthFragment()
             }, SLEEP_TIME)
         }
     }
@@ -111,11 +115,11 @@ class MainActivity : AppCompatActivity(), Navigator {
         binding.mainActivityCoordinator.visibility = View.VISIBLE
     }
 
-    private fun setStartState(savedInstanceState: Bundle?) {
+    /*private fun setStartState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             binding.bottomNavigationView.selectedItemId = R.id.helpFragment
         }
-    }
+    }*/
 
     override fun openHelpFragment() {
         loadFragment(HelpFragment.newInstance())
@@ -145,6 +149,11 @@ class MainActivity : AppCompatActivity(), Navigator {
         loadFragment(EditProfileFragment.newInstance())
     }
 
+    override fun openAuthFragment() {
+        hideMainBottomNav()
+        loadFragment(AuthorizationFragment.newInstance())
+    }
+
     override fun openNewsDetailFragment(event: Event) {
         hideMainBottomNav()
         loadFragment(NewsDetailFragment.newInstance(event))
@@ -166,7 +175,17 @@ class MainActivity : AppCompatActivity(), Navigator {
         }
     }
 
+    override fun showStartState() {
+        setupBottomNavigation()
+        binding.bottomNavigationView.selectedItemId = R.id.helpFragment
+        showMainBottomNav()
+    }
+
     override fun back() {
         supportFragmentManager.popBackStack()
+    }
+
+    override fun exit() {
+        finish()
     }
 }
