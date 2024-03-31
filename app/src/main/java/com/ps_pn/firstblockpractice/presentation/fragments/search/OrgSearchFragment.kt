@@ -26,26 +26,21 @@ class OrgSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fillAdapter()
         setAdapter()
+        StubData.searchedDataByOrg.observe(viewLifecycleOwner) { resultList ->
+            if (resultList == null) {
+                binding.resultsLayout.visibility = View.GONE
+                binding.emptyResultLayout.visibility = View.VISIBLE
+            } else {
+                searchAdapter.submitList(resultList)
+                binding.resultsLayout.visibility = View.VISIBLE
+                binding.emptyResultLayout.visibility = View.GONE
+            }
+        }
     }
 
     private fun setAdapter() {
         binding.searchResultRv.adapter = searchAdapter
-    }
-
-    private fun fillAdapter() {
-        searchAdapter.submitList(StubData.fillSearchResultsStubData())
-    }
-
-    override fun onPause() {
-        super.onPause()
-        fillAdapter()
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = OrgSearchFragment()
     }
 
     override fun onDestroyView() {

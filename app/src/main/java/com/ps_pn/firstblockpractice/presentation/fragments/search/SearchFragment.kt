@@ -6,17 +6,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
+import com.jakewharton.rxbinding4.appcompat.queryTextChanges
 import com.ps_pn.firstblockpractice.R
+import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentSearchBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchViewPagerAdapter
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import java.util.concurrent.TimeUnit
+
+const val SEARCH_BY_EVENT_TAG = 1
+const val SEARCH_BY_ORG_TAG = 2
+private const val EVENT_TAB_POSITION = 0
+private const val ORG_TAB_POSITION = 1
+private const val QUERY_KEY_EVENT = "event_key"
+private const val QUERY_KEY_ORG = "org_key"
+private const val SEARCH_BAR_FOCUS_KEY = "search_bar_focus"
+private const val EMPTY_STROKE = ""
+private const val SEARCH_TIMEOUT = 500L
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding: FragmentSearchBinding
         get() = _binding ?: throw RuntimeException("FragmentSearchBinding is null")
     private val adapter: SearchViewPagerAdapter by lazy { SearchViewPagerAdapter(this) }
+    private val disposableBag = CompositeDisposable()
+    private var eventQuery: String = EMPTY_STROKE
+    private var orgQuery: String = EMPTY_STROKE
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,13 +45,37 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        if (savedInstanceState != null) {
+            setSavedState(savedInstanceState)
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setPager()
+
         setSearchViewParam()
+        setPager()
+        setSearchObservable()
+        setSearchIconListener()
+    }
+
+
+    private fun setSavedState(savedInstanceState: Bundle) {
+        eventQuery = savedInstanceState.getString(QUERY_KEY_EVENT) ?: EMPTY_STROKE
+        orgQuery = savedInstanceState.getString(QUERY_KEY_ORG) ?: EMPTY_STROKE
+        val searchIsActive = savedInstanceState.getBoolean(SEARCH_BAR_FOCUS_KEY)
+        if (searchIsActive) {
+            showSearchBar()
+        }
+    }
+
+    private fun showSearchBar() {
+        with(binding) {
+            searchToolbar.visibility = View.GONE
+            searchBar.visibility = View.VISIBLE
+            searchBar.isActivated = true
+        }
     }
 
     private fun setSearchViewParam() {
@@ -49,13 +94,87 @@ class SearchFragment : Fragment() {
         TabLayoutMediator(binding.searchTabLayout, binding.searchPager) { tab, position ->
             tab.text = adapter.getTabTitle(position)
         }.attach()
+
+        binding.searchTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                clearSearchField()
+
+                when (tab?.position) {
+                    EVENT_TAB_POSITION -> binding.searchBar.setQuery(eventQuery, false)
+                    ORG_TAB_POSITION -> binding.searchBar.setQuery(orgQuery, false)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
     }
 
-    companion object {
-        fun newInstance() = SearchFragment()
+    private fun setSearchObservable() {
+        val disposable = binding.searchBar.queryTextChanges()
+            .debounce(SEARCH_TIMEOUT, TimeUnit.MILLISECONDS)
+            .map { query ->
+                query.toString().trim()
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { query ->
+                if (binding.searchPager.currentItem == ORG_TAB_POSITION) {
+                    orgQuery = query
+                    submitRequest(query, SEARCH_BY_ORG_TAG)
+                } else {
+                    eventQuery = query
+                    submitRequest(query, SEARCH_BY_EVENT_TAG)
+                }
+            }
+        disposableBag.add(disposable)
     }
+
+    private fun submitRequest(query: String, tag: Int) {
+        if (query.isEmpty()) {
+            StubData.clearSearchedData(tag)
+        } else {
+            StubData.fillSearchResultsStubData(query, tag)
+        }
+    }
+
+    private fun setSearchIconListener() {
+        binding.imageButtonSearch.setOnClickListener {
+            showSearchBar()
+        }
+        val clearButton =
+            binding.searchBar.findViewById<AppCompatImageView>(androidx.appcompat.R.id.search_close_btn)
+        clearButton.setOnClickListener {
+            clearSearchField()
+            if (binding.searchPager.currentItem == ORG_TAB_POSITION) {
+                orgQuery = EMPTY_STROKE
+                StubData.fillSearchResultsStubData(orgQuery, SEARCH_BY_ORG_TAG)
+            } else {
+                eventQuery = EMPTY_STROKE
+                StubData.fillSearchResultsStubData(eventQuery, SEARCH_BY_EVENT_TAG)
+            }
+        }
+    }
+
+    private fun clearSearchField() {
+        with(binding) {
+            searchBar.setQuery(EMPTY_STROKE, false);
+            searchBar.clearFocus();
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(QUERY_KEY_EVENT, eventQuery)
+        outState.putString(QUERY_KEY_ORG, orgQuery)
+        outState.putBoolean(SEARCH_BAR_FOCUS_KEY, binding.searchBar.isActivated)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        disposableBag.clear()
     }
 }

@@ -1,20 +1,22 @@
 package com.ps_pn.firstblockpractice.data
 
 import androidx.lifecycle.MutableLiveData
-import com.github.javafaker.Faker
 import com.ps_pn.firstblockpractice.presentation.adapters.friend.Friend
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapterEntity
 import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchResultEntity
+import com.ps_pn.firstblockpractice.presentation.fragments.search.SEARCH_BY_EVENT_TAG
+import com.ps_pn.firstblockpractice.presentation.fragments.search.SEARCH_BY_ORG_TAG
 import com.ps_pn.firstblockpractice.presentation.models.Event
 import com.ps_pn.firstblockpractice.presentation.models.Filter
 
 class StubData {
 
     companion object {
-        private val faker = Faker()
         var categoriesData = listOf<CategoryAdapterEntity>()
         var categoriesIsLoaded = MutableLiveData(false)
         var newsIsLoaded = MutableLiveData(false)
+        var searchedDataByEvent = MutableLiveData<List<SearchResultEntity>?>(null)
+        var searchedDataByOrg = MutableLiveData<List<SearchResultEntity>?>(null)
         var newsData = listOf<Event>()
 
         fun fillFriendsStubData(): List<Friend> {
@@ -35,13 +37,30 @@ class StubData {
             return categoriesData
         }
 
-        fun fillSearchResultsStubData(): List<SearchResultEntity> {
-            val results = mutableListOf<SearchResultEntity>()
-            val randomQuantity = (0..15).random()
-            for (i in 0..randomQuantity) {
-                results.add(SearchResultEntity(title = faker.company().name()))
+        fun fillSearchResultsStubData(query: String, queryTag: Int) {
+            when (queryTag) {
+                SEARCH_BY_EVENT_TAG -> searchByEvent(query)
+                SEARCH_BY_ORG_TAG -> searchByOrg(query)
             }
-            return results
+        }
+
+        fun clearSearchedData(tag: Int) {
+            when (tag) {
+                SEARCH_BY_EVENT_TAG -> searchedDataByEvent.value = null
+                SEARCH_BY_ORG_TAG -> searchedDataByOrg.value = null
+            }
+        }
+
+        private fun searchByEvent(query: String) {
+            searchedDataByEvent.value = newsData
+                .filter { event -> event.label.contains(query, true) }
+                .map { event -> SearchResultEntity(event.label) }
+        }
+
+        private fun searchByOrg(query: String) {
+            searchedDataByOrg.value = newsData
+                .filter { event -> event.company.contains(query, true) }
+                .map { event -> SearchResultEntity(event.label) }
         }
 
         fun fillNewsStubData(): List<Event> {

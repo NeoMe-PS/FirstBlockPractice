@@ -7,13 +7,14 @@ import android.os.Binder
 import android.os.IBinder
 import kotlin.concurrent.thread
 
+private const val TIMEOUT = 1500L
 class LoadNewsService : Service() {
 
     private val binder = LocalBinder()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         thread {
-            Thread.sleep(5000)
+            Thread.sleep(TIMEOUT)
             StubData.fillNewsStubData()
             stopSelf()
         }
