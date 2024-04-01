@@ -38,6 +38,7 @@ class SearchFragment : Fragment() {
     private val disposableBag = CompositeDisposable()
     private var eventQuery: String = EMPTY_STROKE
     private var orgQuery: String = EMPTY_STROKE
+    private var searchIsActive: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,7 +65,7 @@ class SearchFragment : Fragment() {
     private fun setSavedState(savedInstanceState: Bundle) {
         eventQuery = savedInstanceState.getString(QUERY_KEY_EVENT) ?: EMPTY_STROKE
         orgQuery = savedInstanceState.getString(QUERY_KEY_ORG) ?: EMPTY_STROKE
-        val searchIsActive = savedInstanceState.getBoolean(SEARCH_BAR_FOCUS_KEY)
+        searchIsActive = savedInstanceState.getBoolean(SEARCH_BAR_FOCUS_KEY)
         if (searchIsActive) {
             showSearchBar()
         }
@@ -165,11 +166,16 @@ class SearchFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        searchIsActive = binding.searchBar.isActivated
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(QUERY_KEY_EVENT, eventQuery)
         outState.putString(QUERY_KEY_ORG, orgQuery)
-        outState.putBoolean(SEARCH_BAR_FOCUS_KEY, binding.searchBar.isActivated)
+        outState.putBoolean(SEARCH_BAR_FOCUS_KEY, searchIsActive)
     }
 
     override fun onDestroyView() {

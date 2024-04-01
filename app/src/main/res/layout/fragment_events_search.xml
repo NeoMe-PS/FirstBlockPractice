@@ -75,7 +75,7 @@
             android:id="@+id/bot_delimiter"
             android:layout_width="match_parent"
             android:layout_height="@dimen/delimiter_height_1dp"
-            android:layout_marginBottom="@dimen/spec_spacing_search_bot"
+            android:layout_marginBottom="@dimen/spec_spacing_31dp"
             android:background="@color/cool_grey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
