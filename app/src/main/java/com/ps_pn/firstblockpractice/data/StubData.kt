@@ -8,6 +8,8 @@ import com.ps_pn.firstblockpractice.presentation.fragments.search.SEARCH_BY_EVEN
 import com.ps_pn.firstblockpractice.presentation.fragments.search.SEARCH_BY_ORG_TAG
 import com.ps_pn.firstblockpractice.presentation.models.Event
 import com.ps_pn.firstblockpractice.presentation.models.Filter
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 
 class StubData {
 
@@ -18,6 +20,8 @@ class StubData {
         var searchedDataByEvent = MutableLiveData<List<SearchResultEntity>?>(null)
         var searchedDataByOrg = MutableLiveData<List<SearchResultEntity>?>(null)
         var newsData = listOf<Event>()
+        var subject: Subject<Int> = BehaviorSubject.create()
+
 
         fun fillFriendsStubData(): List<Friend> {
             val friends = mutableListOf<Friend>()
@@ -70,6 +74,7 @@ class StubData {
             newsData = JSONParser.getNewsFromJson().toMutableList()
                 .map { Mapper.mapJSONEventToPresentation(it) }
             newsIsLoaded.postValue(true)
+            subject.onNext(newsData.size)
             return newsData
         }
 

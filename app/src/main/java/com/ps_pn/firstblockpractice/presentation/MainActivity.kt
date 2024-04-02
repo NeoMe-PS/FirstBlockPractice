@@ -8,6 +8,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.navigation.NavigationBarView
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.ActivityMainBinding
@@ -22,12 +23,12 @@ class MainActivity : AppCompatActivity(), Navigator {
     private val navController: NavController by lazy {
         Navigation.findNavController(this, R.id.nav_host_fragment)
     }
+    private var newsBadges: BadgeDrawable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
-
-        supportActionBar?.hide();
+        supportActionBar?.hide()
         setContentView(binding.root)
         setNavigation()
         hideBottomAtDestination()
@@ -47,11 +48,15 @@ class MainActivity : AppCompatActivity(), Navigator {
         binding.bottomNavigationView.setupWithNavController(navController)
         binding.bottomNavigationView.labelVisibilityMode =
             NavigationBarView.LABEL_VISIBILITY_SELECTED
+        newsBadges = binding.bottomNavigationView.getOrCreateBadge(R.id.newsFragment)
+
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
+    override fun setNewsBadges(count: Int) {
+        newsBadges?.let {
+            it.isVisible = true
+            it.number = count
+        }
     }
 
     override fun hideMainBottomNav() {
@@ -83,15 +88,6 @@ class MainActivity : AppCompatActivity(), Navigator {
                 currentFragmentId == authID ||
                 currentFragmentId == editProfileFragmentID ||
                 currentFragmentId == newsDetailed
-    }
-
-    override fun showStartState() {
-        binding.bottomNavigationView.selectedItemId = R.id.helpFragment
-        showMainBottomNav()
-    }
-
-    override fun back() {
-        supportFragmentManager.popBackStack()
     }
 
     override fun exit() {

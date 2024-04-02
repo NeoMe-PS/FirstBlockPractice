@@ -147,7 +147,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black_12"
         android:hint="@string/hint_password"
-        android:inputType="textEmailAddress"
+        android:inputType="textPassword"
         android:textColorHint="@color/black_38"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"

@@ -7,8 +7,6 @@ fun Fragment.navigator(): Navigator = requireActivity() as Navigator
 interface Navigator {
     fun hideMainBottomNav()
     fun showMainBottomNav()
-    fun showStartState()
-
-    fun back()
+    fun setNewsBadges(count: Int)
     fun exit()
 }

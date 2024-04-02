@@ -8,12 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.ps_pn.firstblockpractice.databinding.FragmentNewsDetailBinding
-import com.ps_pn.firstblockpractice.presentation.models.Event
 import com.ps_pn.firstblockpractice.presentation.utills.HasCustomBottomBar
 
 class NewsDetailFragment : Fragment(), HasCustomBottomBar {
 
-    private var eventItemParam: Event? = null
     private var _binding: FragmentNewsDetailBinding? = null
     private val binding
         get() = _binding ?: throw RuntimeException("FragmentNewsDetailBinding is null")
@@ -57,9 +55,5 @@ class NewsDetailFragment : Fragment(), HasCustomBottomBar {
                 NewsDetailFragmentDirections.actionNewsDetailFragmentToNewsFragment()
             findNavController().navigate(direction)
         }
-    }
-
-    companion object {
-        private const val ARG_NEWS_ITEM = "NEWS_ITEM"
     }
 }
