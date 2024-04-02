@@ -1,5 +1,6 @@
 package com.ps_pn.firstblockpractice.data
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.ps_pn.firstblockpractice.presentation.adapters.friend.Friend
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapterEntity
@@ -8,8 +9,17 @@ import com.ps_pn.firstblockpractice.presentation.fragments.search.SEARCH_BY_EVEN
 import com.ps_pn.firstblockpractice.presentation.fragments.search.SEARCH_BY_ORG_TAG
 import com.ps_pn.firstblockpractice.presentation.models.Event
 import com.ps_pn.firstblockpractice.presentation.models.Filter
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.functions.BiFunction
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
+import java.util.concurrent.TimeUnit
+
+private const val LOG_TAG = "StubDataTag"
+
+private const val TIMEOUT = 1000L
 
 class StubData {
 
@@ -22,6 +32,37 @@ class StubData {
         var newsData = listOf<Event>()
         var subject: Subject<Int> = BehaviorSubject.create()
 
+        val newsDataObservable = Observable.just(
+            JSONParser.getNewsFromJson().map { Mapper.mapJSONEventToPresentation(it) })
+            .delay(TIMEOUT, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .doOnNext { logThread() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { logThread() }
+
+        val categoriesDataObservable = Observable
+            .just(
+                JSONParser.getCategoriesFromJson().map { Mapper.mapJSONCategoryToPresentation(it) })
+            .delay(TIMEOUT, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .doOnNext { logThread() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { logThread() }
+        val zipper =
+            BiFunction<List<Event>, List<CategoryAdapterEntity>, String>
+            { first, second -> "${first.map { it.label }} - ${second.map { it.name }}" }
+        val someZipObservable = Observable.zip(
+            newsDataObservable, categoriesDataObservable,
+            zipper
+        )
+            .subscribeOn(Schedulers.io())
+            .doOnNext { logThread() }
+            .observeOn(Schedulers.computation())
+            .doOnNext { logThread() }
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(Schedulers.io())
+            .doOnNext { logThread() }
+
 
         fun fillFriendsStubData(): List<Friend> {
             val friends = mutableListOf<Friend>()
@@ -29,6 +70,10 @@ class StubData {
             friends.add(Friend(id = 2, name = "Евгений Александров", imageUrl = ""))
             friends.add(Friend(id = 3, name = "Виктор Кузнецов", imageUrl = ""))
             return friends
+        }
+
+        private fun logThread() {
+            Log.i(LOG_TAG, Thread.currentThread().name)
         }
 
         fun fillCategoriesStubData(): List<CategoryAdapterEntity> {

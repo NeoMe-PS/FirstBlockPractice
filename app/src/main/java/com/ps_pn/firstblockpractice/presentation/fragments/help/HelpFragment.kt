@@ -49,7 +49,7 @@ class HelpFragment : Fragment() {
     private fun observeDataLoading() {
         StubData.categoriesIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
             if (isLoaded) {
-                hideProgressBar()
+
                 isLoading = true
                 categoryAdapter.submitList(StubData.categoriesData)
             } else {
