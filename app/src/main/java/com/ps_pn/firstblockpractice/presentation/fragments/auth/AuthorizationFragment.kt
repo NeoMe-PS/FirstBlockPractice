@@ -14,7 +14,6 @@ import com.ps_pn.firstblockpractice.presentation.utills.WithoutBottomBar
 import com.ps_pn.firstblockpractice.presentation.utills.navigator
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.functions.BiFunction
 
 class AuthorizationFragment : Fragment(), WithoutBottomBar {
 
@@ -49,9 +48,10 @@ class AuthorizationFragment : Fragment(), WithoutBottomBar {
         val emailObservable = binding.emailEdit.textChanges()
         val passObservable = binding.passEdit.textChanges()
         val disposable = Observable.combineLatest(
-            emailObservable, passObservable, BiFunction { t1, t2 ->
-                t1.length >= 6 && t2.length >= 6
-            }).subscribe {
+            emailObservable, passObservable
+        ) { emailText, passText ->
+            emailText.length >= MIN_LENGTH_VALUE && passText.length >= MIN_LENGTH_VALUE
+        }.subscribe {
             binding.loginBtn.isEnabled = it
         }
         disposableBag.add(disposable)
@@ -77,7 +77,6 @@ class AuthorizationFragment : Fragment(), WithoutBottomBar {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance() = AuthorizationFragment()
+        private const val MIN_LENGTH_VALUE = 6
     }
 }

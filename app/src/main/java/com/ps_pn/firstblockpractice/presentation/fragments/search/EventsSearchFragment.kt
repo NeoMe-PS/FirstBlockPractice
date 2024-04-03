@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentEventsSearchBinding
@@ -28,14 +29,13 @@ class EventsSearchFragment : Fragment() {
 
         StubData.searchedDataByEvent.observe(viewLifecycleOwner) { resultList ->
             if (resultList == null) {
-                binding.resultsLayout.visibility = View.GONE
-                binding.emptyResultLayout.visibility = View.VISIBLE
-            } else {
-                searchAdapter.submitList(resultList)
-                binding.resultsLayout.visibility = View.VISIBLE
-                binding.emptyResultLayout.visibility = View.GONE
+                binding.resultsLayout.isVisible = false
+                binding.emptyResultLayout.isVisible = true
+                return@observe
             }
-
+            searchAdapter.submitList(resultList)
+            binding.resultsLayout.isVisible = true
+            binding.emptyResultLayout.isVisible = false
         }
     }
 

@@ -95,21 +95,23 @@ class StubData {
 
         fun clearSearchedData(tag: Int) {
             when (tag) {
-                SEARCH_BY_EVENT_TAG -> searchedDataByEvent.value = null
-                SEARCH_BY_ORG_TAG -> searchedDataByOrg.value = null
+                SEARCH_BY_EVENT_TAG -> searchedDataByEvent.postValue(null)
+                SEARCH_BY_ORG_TAG -> searchedDataByOrg.postValue(null)
             }
         }
 
         private fun searchByEvent(query: String) {
-            searchedDataByEvent.value = newsData
+            val value = newsData
                 .filter { event -> event.label.contains(query, true) }
                 .map { event -> SearchResultEntity(event.label) }
+            searchedDataByEvent.postValue(value)
         }
 
         private fun searchByOrg(query: String) {
-            searchedDataByOrg.value = newsData
+            val value = newsData
                 .filter { event -> event.company.contains(query, true) }
                 .map { event -> SearchResultEntity(event.label) }
+            searchedDataByOrg.postValue(value)
         }
 
         fun fillNewsStubData(): List<Event> {

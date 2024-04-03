@@ -16,8 +16,8 @@ import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentSearchBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchViewPagerAdapter
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 const val SEARCH_BY_EVENT_TAG = 1
@@ -106,21 +106,20 @@ class SearchFragment : Fragment() {
                 }
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
+            override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+
         })
     }
 
     private fun setSearchObservable() {
         val disposable = binding.searchBar.queryTextChanges()
+            .observeOn(Schedulers.io())
             .debounce(SEARCH_TIMEOUT, TimeUnit.MILLISECONDS)
             .map { query ->
                 query.toString().trim()
             }
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe { query ->
                 if (binding.searchPager.currentItem == ORG_TAB_POSITION) {
                     orgQuery = query
@@ -161,8 +160,8 @@ class SearchFragment : Fragment() {
 
     private fun clearSearchField() {
         with(binding) {
-            searchBar.setQuery(EMPTY_STROKE, false);
-            searchBar.clearFocus();
+            searchBar.setQuery(EMPTY_STROKE, false)
+            searchBar.clearFocus()
         }
     }
 
