@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentUserProfileBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.friend.FriendsAdapter
-import com.ps_pn.firstblockpractice.presentation.utills.navigator
 
 class UserProfileFragment : Fragment() {
     private var _binding: FragmentUserProfileBinding? = null
@@ -41,7 +41,9 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun openEditProfileFragment() {
-        this.navigator().openUserEditFragment()
+        val direction =
+            UserProfileFragmentDirections.actionUserProfileFragmentToEditProfileFragment()
+        findNavController().navigate(direction)
     }
 
     private fun fillAdapter() {

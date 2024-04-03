@@ -1,6 +1,7 @@
 package com.ps_pn.firstblockpractice.presentation.models
 
 import android.os.Parcelable
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 
@@ -20,4 +21,6 @@ data class Event(
     val address: String,
     val phone: String,
     val company: String,
+    @IgnoredOnParcel
+    var isRead: Boolean = false
 ) : Parcelable

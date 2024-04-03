@@ -10,12 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.ps_pn.firstblockpractice.data.LoadNewsService
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentNewsBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.news.NewsAdapter
 import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
 import com.ps_pn.firstblockpractice.presentation.utills.navigator
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+
+private const val KEY_NEWS_COUNTER = "news_counter"
 
 class NewsFragment : Fragment() {
     private var _binding: FragmentNewsBinding? = null
@@ -38,15 +42,15 @@ class NewsFragment : Fragment() {
             mBound = false
         }
     }
+    private val disposableBag = CompositeDisposable()
+    private var newsCounter = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        requireContext().startService(LoadNewsService.newIntent(this.requireContext()))
-        Intent(requireContext(), LoadNewsService::class.java).also { intent ->
-            requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        startService()
+        if (savedInstanceState != null) {
+            newsCounter = savedInstanceState.getInt(KEY_NEWS_COUNTER, 0)
         }
-
     }
 
     override fun onCreateView(
@@ -64,8 +68,24 @@ class NewsFragment : Fragment() {
         binding.newsRv.adapter = newsAdapter
         newsAdapter.submitList(fullDataList)
         observeDataLoading()
+        observeBadgeCount()
         updateNewsByFilter()
         setFilterButtonOnClick()
+    }
+
+    private fun observeBadgeCount() {
+        val disposable = StubData.subject.subscribe { count ->
+            newsCounter = count
+            navigator().setNewsBadges(newsCounter)
+        }
+        disposableBag.add(disposable)
+    }
+
+    private fun startService() {
+        requireContext().startService(LoadNewsService.newIntent(this.requireContext()))
+        Intent(requireContext(), LoadNewsService::class.java).also { intent ->
+            requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
     }
 
     private fun observeDataLoading() {
@@ -81,19 +101,35 @@ class NewsFragment : Fragment() {
 
     private fun setFilterButtonOnClick() {
         binding.imageButtonFilter.setOnClickListener {
-            this.navigator().openNewsFilterFragment()
+            val direction = NewsFragmentDirections.actionNewsFragmentToFilterFragment()
+            findNavController().navigate(direction)
         }
     }
 
     private fun setAdapterOnClickListener() {
         newsAdapter.onNewsClickListener = { newsItem ->
-            this.navigator().openNewsDetailFragment(newsItem)
+            if (!newsItem.isRead) {
+                newsItem.isRead = true
+                if (newsCounter > 0) {
+                    newsCounter -= 1
+                    StubData.subject.onNext(newsCounter)
+                }
+            }
+            val direction =
+                NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(newsItem)
+            findNavController().navigate(direction)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_NEWS_COUNTER, newsCounter)
     }
 
     override fun onResume() {
         super.onResume()
         updateNewsByFilter()
+        navigator().setNewsBadges(newsCounter)
     }
 
     private fun showProgressBar() {
@@ -118,9 +154,7 @@ class NewsFragment : Fragment() {
         super.onDestroy()
         requireContext().unbindService(connection)
         mBound = false
+        disposableBag.clear()
     }
 
-    companion object {
-        fun newInstance() = NewsFragment()
-    }
 }

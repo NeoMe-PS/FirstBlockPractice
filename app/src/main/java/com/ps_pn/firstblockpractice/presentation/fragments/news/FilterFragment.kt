@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FragmentFilterBinding
-import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
 import com.ps_pn.firstblockpractice.presentation.models.Filter
-import com.ps_pn.firstblockpractice.presentation.utills.navigator
+import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
 
 class FilterFragment : Fragment() {
 
@@ -42,7 +42,8 @@ class FilterFragment : Fragment() {
 
     private fun setBackButton() {
         binding.imageButtonBack.setOnClickListener {
-            this.navigator().back()
+            val direction = FilterFragmentDirections.actionFilterFragmentToNewsFragment()
+            findNavController().navigate(direction)
         }
     }
 

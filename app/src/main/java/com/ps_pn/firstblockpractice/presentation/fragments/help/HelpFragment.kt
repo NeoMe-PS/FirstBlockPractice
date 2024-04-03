@@ -10,7 +10,7 @@ import com.ps_pn.firstblockpractice.databinding.FragmentHelpBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapter
 import java.util.concurrent.Executors
 
-
+private const val TIMEOUT = 1000L
 class HelpFragment : Fragment() {
     private var _binding: FragmentHelpBinding? = null
     private val binding: FragmentHelpBinding
@@ -49,7 +49,7 @@ class HelpFragment : Fragment() {
     private fun observeDataLoading() {
         StubData.categoriesIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
             if (isLoaded) {
-                hideProgressBar()
+
                 isLoading = true
                 categoryAdapter.submitList(StubData.categoriesData)
             } else {
@@ -75,14 +75,13 @@ class HelpFragment : Fragment() {
 
     private fun loadData() {
         executorService.submit {
-            Thread.sleep(5000)
+            Thread.sleep(TIMEOUT)
             StubData.fillCategoriesStubData()
         }
     }
 
     companion object {
         private const val LOADING_STATE_KEY = "LOADING_STATE_KEY"
-        fun newInstance() = HelpFragment()
     }
 
     override fun onDestroyView() {

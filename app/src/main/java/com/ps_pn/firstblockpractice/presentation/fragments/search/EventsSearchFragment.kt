@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentEventsSearchBinding
+import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchResultAdapter
 
 class EventsSearchFragment : Fragment() {
     private var _binding: FragmentEventsSearchBinding? = null
     private val binding: FragmentEventsSearchBinding
         get() = _binding ?: throw RuntimeException("FragmentEventsSearchBinding is null")
-
+    private val searchAdapter: SearchResultAdapter = SearchResultAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -20,9 +23,24 @@ class EventsSearchFragment : Fragment() {
         return binding.root
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = EventsSearchFragment()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setAdapter()
+
+        StubData.searchedDataByEvent.observe(viewLifecycleOwner) { resultList ->
+            if (resultList == null) {
+                binding.resultsLayout.isVisible = false
+                binding.emptyResultLayout.isVisible = true
+                return@observe
+            }
+            searchAdapter.submitList(resultList)
+            binding.resultsLayout.isVisible = true
+            binding.emptyResultLayout.isVisible = false
+        }
+    }
+
+    private fun setAdapter() {
+        binding.searchResultRv.adapter = searchAdapter
     }
 
     override fun onDestroyView() {
