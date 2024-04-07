@@ -1,6 +1,7 @@
 package com.ps_pn.firstblockpractice.presentation.fragments.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import androidx.fragment.app.Fragment
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentOrgSearchBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchResultAdapter
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -20,7 +23,11 @@ class OrgSearchFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentOrgSearchBinding is null")
 
     private val searchAdapter: SearchResultAdapter = SearchResultAdapter()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    private val errorHandler = CoroutineExceptionHandler { context, throwable ->
+        Log.e("TestLOG", "$throwable in ${context[CoroutineName]}")
+    }
+    private val coroutineName = CoroutineName("EventsSearchFragment Name")
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + errorHandler + coroutineName)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

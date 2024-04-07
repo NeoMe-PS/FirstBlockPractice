@@ -133,7 +133,7 @@ class SearchFragment : Fragment() {
                     submitRequest(query, SEARCH_BY_EVENT_TAG)
                 }
             }
-            .launchIn(CoroutineScope(Dispatchers.IO))
+            .launchIn(CoroutineScope(Dispatchers.Default))
     }
 
     private fun submitRequest(query: String, tag: Int) {
