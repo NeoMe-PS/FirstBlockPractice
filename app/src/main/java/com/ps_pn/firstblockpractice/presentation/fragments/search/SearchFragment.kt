@@ -7,18 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
-import com.jakewharton.rxbinding4.appcompat.queryTextChanges
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentSearchBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchViewPagerAdapter
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
 const val SEARCH_BY_EVENT_TAG = 1
 const val SEARCH_BY_ORG_TAG = 2
@@ -57,7 +64,7 @@ class SearchFragment : Fragment() {
 
         setSearchViewParam()
         setPager()
-        setSearchObservable()
+        setSearchFlow()
         setSearchIconListener()
     }
 
@@ -113,14 +120,11 @@ class SearchFragment : Fragment() {
         })
     }
 
-    private fun setSearchObservable() {
-        val disposable = binding.searchBar.queryTextChanges()
-            .observeOn(Schedulers.io())
-            .debounce(SEARCH_TIMEOUT, TimeUnit.MILLISECONDS)
-            .map { query ->
-                query.toString().trim()
-            }
-            .subscribe { query ->
+    private fun setSearchFlow() {
+        binding.searchBar.getQueryTextChangeStateFlow()
+            .debounce(SEARCH_TIMEOUT)
+            .map { query -> query.trim() }
+            .onEach { query ->
                 if (binding.searchPager.currentItem == ORG_TAB_POSITION) {
                     orgQuery = query
                     submitRequest(query, SEARCH_BY_ORG_TAG)
@@ -129,7 +133,7 @@ class SearchFragment : Fragment() {
                     submitRequest(query, SEARCH_BY_EVENT_TAG)
                 }
             }
-        disposableBag.add(disposable)
+            .launchIn(CoroutineScope(Dispatchers.IO))
     }
 
     private fun submitRequest(query: String, tag: Int) {
@@ -182,4 +186,21 @@ class SearchFragment : Fragment() {
         _binding = null
         disposableBag.clear()
     }
+}
+
+fun SearchView.getQueryTextChangeStateFlow(): StateFlow<String> {
+
+    val query = MutableStateFlow("")
+
+    setOnQueryTextListener(object : OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            return true
+        }
+
+        override fun onQueryTextChange(newText: String): Boolean {
+            query.value = newText
+            return true
+        }
+    })
+    return query
 }
