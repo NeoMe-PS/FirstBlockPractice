@@ -1,6 +1,7 @@
 package com.ps_pn.firstblockpractice.presentation.fragments.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,12 @@ import androidx.fragment.app.Fragment
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentOrgSearchBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchResultAdapter
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class OrgSearchFragment : Fragment() {
     private var _binding: FragmentOrgSearchBinding? = null
@@ -16,6 +23,11 @@ class OrgSearchFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentOrgSearchBinding is null")
 
     private val searchAdapter: SearchResultAdapter = SearchResultAdapter()
+    private val errorHandler = CoroutineExceptionHandler { context, throwable ->
+        Log.e("TestLOG", "$throwable in ${context[CoroutineName]}")
+    }
+    private val coroutineName = CoroutineName("EventsSearchFragment Name")
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + errorHandler + coroutineName)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,15 +40,21 @@ class OrgSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setAdapter()
-        StubData.searchedDataByOrg.observe(viewLifecycleOwner) { resultList ->
-            if (resultList == null) {
-                binding.resultsLayout.isVisible = false
-                binding.emptyResultLayout.isVisible = true
-                return@observe
+        observeData()
+    }
+
+    private fun observeData() {
+        coroutineScope.launch {
+            StubData.searchedDataByOrg.collect { resultList ->
+                if (resultList == null) {
+                    binding.resultsLayout.isVisible = false
+                    binding.emptyResultLayout.isVisible = true
+                    return@collect
+                }
+                searchAdapter.submitList(resultList)
+                binding.resultsLayout.isVisible = true
+                binding.emptyResultLayout.isVisible = false
             }
-            searchAdapter.submitList(resultList)
-            binding.resultsLayout.isVisible = true
-            binding.emptyResultLayout.isVisible = false
         }
     }
 
@@ -47,5 +65,6 @@ class OrgSearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        coroutineScope.cancel()
     }
 }

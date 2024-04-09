@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.ps_pn.firstblockpractice.data.LoadNewsService
 import com.ps_pn.firstblockpractice.data.StubData
@@ -18,6 +19,7 @@ import com.ps_pn.firstblockpractice.presentation.adapters.news.NewsAdapter
 import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
 import com.ps_pn.firstblockpractice.presentation.utills.navigator
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.launch
 
 private const val KEY_NEWS_COUNTER = "news_counter"
 
@@ -74,11 +76,12 @@ class NewsFragment : Fragment() {
     }
 
     private fun observeBadgeCount() {
-        val disposable = StubData.subject.subscribe { count ->
-            newsCounter = count
-            navigator().setNewsBadges(newsCounter)
+        lifecycleScope.launch {
+            StubData.budgeFlow.collect { count ->
+                newsCounter = count
+                navigator().setNewsBadges(newsCounter)
+            }
         }
-        disposableBag.add(disposable)
     }
 
     private fun startService() {
@@ -112,7 +115,7 @@ class NewsFragment : Fragment() {
                 newsItem.isRead = true
                 if (newsCounter > 0) {
                     newsCounter -= 1
-                    StubData.subject.onNext(newsCounter)
+                    StubData.emitToBadge(newsCounter)
                 }
             }
             val direction =

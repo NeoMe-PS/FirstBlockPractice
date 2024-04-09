@@ -65,6 +65,9 @@ val rxAndroidVersion = "3.0.2"
 val rxJavaVersion = "3.1.5"
 val rxBindingVersion = "4.0.0"
 val splashScreenVersion = "1.0.1"
+val lifecycleVersion = "2.7.0"
+val coroutinesAndroidVersion = "1.6.4"
+val coroutinesCoreVersion = "1.4.2"
 
 dependencies {
 
@@ -117,4 +120,11 @@ dependencies {
     //NavComponent
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+
+    //Coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesAndroidVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 }
