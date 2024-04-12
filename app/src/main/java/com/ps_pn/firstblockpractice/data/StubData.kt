@@ -1,6 +1,5 @@
 package com.ps_pn.firstblockpractice.data
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.ps_pn.firstblockpractice.data.network.ApiFactory
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapterEntity
@@ -10,12 +9,10 @@ import com.ps_pn.firstblockpractice.presentation.fragments.search.SEARCH_BY_ORG_
 import com.ps_pn.firstblockpractice.presentation.models.Event
 import com.ps_pn.firstblockpractice.presentation.models.Filter
 import com.ps_pn.firstblockpractice.presentation.models.Friend
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import java.util.concurrent.TimeUnit
-
-private const val TIMEOUT = 1000L
+import kotlinx.coroutines.flow.flow
 
 object StubData {
 
@@ -33,30 +30,23 @@ object StubData {
     private val _budgeFlow = MutableStateFlow(0)
     val budgeFlow: StateFlow<Int> = _budgeFlow
 
-    val categories = ApiFactory.apiService.getCategories()
-        .subscribeOn(Schedulers.io())
-        .delay(TIMEOUT, TimeUnit.MILLISECONDS)
-        .map { dataList -> dataList.map { Mapper.mapDtoCategoryToPresentation(it) } }
-        .onErrorReturn { throwable ->
-            Log.i("TestLOG", "$throwable")
-            if (categoriesData.isNotEmpty()) {
-                categoriesIsLoaded.postValue(true)
-                return@onErrorReturn categoriesData
-            }
-            categoriesData = JSONParser.getCategoriesFromJson()
-                .map { Mapper.mapJSONCategoryToPresentation(it) }
-            categoriesIsLoaded.postValue(true)
-            categoriesData
-        }
-
-    val friends = ApiFactory.apiService.getFriends()
-
     fun getFriendsStubData(): List<Friend> {
         val friends = mutableListOf<Friend>()
         friends.add(Friend(id = 1, name = "Дмитрий Валерьевич", img = ""))
         friends.add(Friend(id = 2, name = "Евгений Александров", img = ""))
         friends.add(Friend(id = 3, name = "Виктор Кузнецов", img = ""))
         return friends
+    }
+
+    fun loadFromStorage(): List<CategoryAdapterEntity> {
+        if (categoriesData.isNotEmpty()) {
+            categoriesIsLoaded.postValue(true)
+            return categoriesData
+        }
+        categoriesData = JSONParser.getCategoriesFromJson()
+            .map { Mapper.mapJSONCategoryToPresentation(it) }
+        categoriesIsLoaded.postValue(true)
+        return categoriesData
     }
 
     fun getSearchResultsStubData(query: String, queryTag: Int) {
@@ -123,4 +113,11 @@ object StubData {
         return result
     }
 
+    fun getCategories(): Flow<List<CategoryAdapterEntity>> = flow {
+        emit(ApiFactory.apiService.getCategories().map { Mapper.mapDtoCategoryToPresentation(it) })
+    }
+
+    fun getFriends(): Flow<List<Friend>> = flow {
+        emit(ApiFactory.apiService.getFriends().map { Mapper.mapDtoFriendToPresentation(it) })
+    }
 }
