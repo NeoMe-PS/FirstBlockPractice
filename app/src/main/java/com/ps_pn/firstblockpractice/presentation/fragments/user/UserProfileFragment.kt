@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.ps_pn.firstblockpractice.data.Mapper
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentUserProfileBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.friend.FriendsAdapter
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 
 class UserProfileFragment : Fragment() {
     private var _binding: FragmentUserProfileBinding? = null
@@ -51,15 +53,15 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun fillAdapter() {
-        val disposable = StubData.friends.subscribeOn(Schedulers.io())
-            .map { dtoResponse -> dtoResponse.map { Mapper.mapDtoFriendToPresentation(it) } }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ response ->
-                friendAdapter.submitList(response)
-            }, {
-                friendAdapter.submitList(StubData.getFriendsStubData())
-            })
-        disposableBag.add(disposable)
+        lifecycleScope.launch {
+            StubData.getFriends().flowOn(Dispatchers.IO)
+                .catch {
+                    friendAdapter.submitList(StubData.getFriendsStubData())
+                }
+                .collect {
+                    friendAdapter.submitList(it)
+                }
+        }
     }
 
     override fun onDestroyView() {

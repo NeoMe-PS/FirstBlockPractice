@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentHelpBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapter
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 
 class HelpFragment : Fragment() {
     private var _binding: FragmentHelpBinding? = null
@@ -48,16 +52,18 @@ class HelpFragment : Fragment() {
     }
 
     private fun observeData() {
-        val disposable = StubData.categories
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ categories ->
-                categoryAdapter.submitList(categories)
-                StubData.categoriesIsLoaded.postValue(true)
-                hideProgressBar()
-            }, {
-                hideProgressBar()
-            })
-        disposableBag.add(disposable)
+        lifecycleScope.launch {
+            StubData.getCategories()
+                .flowOn(Dispatchers.IO)
+                .catch {
+                    StubData.loadFromStorage()
+                }
+                .collect { categories ->
+                    categoryAdapter.submitList(categories)
+                    StubData.categoriesIsLoaded.postValue(true)
+                    hideProgressBar()
+                }
+        }
         observeDataLoading()
     }
 
