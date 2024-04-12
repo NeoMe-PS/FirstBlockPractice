@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.ps_pn.firstblockpractice.data.Mapper
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentUserProfileBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.friend.FriendsAdapter
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class UserProfileFragment : Fragment() {
     private var _binding: FragmentUserProfileBinding? = null
@@ -16,7 +20,7 @@ class UserProfileFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentUserProfileBinding is null")
 
     private val friendAdapter: FriendsAdapter = FriendsAdapter()
-
+    private val disposableBag = CompositeDisposable()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,15 +51,20 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun fillAdapter() {
-        friendAdapter.submitList(StubData.fillFriendsStubData())
-    }
-
-    companion object {
-        fun newInstance() = UserProfileFragment()
+        val disposable = StubData.friends.subscribeOn(Schedulers.io())
+            .map { dtoResponse -> dtoResponse.map { Mapper.mapDtoFriendToPresentation(it) } }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
+                friendAdapter.submitList(response)
+            }, {
+                friendAdapter.submitList(StubData.getFriendsStubData())
+            })
+        disposableBag.add(disposable)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        disposableBag.clear()
         _binding = null
     }
 }

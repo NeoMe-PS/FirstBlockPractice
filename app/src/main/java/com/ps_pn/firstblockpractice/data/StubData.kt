@@ -1,19 +1,25 @@
 package com.ps_pn.firstblockpractice.data
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.ps_pn.firstblockpractice.presentation.adapters.friend.Friend
+import com.ps_pn.firstblockpractice.data.network.ApiFactory
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapterEntity
 import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchResultEntity
 import com.ps_pn.firstblockpractice.presentation.fragments.search.SEARCH_BY_EVENT_TAG
 import com.ps_pn.firstblockpractice.presentation.fragments.search.SEARCH_BY_ORG_TAG
 import com.ps_pn.firstblockpractice.presentation.models.Event
 import com.ps_pn.firstblockpractice.presentation.models.Filter
+import com.ps_pn.firstblockpractice.presentation.models.Friend
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.util.concurrent.TimeUnit
+
+private const val TIMEOUT = 1000L
 
 object StubData {
 
-    var categoriesData = listOf<CategoryAdapterEntity>()
+    private var categoriesData = listOf<CategoryAdapterEntity>()
     var categoriesIsLoaded = MutableLiveData(false)
     var newsIsLoaded = MutableLiveData(false)
     var newsData = listOf<Event>()
@@ -26,25 +32,34 @@ object StubData {
 
     private val _budgeFlow = MutableStateFlow(0)
     val budgeFlow: StateFlow<Int> = _budgeFlow
-    fun fillFriendsStubData(): List<Friend> {
+
+    val categories = ApiFactory.apiService.getCategories()
+        .subscribeOn(Schedulers.io())
+        .delay(TIMEOUT, TimeUnit.MILLISECONDS)
+        .map { dataList -> dataList.map { Mapper.mapDtoCategoryToPresentation(it) } }
+        .onErrorReturn { throwable ->
+            Log.i("TestLOG", "$throwable")
+            if (categoriesData.isNotEmpty()) {
+                categoriesIsLoaded.postValue(true)
+                return@onErrorReturn categoriesData
+            }
+            categoriesData = JSONParser.getCategoriesFromJson()
+                .map { Mapper.mapJSONCategoryToPresentation(it) }
+            categoriesIsLoaded.postValue(true)
+            categoriesData
+        }
+
+    val friends = ApiFactory.apiService.getFriends()
+
+    fun getFriendsStubData(): List<Friend> {
         val friends = mutableListOf<Friend>()
-        friends.add(Friend(id = 1, name = "Дмитрий Валерьевич", imageUrl = ""))
-        friends.add(Friend(id = 2, name = "Евгений Александров", imageUrl = ""))
-        friends.add(Friend(id = 3, name = "Виктор Кузнецов", imageUrl = ""))
+        friends.add(Friend(id = 1, name = "Дмитрий Валерьевич", img = ""))
+        friends.add(Friend(id = 2, name = "Евгений Александров", img = ""))
+        friends.add(Friend(id = 3, name = "Виктор Кузнецов", img = ""))
         return friends
     }
 
-    fun fillCategoriesStubData(): List<CategoryAdapterEntity> {
-        if (categoriesIsLoaded.value == true) {
-            return categoriesData
-        }
-        categoriesData = JSONParser.getCategoriesFromJson()
-            .map { Mapper.mapJSONCategoryToPresentation(it) }
-        categoriesIsLoaded.postValue(true)
-        return categoriesData
-    }
-
-    fun fillSearchResultsStubData(query: String, queryTag: Int) {
+    fun getSearchResultsStubData(query: String, queryTag: Int) {
         when (queryTag) {
             SEARCH_BY_EVENT_TAG -> searchByEvent(query)
             SEARCH_BY_ORG_TAG -> searchByOrg(query)
@@ -76,7 +91,7 @@ object StubData {
         _searchedDataByOrg.value = value
     }
 
-    fun fillNewsStubData(): List<Event> {
+    fun getNewsEventsStubData(): List<Event> {
         if (newsIsLoaded.value == true) {
             return newsData
         }
@@ -87,7 +102,7 @@ object StubData {
         return newsData
     }
 
-    fun filterNewsStubData(
+    fun filterNewsEventsStubData(
         currentList: List<Event>,
         filterCategories: List<Filter>
     ): List<Event> {
