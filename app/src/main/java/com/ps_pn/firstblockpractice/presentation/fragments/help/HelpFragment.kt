@@ -4,21 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentHelpBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapter
-import java.util.concurrent.Executors
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-private const val TIMEOUT = 1000L
 class HelpFragment : Fragment() {
     private var _binding: FragmentHelpBinding? = null
     private val binding: FragmentHelpBinding
         get() = _binding ?: throw RuntimeException("FragmentHelpBinding is null")
 
     private val categoryAdapter: CategoryAdapter = CategoryAdapter()
-    private val executorService = Executors.newSingleThreadExecutor()
     private var isLoading = false
+    private val disposableBag = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,6 @@ class HelpFragment : Fragment() {
             isLoading = savedInstanceState.getBoolean(LOADING_STATE_KEY)
         }
         if (!isLoading) {
-            loadData()
             isLoading = true
         }
     }
@@ -43,19 +43,37 @@ class HelpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.categoryRv.adapter = categoryAdapter
+
+        observeData()
+    }
+
+    private fun observeData() {
+        val disposable = StubData.categories
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ categories ->
+                categoryAdapter.submitList(categories)
+                StubData.categoriesIsLoaded.postValue(true)
+                hideProgressBar()
+            }, {
+                hideProgressBar()
+            })
+        disposableBag.add(disposable)
         observeDataLoading()
     }
 
     private fun observeDataLoading() {
         StubData.categoriesIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
             if (isLoaded) {
-
                 isLoading = true
-                categoryAdapter.submitList(StubData.categoriesData)
             } else {
                 showProgressBar()
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        disposableBag.clear()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -64,20 +82,13 @@ class HelpFragment : Fragment() {
     }
 
     private fun showProgressBar() {
-        binding.categoryProgressBar.visibility = View.VISIBLE
-        binding.categoryRv.visibility = View.GONE
+        binding.categoryProgressBar.isVisible = true
+        binding.categoryRv.isVisible = false
     }
 
     private fun hideProgressBar() {
-        binding.categoryProgressBar.visibility = View.GONE
-        binding.categoryRv.visibility = View.VISIBLE
-    }
-
-    private fun loadData() {
-        executorService.submit {
-            Thread.sleep(TIMEOUT)
-            StubData.fillCategoriesStubData()
-        }
+        binding.categoryProgressBar.isVisible = false
+        binding.categoryRv.isVisible = true
     }
 
     companion object {
@@ -87,10 +98,5 @@ class HelpFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        executorService.shutdown()
     }
 }

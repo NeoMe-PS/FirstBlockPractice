@@ -146,7 +146,7 @@ class NewsFragment : Fragment() {
     }
 
     private fun updateNewsByFilter() {
-        val filteredList = StubData.filterNewsStubData(
+        val filteredList = StubData.filterNewsEventsStubData(
             fullDataList,
             PreferenceManager.filterList
         )

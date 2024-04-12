@@ -68,6 +68,8 @@ val splashScreenVersion = "1.0.1"
 val lifecycleVersion = "2.7.0"
 val coroutinesAndroidVersion = "1.6.4"
 val coroutinesCoreVersion = "1.4.2"
+val httpInterceptorVersion = "4.12.0"
+val glideVersion = "4.16.0"
 
 dependencies {
 
@@ -81,6 +83,10 @@ dependencies {
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:$httpInterceptorVersion")
+
 
     //FragmentKTX
     implementation("androidx.fragment:fragment-ktx:$fragmentKtxVersion")
@@ -127,4 +133,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+
+    //Glide
+    implementation("com.github.bumptech.glide:glide:$glideVersion")
 }

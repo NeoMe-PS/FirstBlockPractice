@@ -3,8 +3,11 @@ package com.ps_pn.firstblockpractice.presentation.adapters.friend
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FriendItemBinding
+import com.ps_pn.firstblockpractice.presentation.models.Friend
 
 class FriendsAdapter : ListAdapter<Friend, FriendViewHolder>(FriendDiffUtil()) {
     override fun onCreateViewHolder(
@@ -23,13 +26,11 @@ class FriendsAdapter : ListAdapter<Friend, FriendViewHolder>(FriendDiffUtil()) {
     override fun onBindViewHolder(holder: FriendViewHolder, position: Int) {
         val item = getItem(position)
         holder.binding.friendNameTv.text = item.name
-        val imageRes =
-            when (item.id) {
-                1 -> R.drawable.avatar_1
-                2 -> R.drawable.avatar_2
-                3 -> R.drawable.avatar_3
-                else -> R.drawable.avatar_1
-            }
-        holder.binding.friendAvatarImg.setBackgroundResource(imageRes)
+        Glide.with(holder.binding.friendAvatarImg)
+            .load(item.img)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .placeholder(R.drawable.user_icon)
+            .error(R.drawable.user_icon)
+            .into(holder.binding.friendAvatarImg)
     }
 }
