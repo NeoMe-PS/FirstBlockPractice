@@ -1,24 +1,19 @@
 package com.ps_pn.firstblockpractice.presentation.fragments.news
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.ps_pn.firstblockpractice.data.LoadNewsService
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentNewsBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.news.NewsAdapter
 import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
 import com.ps_pn.firstblockpractice.presentation.utills.navigator
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 private const val KEY_NEWS_COUNTER = "news_counter"
@@ -30,26 +25,10 @@ class NewsFragment : Fragment() {
 
     private val newsAdapter: NewsAdapter = NewsAdapter()
     private val fullDataList = StubData.newsData
-
-    private lateinit var mService: LoadNewsService
-    private var mBound: Boolean = false
-    private val connection = object : ServiceConnection {
-        override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            val binder = service as LoadNewsService.LocalBinder
-            mService = binder.getService()
-            mBound = true
-        }
-
-        override fun onServiceDisconnected(arg0: ComponentName) {
-            mBound = false
-        }
-    }
-    private val disposableBag = CompositeDisposable()
     private var newsCounter = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startService()
         if (savedInstanceState != null) {
             newsCounter = savedInstanceState.getInt(KEY_NEWS_COUNTER, 0)
         }
@@ -69,7 +48,7 @@ class NewsFragment : Fragment() {
         setAdapterOnClickListener()
         binding.newsRv.adapter = newsAdapter
         newsAdapter.submitList(fullDataList)
-        observeDataLoading()
+        observeData()
         observeBadgeCount()
         updateNewsByFilter()
         setFilterButtonOnClick()
@@ -84,17 +63,22 @@ class NewsFragment : Fragment() {
         }
     }
 
-    private fun startService() {
-        requireContext().startService(LoadNewsService.newIntent(this.requireContext()))
-        Intent(requireContext(), LoadNewsService::class.java).also { intent ->
-            requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE)
+    private fun observeData() {
+        lifecycleScope.launch {
+            StubData.events
+                .flowOn(Dispatchers.IO)
+                .collect { events ->
+                    newsAdapter.submitList(events)
+                    StubData.emitToBadge(events.size)
+                    hideProgressBar()
+                }
         }
+        observeDataLoading()
     }
 
     private fun observeDataLoading() {
-        StubData.newsIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
+        StubData.eventsIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
             if (isLoaded) {
-                newsAdapter.submitList(StubData.newsData)
                 hideProgressBar()
             } else {
                 showProgressBar()
@@ -112,6 +96,9 @@ class NewsFragment : Fragment() {
     private fun setAdapterOnClickListener() {
         newsAdapter.onNewsClickListener = { newsItem ->
             if (!newsItem.isRead) {
+                lifecycleScope.launch {
+                    StubData.markIsReadEvent(newsItem.id)
+                }
                 newsItem.isRead = true
                 if (newsCounter > 0) {
                     newsCounter -= 1
@@ -146,18 +133,10 @@ class NewsFragment : Fragment() {
     }
 
     private fun updateNewsByFilter() {
-        val filteredList = StubData.filterNewsEventsStubData(
+        val filteredList = StubData.filterEvents(
             fullDataList,
             PreferenceManager.filterList
         )
         newsAdapter.submitList(filteredList)
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        requireContext().unbindService(connection)
-        mBound = false
-        disposableBag.clear()
-    }
-
 }

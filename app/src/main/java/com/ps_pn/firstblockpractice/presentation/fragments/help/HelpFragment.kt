@@ -12,7 +12,6 @@ import com.ps_pn.firstblockpractice.databinding.FragmentHelpBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapter
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
@@ -47,20 +46,15 @@ class HelpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.categoryRv.adapter = categoryAdapter
-
         observeData()
     }
 
     private fun observeData() {
         lifecycleScope.launch {
-            StubData.getCategories()
+            StubData.categories
                 .flowOn(Dispatchers.IO)
-                .catch {
-                    StubData.loadFromStorage()
-                }
                 .collect { categories ->
                     categoryAdapter.submitList(categories)
-                    StubData.categoriesIsLoaded.postValue(true)
                     hideProgressBar()
                 }
         }

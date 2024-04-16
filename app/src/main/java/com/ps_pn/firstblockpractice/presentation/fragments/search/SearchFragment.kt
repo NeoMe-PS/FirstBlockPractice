@@ -140,7 +140,7 @@ class SearchFragment : Fragment() {
         if (query.isEmpty()) {
             StubData.clearSearchedData(tag)
         } else {
-            StubData.getSearchResultsStubData(query, tag)
+            StubData.getSearchResults(query, tag)
         }
     }
 
@@ -154,10 +154,10 @@ class SearchFragment : Fragment() {
             clearSearchField()
             if (binding.searchPager.currentItem == ORG_TAB_POSITION) {
                 orgQuery = EMPTY_STROKE
-                StubData.getSearchResultsStubData(orgQuery, SEARCH_BY_ORG_TAG)
+                StubData.getSearchResults(orgQuery, SEARCH_BY_ORG_TAG)
             } else {
                 eventQuery = EMPTY_STROKE
-                StubData.getSearchResultsStubData(eventQuery, SEARCH_BY_EVENT_TAG)
+                StubData.getSearchResults(eventQuery, SEARCH_BY_EVENT_TAG)
             }
         }
     }

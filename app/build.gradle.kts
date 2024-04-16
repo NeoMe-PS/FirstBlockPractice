@@ -70,6 +70,8 @@ val coroutinesAndroidVersion = "1.6.4"
 val coroutinesCoreVersion = "1.4.2"
 val httpInterceptorVersion = "4.12.0"
 val glideVersion = "4.16.0"
+val room_version = "2.6.1"
+
 
 dependencies {
 
@@ -136,4 +138,12 @@ dependencies {
 
     //Glide
     implementation("com.github.bumptech.glide:glide:$glideVersion")
+
+    //Room
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+
+
 }

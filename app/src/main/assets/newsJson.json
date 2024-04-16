@@ -4,11 +4,13 @@
     "categories": [
       {
         "id": 1,
-        "label": "Дети"
+        "label": "Дети",
+        "img": "icon_kids"
       },
       {
         "id": 2,
-        "label": "Взрослые"
+        "label": "Взрослые",
+        "img": "icon_adult"
       }
     ],
     "company": "Hartmann, Marquardt and Homenick",
@@ -32,15 +34,18 @@
     "categories": [
       {
         "id": 1,
-        "label": "Дети"
+        "label": "Дети",
+        "img": "icon_adult"
       },
       {
         "id": 2,
-        "label": "Взрослые"
+        "label": "Взрослые",
+        "img": "icon_adult"
       },
       {
         "id": 5,
-        "label": "Мероприятия"
+        "label": "Мероприятия",
+        "img": "icon_adult"
       }
     ],
     "company": "Благотворительный Фонд «Счастливый Мир»",

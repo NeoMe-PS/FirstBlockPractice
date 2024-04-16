@@ -1,7 +1,11 @@
 package com.ps_pn.firstblockpractice.data
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.ps_pn.firstblockpractice.data.db.AppDataBase
 import com.ps_pn.firstblockpractice.data.network.ApiFactory
+import com.ps_pn.firstblockpractice.data.network.NoConnectivityException
+import com.ps_pn.firstblockpractice.presentation.App
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapterEntity
 import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchResultEntity
 import com.ps_pn.firstblockpractice.presentation.fragments.search.SEARCH_BY_EVENT_TAG
@@ -16,10 +20,15 @@ import kotlinx.coroutines.flow.flow
 
 object StubData {
 
-    private var categoriesData = listOf<CategoryAdapterEntity>()
+    private val dao = AppDataBase.getInstance(App.instance).appDao()
+    private val apiService = ApiFactory.apiService
+
     var categoriesIsLoaded = MutableLiveData(false)
-    var newsIsLoaded = MutableLiveData(false)
+    var eventsIsLoaded = MutableLiveData(false)
     var newsData = listOf<Event>()
+
+    val events = loadEvents()
+    val categories = loadCategories()
 
     private val _searchedDataByEvent = MutableStateFlow<List<SearchResultEntity>?>(null)
     val searchedDataByEvent: StateFlow<List<SearchResultEntity>?> = _searchedDataByEvent
@@ -38,18 +47,7 @@ object StubData {
         return friends
     }
 
-    fun loadFromStorage(): List<CategoryAdapterEntity> {
-        if (categoriesData.isNotEmpty()) {
-            categoriesIsLoaded.postValue(true)
-            return categoriesData
-        }
-        categoriesData = JSONParser.getCategoriesFromJson()
-            .map { Mapper.mapJSONCategoryToPresentation(it) }
-        categoriesIsLoaded.postValue(true)
-        return categoriesData
-    }
-
-    fun getSearchResultsStubData(query: String, queryTag: Int) {
+    fun getSearchResults(query: String, queryTag: Int) {
         when (queryTag) {
             SEARCH_BY_EVENT_TAG -> searchByEvent(query)
             SEARCH_BY_ORG_TAG -> searchByOrg(query)
@@ -81,18 +79,7 @@ object StubData {
         _searchedDataByOrg.value = value
     }
 
-    fun getNewsEventsStubData(): List<Event> {
-        if (newsIsLoaded.value == true) {
-            return newsData
-        }
-        newsData = JSONParser.getNewsFromJson().toMutableList()
-            .map { Mapper.mapJSONEventToPresentation(it) }
-        newsIsLoaded.postValue(true)
-        _budgeFlow.value = newsData.size
-        return newsData
-    }
-
-    fun filterNewsEventsStubData(
+    fun filterEvents(
         currentList: List<Event>,
         filterCategories: List<Filter>
     ): List<Event> {
@@ -113,11 +100,80 @@ object StubData {
         return result
     }
 
-    fun getCategories(): Flow<List<CategoryAdapterEntity>> = flow {
-        emit(ApiFactory.apiService.getCategories().map { Mapper.mapDtoCategoryToPresentation(it) })
+    fun loadCategories() = flow {
+        if (categoriesIsLoaded.value == true) {
+            emit(getCategoriesFromDb())
+        }
+        try {
+            val response = apiService.getCategories()
+            if (response.isSuccessful) {
+                if (!response.body().isNullOrEmpty()) {
+                    val categoriesDto = response.body().orEmpty()
+                    dao.insertCategories(categoriesDto.map { Mapper.mapDtoToDbModel(it) })
+                    eventsIsLoaded.postValue(true)
+                    emit(getCategoriesFromDb())
+                }
+            } else {
+                Log.i("TestLOG", "responseError " + response.errorBody().toString())
+            }
+        } catch (networkException: NoConnectivityException) {
+            Log.i("TestLOG", networkException.toString())
+        }
+        emit(loadCategoryFromStorage())
+    }
+
+    fun loadEvents() = flow {
+        if (eventsIsLoaded.value == true) {
+            emit(getEventsFromDb())
+        }
+        try {
+            val response = apiService.getEvents()
+            if (response.isSuccessful) {
+                if (!response.body().isNullOrEmpty()) {
+                    val eventDto = response.body().orEmpty()
+                    dao.insertEvents(eventDto.map { Mapper.mapDtoToDbModel(it) })
+                    eventsIsLoaded.postValue(true)
+                    emit(getEventsFromDb())
+                }
+            } else {
+                Log.i("TestLOG", "responseError " + response.errorBody().toString())
+            }
+        } catch (networkException: NoConnectivityException) {
+            Log.i("TestLOG", networkException.toString())
+        }
+        eventsIsLoaded.postValue(true)
+        emit(loadEventsFromStorage())
+    }
+
+    suspend fun markIsReadEvent(id: Int) {
+        dao.markAsReadEvent(id)
+    }
+
+    private suspend fun loadEventsFromStorage(): List<Event> {
+        val events = JSONParser.getEventsFromJson().map { Mapper.mapJSONEventToDb(it) }
+        dao.insertEvents(events)
+        eventsIsLoaded.postValue(true)
+        return dao.getEvents().map { Mapper.mapDbToPresentation(it) }
+    }
+
+
+    private fun getCategoriesFromDb(): List<CategoryAdapterEntity> {
+        return dao.getCategories().map { Mapper.mapDbToPresentation(it) }
+    }
+
+    private fun getEventsFromDb(): List<Event> {
+        return dao.getEvents().map { Mapper.mapDbToPresentation(it) }
+    }
+
+    private suspend fun loadCategoryFromStorage(): List<CategoryAdapterEntity> {
+        val categories = JSONParser.getCategoriesFromJson().map { Mapper.mapJSONCategoryToDb(it) }
+        dao.insertCategories(categories)
+        categoriesIsLoaded.postValue(true)
+        return dao.getCategories().map { Mapper.mapDbToPresentation(it) }
     }
 
     fun getFriends(): Flow<List<Friend>> = flow {
         emit(ApiFactory.apiService.getFriends().map { Mapper.mapDtoFriendToPresentation(it) })
     }
 }
+
