@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spec_spacing_small"
+    app:cardCornerRadius="@dimen/_2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/news_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/spec_spacing_xxs"
+            android:contentDescription="@string/desc_news_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_fade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/spec_spacing_xxs"
+            android:contentDescription="@string/desc_news_img"
+            android:src="@drawable/fade"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/news_label_tv"
+            android:layout_width="@dimen/news_short_desc_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/blue_grey"
+            android:textSize="@dimen/font_large"
+            app:fontFamily="@font/officina_sans_extra_bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_fade" />
+
+        <ImageView
+            android:id="@+id/decor_img"
+            android:layout_width="@dimen/news_decor_width"
+            android:layout_height="@dimen/news_decor_height"
+            android:layout_marginTop="@dimen/spec_spacing_xs"
+            android:src="@drawable/decor"
+            android:contentDescription="@string/desc_news_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/news_label_tv" />
+
+        <TextView
+            android:id="@+id/news_short_desc_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_xxl"
+            android:layout_marginTop="@dimen/spacing_xxs"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/font_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/decor_img" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:background="@color/turtle_green"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/news_short_desc_tv">
+
+            <TextView
+                android:id="@+id/news_date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/spec_spacing_ms"
+                android:gravity="center"
+                android:paddingTop="@dimen/_7dp"
+                android:paddingBottom="@dimen/_9dp"
+                android:text="@string/label_help"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_xs"
+                app:drawableLeftCompat="@drawable/icon_calendar_2" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
