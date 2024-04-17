@@ -1,7 +1,6 @@
 package com.ps_pn.firstblockpractice.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity(), Navigator {
         setContentView(binding.root)
         setNavigation()
         hideBottomAtDestination()
-        Log.i("TestLOG", "img  - ${R.drawable.img_2}")
     }
 
     private fun setNavigation() {
