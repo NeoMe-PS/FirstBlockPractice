@@ -3,6 +3,7 @@ package com.ps_pn.firstblockpractice.data.network.dto
 import com.google.gson.annotations.SerializedName
 import com.ps_pn.firstblockpractice.presentation.models.Category
 
+
 data class EventDto(
     @SerializedName("address")
     val address: String,

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentNewsBinding
 import com.ps_pn.firstblockpractice.presentation.adapters.news.NewsAdapter
+import com.ps_pn.firstblockpractice.presentation.models.Event
 import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
 import com.ps_pn.firstblockpractice.presentation.utills.navigator
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +51,6 @@ class NewsFragment : Fragment() {
         newsAdapter.submitList(fullDataList)
         observeData()
         observeBadgeCount()
-        updateNewsByFilter()
         setFilterButtonOnClick()
     }
 
@@ -68,7 +68,7 @@ class NewsFragment : Fragment() {
             StubData.events
                 .flowOn(Dispatchers.IO)
                 .collect { events ->
-                    newsAdapter.submitList(events)
+                    updateNewsByFilter(events)
                     StubData.emitToBadge(events.size)
                     hideProgressBar()
                 }
@@ -118,7 +118,6 @@ class NewsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateNewsByFilter()
         navigator().setNewsBadges(newsCounter)
     }
 
@@ -132,11 +131,7 @@ class NewsFragment : Fragment() {
         binding.newsRv.visibility = View.VISIBLE
     }
 
-    private fun updateNewsByFilter() {
-        val filteredList = StubData.filterEvents(
-            fullDataList,
-            PreferenceManager.filterList
-        )
-        newsAdapter.submitList(filteredList)
+    private fun updateNewsByFilter(currentList: List<Event>) {
+        newsAdapter.submitList(StubData.filterEvents(currentList, PreferenceManager.filterList))
     }
 }

@@ -100,9 +100,10 @@ object StubData {
         return result
     }
 
-    fun loadCategories() = flow {
+    private fun loadCategories() = flow {
         if (categoriesIsLoaded.value == true) {
             emit(getCategoriesFromDb())
+            return@flow
         }
         try {
             val response = apiService.getCategories()
@@ -110,8 +111,9 @@ object StubData {
                 if (!response.body().isNullOrEmpty()) {
                     val categoriesDto = response.body().orEmpty()
                     dao.insertCategories(categoriesDto.map { Mapper.mapDtoToDbModel(it) })
-                    eventsIsLoaded.postValue(true)
+                    categoriesIsLoaded.postValue(true)
                     emit(getCategoriesFromDb())
+                    return@flow
                 }
             } else {
                 Log.i("TestLOG", "responseError " + response.errorBody().toString())
@@ -122,9 +124,10 @@ object StubData {
         emit(loadCategoryFromStorage())
     }
 
-    fun loadEvents() = flow {
+    private fun loadEvents() = flow {
         if (eventsIsLoaded.value == true) {
             emit(getEventsFromDb())
+            return@flow
         }
         try {
             val response = apiService.getEvents()
@@ -132,8 +135,9 @@ object StubData {
                 if (!response.body().isNullOrEmpty()) {
                     val eventDto = response.body().orEmpty()
                     dao.insertEvents(eventDto.map { Mapper.mapDtoToDbModel(it) })
-                    eventsIsLoaded.postValue(true)
                     emit(getEventsFromDb())
+                    eventsIsLoaded.postValue(true)
+                    return@flow
                 }
             } else {
                 Log.i("TestLOG", "responseError " + response.errorBody().toString())
@@ -141,7 +145,6 @@ object StubData {
         } catch (networkException: NoConnectivityException) {
             Log.i("TestLOG", networkException.toString())
         }
-        eventsIsLoaded.postValue(true)
         emit(loadEventsFromStorage())
     }
 

@@ -2,7 +2,7 @@
   {
     "id": 1,
     "label": "Дети",
-    "img": "icon_adult"
+    "img": "icon_child"
   },
   {
     "id": 2,
@@ -22,6 +22,6 @@
   {
     "id": 5,
     "label": "Мероприятия",
-    "img": "icon_adult"
+    "img": "icon_event"
   }
 ]
