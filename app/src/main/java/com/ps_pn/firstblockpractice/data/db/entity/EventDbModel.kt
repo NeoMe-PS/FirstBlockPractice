@@ -2,13 +2,13 @@ package com.ps_pn.firstblockpractice.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ps_pn.firstblockpractice.presentation.models.Category
+import com.ps_pn.firstblockpractice.data.jsonstorage.CategoryJSON
 
 @Entity(tableName = "events")
 data class EventDbModel(
     @PrimaryKey
     val id: Int,
-    val categories: List<Category>,
+    val categories: List<CategoryJSON>,
     val label: String,
     val shortDesc: String,
     val fullDesc: String,

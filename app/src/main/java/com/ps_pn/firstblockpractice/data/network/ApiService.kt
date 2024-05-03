@@ -14,6 +14,6 @@ interface ApiService {
     suspend fun getEvents(): Response<List<EventDto>>
 
     @GET("friends")
-    suspend fun getFriends(): List<FriendDto>
+    suspend fun getFriends(): Response<List<FriendDto>>
 
 }

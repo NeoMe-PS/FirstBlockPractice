@@ -3,7 +3,7 @@ package com.ps_pn.firstblockpractice.data.network
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.ps_pn.firstblockpractice.presentation.App
+import com.ps_pn.firstblockpractice.core.App
 import okhttp3.Interceptor
 import okhttp3.Interceptor.*
 import okhttp3.Request

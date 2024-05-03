@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_grey_two"
     android:orientation="vertical"
-    tools:context=".presentation.fragments.news.FilterFragment">
+    tools:context=".presentation.news.ui.FilterFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
