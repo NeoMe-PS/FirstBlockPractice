@@ -78,7 +78,7 @@
             app:destination="@id/newsFragment" />
         <argument
             android:name="event"
-            app:argType="com.ps_pn.firstblockpractice.presentation.models.Event" />
+            app:argType="com.ps_pn.firstblockpractice.presentation.models.EventUI" />
     </fragment>
     <fragment
         android:id="@+id/orgSearchFragment"

@@ -1,13 +1,13 @@
 package com.ps_pn.firstblockpractice.data.network.dto
 
 import com.google.gson.annotations.SerializedName
-import com.ps_pn.firstblockpractice.presentation.models.Category
+import com.ps_pn.firstblockpractice.data.jsonstorage.CategoryJSON
 
 
 data class EventDto(
     @SerializedName("address")
     val address: String,
-    @SerializedName("categories") val categories: List<Category>,
+    @SerializedName("categories") val categories: List<CategoryJSON>,
     @SerializedName("company")
     val company: String,
     @SerializedName("date") val date: String,

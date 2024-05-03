@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FragmentAuthorizationBinding
+import com.ps_pn.firstblockpractice.presentation.utills.BindingException
 import com.ps_pn.firstblockpractice.presentation.utills.WithoutBottomBar
 import com.ps_pn.firstblockpractice.presentation.utills.navigator
 import io.reactivex.rxjava3.core.Observable
@@ -19,12 +20,8 @@ class AuthorizationFragment : Fragment(), WithoutBottomBar {
 
     private var _binding: FragmentAuthorizationBinding? = null
     private val binding
-        get() = _binding ?: throw RuntimeException("AuthorizationFragment is null")
+        get() = _binding ?: throw BindingException("AuthorizationFragment is null")
     private val disposableBag = CompositeDisposable()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,19 +39,23 @@ class AuthorizationFragment : Fragment(), WithoutBottomBar {
     private fun setListeners() {
         setBackButton()
         setLoginButton()
+        checkAuthorization()
+    }
+
+    private fun checkAuthorization() {
+        val emailObservable = binding.emailEdit.textChanges()
+        val passObservable = binding.passEdit.textChanges()
+        val disposable = Observable.combineLatest(emailObservable, passObservable)
+        { emailText, passText ->
+            emailText.length >= MIN_LENGTH_VALUE && passText.length >= MIN_LENGTH_VALUE
+        }
+            .subscribe {
+                binding.loginBtn.isEnabled = it
+            }
+        disposableBag.add(disposable)
     }
 
     private fun setLoginButton() {
-        val emailObservable = binding.emailEdit.textChanges()
-        val passObservable = binding.passEdit.textChanges()
-        val disposable = Observable.combineLatest(
-            emailObservable, passObservable
-        ) { emailText, passText ->
-            emailText.length >= MIN_LENGTH_VALUE && passText.length >= MIN_LENGTH_VALUE
-        }.subscribe {
-            binding.loginBtn.isEnabled = it
-        }
-        disposableBag.add(disposable)
         binding.loginBtn.setOnClickListener {
             val navOptions: NavOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.authorizationFragment, true)

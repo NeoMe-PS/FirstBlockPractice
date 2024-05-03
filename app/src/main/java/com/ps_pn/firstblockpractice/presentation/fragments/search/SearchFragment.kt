@@ -9,43 +9,55 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ps_pn.firstblockpractice.R
-import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentSearchBinding
+import com.ps_pn.firstblockpractice.di.AppComponent
+import com.ps_pn.firstblockpractice.presentation.App
+import com.ps_pn.firstblockpractice.presentation.ViewModelFactory
 import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchViewPagerAdapter
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import com.ps_pn.firstblockpractice.presentation.utills.BindingException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 const val SEARCH_BY_EVENT_TAG = 1
 const val SEARCH_BY_ORG_TAG = 2
 private const val EVENT_TAB_POSITION = 0
 private const val ORG_TAB_POSITION = 1
-private const val QUERY_KEY_EVENT = "event_key"
-private const val QUERY_KEY_ORG = "org_key"
-private const val SEARCH_BAR_FOCUS_KEY = "search_bar_focus"
 private const val EMPTY_STROKE = ""
 private const val SEARCH_TIMEOUT = 500L
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding: FragmentSearchBinding
-        get() = _binding ?: throw RuntimeException("FragmentSearchBinding is null")
+        get() = _binding ?: throw BindingException("FragmentSearchBinding is null")
     private val adapter: SearchViewPagerAdapter by lazy { SearchViewPagerAdapter(this) }
-    private val disposableBag = CompositeDisposable()
-    private var eventQuery: String = EMPTY_STROKE
-    private var orgQuery: String = EMPTY_STROKE
-    private var searchIsActive: Boolean = false
+    private val eventSearchFragment = EventsSearchFragment()
+    private val orgSearchFragment = OrgSearchFragment()
+    lateinit var viewModel: SearchViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val component: AppComponent by lazy {
+        (requireActivity().application as App).component
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,36 +65,62 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        if (savedInstanceState != null) {
-            setSavedState(savedInstanceState)
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel = ViewModelProvider(this, viewModelFactory)[SearchViewModel::class.java]
         setSearchViewParam()
         setPager()
         setSearchFlow()
         setSearchIconListener()
+        observeViewModel()
     }
 
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.uiState.collect { state ->
+                    when (state) {
+                        is SearchUIState.Started -> {
+                            hideSearchBar()
+                        }
 
-    private fun setSavedState(savedInstanceState: Bundle) {
-        eventQuery = savedInstanceState.getString(QUERY_KEY_EVENT) ?: EMPTY_STROKE
-        orgQuery = savedInstanceState.getString(QUERY_KEY_ORG) ?: EMPTY_STROKE
-        searchIsActive = savedInstanceState.getBoolean(SEARCH_BAR_FOCUS_KEY)
-        if (searchIsActive) {
-            showSearchBar()
+                        is SearchUIState.ActivatedSearch -> {
+                            showSearchBar()
+                        }
+
+                        is SearchUIState.EventSearching -> {
+                            showSearchBar()
+                            setSearchQuery(state.searchValue)
+                        }
+
+                        is SearchUIState.OrgSearching -> {
+                            showSearchBar()
+                            setSearchQuery(state.searchValue)
+                        }
+                    }
+                }
+            }
         }
+
     }
 
     private fun showSearchBar() {
         with(binding) {
-            searchToolbar.visibility = View.GONE
-            searchBar.visibility = View.VISIBLE
+            searchToolbar.isVisible = false
+            searchBar.isVisible = true
             searchBar.isActivated = true
+        }
+    }
+
+    private fun hideSearchBar() {
+        with(binding) {
+            searchToolbar.isVisible = true
+            searchBar.isVisible = false
+            searchBar.isActivated = false
         }
     }
 
@@ -96,69 +134,57 @@ class SearchFragment : Fragment() {
     }
 
     private fun setPager() {
-        adapter.addFragment(EventsSearchFragment(), getString(R.string.label_events_pager))
-        adapter.addFragment(OrgSearchFragment(), getString(R.string.label_org_pager))
+        adapter.addFragment(eventSearchFragment, getString(R.string.label_events_pager))
+        adapter.addFragment(orgSearchFragment, getString(R.string.label_org_pager))
         binding.searchPager.adapter = adapter
         TabLayoutMediator(binding.searchTabLayout, binding.searchPager) { tab, position ->
             tab.text = adapter.getTabTitle(position)
         }.attach()
-
         binding.searchTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                clearSearchField()
-
                 when (tab?.position) {
-                    EVENT_TAB_POSITION -> binding.searchBar.setQuery(eventQuery, false)
-                    ORG_TAB_POSITION -> binding.searchBar.setQuery(orgQuery, false)
+                    EVENT_TAB_POSITION -> viewModel.switchTab(SEARCH_BY_EVENT_TAG)
+                    ORG_TAB_POSITION -> viewModel.switchTab(SEARCH_BY_ORG_TAG)
                 }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
-
             override fun onTabReselected(tab: TabLayout.Tab?) = Unit
-
         })
+    }
+
+    private fun setSearchQuery(query: String?) {
+        if (query.isNullOrEmpty()) {
+            binding.searchBar.setQuery(EMPTY_STROKE, false)
+            return
+        }
+        binding.searchBar.setQuery(query, false)
     }
 
     private fun setSearchFlow() {
         binding.searchBar.getQueryTextChangeStateFlow()
             .debounce(SEARCH_TIMEOUT)
+            .filter { it.isNotEmpty() }
             .map { query -> query.trim() }
             .onEach { query ->
                 if (binding.searchPager.currentItem == ORG_TAB_POSITION) {
-                    orgQuery = query
-                    submitRequest(query, SEARCH_BY_ORG_TAG)
+                    viewModel.submitQuery(query, SEARCH_BY_ORG_TAG)
                 } else {
-                    eventQuery = query
-                    submitRequest(query, SEARCH_BY_EVENT_TAG)
+                    viewModel.submitQuery(query, SEARCH_BY_EVENT_TAG)
                 }
             }
             .launchIn(CoroutineScope(Dispatchers.Default))
     }
 
-    private fun submitRequest(query: String, tag: Int) {
-        if (query.isEmpty()) {
-            StubData.clearSearchedData(tag)
-        } else {
-            StubData.getSearchResults(query, tag)
-        }
-    }
-
     private fun setSearchIconListener() {
         binding.imageButtonSearch.setOnClickListener {
             showSearchBar()
+            viewModel.setStartedState()
         }
         val clearButton =
             binding.searchBar.findViewById<AppCompatImageView>(androidx.appcompat.R.id.search_close_btn)
         clearButton.setOnClickListener {
             clearSearchField()
-            if (binding.searchPager.currentItem == ORG_TAB_POSITION) {
-                orgQuery = EMPTY_STROKE
-                StubData.getSearchResults(orgQuery, SEARCH_BY_ORG_TAG)
-            } else {
-                eventQuery = EMPTY_STROKE
-                StubData.getSearchResults(eventQuery, SEARCH_BY_EVENT_TAG)
-            }
         }
     }
 
@@ -167,31 +193,21 @@ class SearchFragment : Fragment() {
             searchBar.setQuery(EMPTY_STROKE, false)
             searchBar.clearFocus()
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        searchIsActive = binding.searchBar.isActivated
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(QUERY_KEY_EVENT, eventQuery)
-        outState.putString(QUERY_KEY_ORG, orgQuery)
-        outState.putBoolean(SEARCH_BAR_FOCUS_KEY, searchIsActive)
+        if (binding.searchPager.currentItem == ORG_TAB_POSITION) {
+            viewModel.clearQuery(SEARCH_BY_ORG_TAG)
+        } else {
+            viewModel.clearQuery(SEARCH_BY_EVENT_TAG)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        disposableBag.clear()
     }
 }
 
 fun SearchView.getQueryTextChangeStateFlow(): StateFlow<String> {
-
-    val query = MutableStateFlow("")
-
+    val query = MutableStateFlow(EMPTY_STROKE)
     setOnQueryTextListener(object : OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
             return true

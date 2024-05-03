@@ -1,4 +1,4 @@
-package com.ps_pn.firstblockpractice.presentation.models
+package com.ps_pn.firstblockpractice.domain.entity
 
 data class Friend(
     val id: Int,

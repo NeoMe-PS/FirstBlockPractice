@@ -7,7 +7,7 @@ class SearchResultDiffUtil : DiffUtil.ItemCallback<SearchResultEntity>() {
         oldItem: SearchResultEntity,
         newItem: SearchResultEntity,
     ): Boolean {
-        return oldItem.title == newItem.title
+        return oldItem.label == newItem.label
     }
 
     override fun areContentsTheSame(

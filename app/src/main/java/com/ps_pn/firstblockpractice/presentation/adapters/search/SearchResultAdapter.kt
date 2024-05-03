@@ -19,6 +19,6 @@ class SearchResultAdapter :
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
         val item = getItem(position)
-        holder.binding.titleTv.text = item.title
+        holder.binding.titleTv.text = item.label
     }
 }

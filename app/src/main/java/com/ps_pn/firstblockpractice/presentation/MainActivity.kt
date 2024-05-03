@@ -12,6 +12,8 @@ import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.navigation.NavigationBarView
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.ActivityMainBinding
+import com.ps_pn.firstblockpractice.di.AppComponent
+import com.ps_pn.firstblockpractice.presentation.utills.BindingException
 import com.ps_pn.firstblockpractice.presentation.utills.Navigator
 
 const val FILTER_PREFERENCES = "FILTER_PREFERENCES"
@@ -19,13 +21,18 @@ const val FILTER_PREFERENCES = "FILTER_PREFERENCES"
 class MainActivity : AppCompatActivity(), Navigator {
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding
-        get() = _binding ?: throw RuntimeException("ActivityMainBinding is null")
+        get() = _binding ?: throw BindingException("ActivityMainBinding is null")
     private val navController: NavController by lazy {
         Navigation.findNavController(this, R.id.nav_host_fragment)
     }
     private var newsBadges: BadgeDrawable? = null
 
+    private val component: AppComponent by lazy {
+        (application as App).component
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         supportActionBar?.hide()

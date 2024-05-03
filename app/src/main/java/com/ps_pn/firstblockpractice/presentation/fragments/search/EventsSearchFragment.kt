@@ -1,33 +1,34 @@
 package com.ps_pn.firstblockpractice.presentation.fragments.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.ps_pn.firstblockpractice.data.StubData
+import androidx.lifecycle.ViewModelProvider
 import com.ps_pn.firstblockpractice.databinding.FragmentEventsSearchBinding
+import com.ps_pn.firstblockpractice.di.AppComponent
+import com.ps_pn.firstblockpractice.presentation.App
+import com.ps_pn.firstblockpractice.presentation.ViewModelFactory
 import com.ps_pn.firstblockpractice.presentation.adapters.search.SearchResultAdapter
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import com.ps_pn.firstblockpractice.presentation.mapper.UiMapper
+import com.ps_pn.firstblockpractice.presentation.utills.BindingException
+import javax.inject.Inject
 
 class EventsSearchFragment : Fragment() {
     private var _binding: FragmentEventsSearchBinding? = null
     private val binding: FragmentEventsSearchBinding
-        get() = _binding ?: throw RuntimeException("FragmentEventsSearchBinding is null")
+        get() = _binding ?: throw BindingException("FragmentEventsSearchBinding is null")
     private val searchAdapter: SearchResultAdapter = SearchResultAdapter()
+    lateinit var viewModel: SearchViewModel
 
-    private val errorHandler = CoroutineExceptionHandler { context, throwable ->
-        Log.e("TestLOG", "$throwable in ${context[CoroutineName]}")
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val component: AppComponent by lazy {
+        (requireActivity().application as App).component
     }
-    private val coroutineName = CoroutineName("EventsSearchFragment Name")
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + errorHandler + coroutineName)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,23 +38,28 @@ class EventsSearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(
+            requireParentFragment(),
+            viewModelFactory
+        )[SearchViewModel::class.java]
         setAdapter()
-        observeData()
+        observeViewModel()
+
     }
 
-    private fun observeData() {
-        coroutineScope.launch {
-            StubData.searchedDataByEvent.collect { resultList ->
-                if (resultList == null) {
-                    binding.resultsLayout.isVisible = false
-                    binding.emptyResultLayout.isVisible = true
-                    return@collect
-                }
-                searchAdapter.submitList(resultList)
-                binding.resultsLayout.isVisible = true
-                binding.emptyResultLayout.isVisible = false
+    private fun observeViewModel() {
+        viewModel.eventData.observe(viewLifecycleOwner) { data ->
+            if (data.isNullOrEmpty()) {
+                binding.resultsLayout.isVisible = false
+                binding.emptyResultLayout.isVisible = true
+                return@observe
             }
+            val mappedData = data.map { UiMapper.mapDomainToUiSearch(it) }
+            searchAdapter.submitList(mappedData)
+            binding.resultsLayout.isVisible = true
+            binding.emptyResultLayout.isVisible = false
         }
     }
 
@@ -64,6 +70,5 @@ class EventsSearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        coroutineScope.cancel()
     }
 }

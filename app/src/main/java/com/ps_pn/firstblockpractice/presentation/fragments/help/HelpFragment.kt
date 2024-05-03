@@ -4,35 +4,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.ps_pn.firstblockpractice.data.StubData
+import androidx.lifecycle.repeatOnLifecycle
 import com.ps_pn.firstblockpractice.databinding.FragmentHelpBinding
+import com.ps_pn.firstblockpractice.di.AppComponent
+import com.ps_pn.firstblockpractice.presentation.App
+import com.ps_pn.firstblockpractice.presentation.ViewModelFactory
 import com.ps_pn.firstblockpractice.presentation.adapters.help.CategoryAdapter
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import com.ps_pn.firstblockpractice.presentation.utills.BindingException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class HelpFragment : Fragment() {
     private var _binding: FragmentHelpBinding? = null
     private val binding: FragmentHelpBinding
-        get() = _binding ?: throw RuntimeException("FragmentHelpBinding is null")
+        get() = _binding ?: throw BindingException("FragmentHelpBinding is null")
 
     private val categoryAdapter: CategoryAdapter = CategoryAdapter()
-    private var isLoading = false
-    private val disposableBag = CompositeDisposable()
+    lateinit var viewModel: HelpViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (savedInstanceState != null) {
-            isLoading = savedInstanceState.getBoolean(LOADING_STATE_KEY)
-        }
-        if (!isLoading) {
-            isLoading = true
-        }
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val component: AppComponent by lazy {
+        (requireActivity().application as App).component
     }
+    private val mainDispatcher = Dispatchers.Main
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,41 +47,41 @@ class HelpFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, viewModelFactory)[HelpViewModel::class.java]
         binding.categoryRv.adapter = categoryAdapter
-        observeData()
+        observeViewModel()
     }
 
-    private fun observeData() {
+    private fun observeViewModel() {
         lifecycleScope.launch {
-            StubData.categories
-                .flowOn(Dispatchers.IO)
-                .collect { categories ->
-                    categoryAdapter.submitList(categories)
-                    hideProgressBar()
-                }
-        }
-        observeDataLoading()
-    }
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.uiState.collect { state ->
+                    when (state) {
+                        is HelpUIState.Loading -> {
+                            showProgressBar()
+                        }
 
-    private fun observeDataLoading() {
-        StubData.categoriesIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
-            if (isLoaded) {
-                isLoading = true
-            } else {
-                showProgressBar()
+                        is HelpUIState.Response -> {
+                            categoryAdapter.submitList(state.categories)
+                            hideProgressBar()
+                        }
+
+                        is HelpUIState.Error -> {
+                            withContext(mainDispatcher) {
+                                showErrorMsg()
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        disposableBag.clear()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean(LOADING_STATE_KEY, isLoading)
+    private fun showErrorMsg() {
+        Toast.makeText(this@HelpFragment.requireContext(), "Some error", Toast.LENGTH_SHORT)
+            .show()
     }
 
     private fun showProgressBar() {
@@ -89,10 +92,6 @@ class HelpFragment : Fragment() {
     private fun hideProgressBar() {
         binding.categoryProgressBar.isVisible = false
         binding.categoryRv.isVisible = true
-    }
-
-    companion object {
-        private const val LOADING_STATE_KEY = "LOADING_STATE_KEY"
     }
 
     override fun onDestroyView() {

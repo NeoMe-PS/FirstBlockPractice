@@ -10,17 +10,14 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FragmentEditProfileBinding
+import com.ps_pn.firstblockpractice.presentation.utills.BindingException
 import com.ps_pn.firstblockpractice.presentation.utills.WithoutBottomBar
 
 class EditProfileFragment : Fragment(), WithoutBottomBar {
 
     private var _binding: FragmentEditProfileBinding? = null
     private val binding: FragmentEditProfileBinding
-        get() = _binding ?: throw RuntimeException("FragmentEditProfileBinding is null")
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+        get() = _binding ?: throw BindingException("FragmentEditProfileBinding is null")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,10 +66,6 @@ class EditProfileFragment : Fragment(), WithoutBottomBar {
         }
     }
 
-    private fun openChoosePhotoDialog() {
-        EditImageDialog().show(requireActivity().supportFragmentManager, null)
-    }
-
     companion object {
         const val EDIT_REQUEST_KEY_DELETE = "deleteImg"
         const val EDIT_BUNDLE_KEY_DELETE = "deleteImg"
@@ -80,8 +73,5 @@ class EditProfileFragment : Fragment(), WithoutBottomBar {
         const val EDIT_BUNDLE_KEY_GET_PHOTO = "getPhoto"
         const val EDIT_REQUEST_CHOOSE_PHOTO = "getPhoto"
         const val EDIT_BUNDLE_KEY_CHOOSE_PHOTO = "getPhoto"
-
-        @JvmStatic
-        fun newInstance() = EditProfileFragment()
     }
 }

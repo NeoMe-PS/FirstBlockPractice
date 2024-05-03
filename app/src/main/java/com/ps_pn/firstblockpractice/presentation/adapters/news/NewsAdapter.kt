@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.ps_pn.firstblockpractice.databinding.NewsItemBinding
-import com.ps_pn.firstblockpractice.presentation.models.Event
+import com.ps_pn.firstblockpractice.presentation.models.EventUI
 
-class NewsAdapter : ListAdapter<Event, NewsViewHolder>(NewsDiffUtil()) {
+class NewsAdapter : ListAdapter<EventUI, NewsViewHolder>(NewsDiffUtil()) {
 
-     var onNewsClickListener: ((Event) -> Unit)? = null
+    var onNewsClickListener: ((EventUI) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val itemBinding =
             NewsItemBinding.inflate(

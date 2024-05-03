@@ -4,36 +4,42 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.ps_pn.firstblockpractice.data.StubData
 import com.ps_pn.firstblockpractice.databinding.FragmentNewsBinding
+import com.ps_pn.firstblockpractice.di.AppComponent
+import com.ps_pn.firstblockpractice.presentation.App
+import com.ps_pn.firstblockpractice.presentation.ViewModelFactory
 import com.ps_pn.firstblockpractice.presentation.adapters.news.NewsAdapter
-import com.ps_pn.firstblockpractice.presentation.models.Event
-import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
+import com.ps_pn.firstblockpractice.presentation.models.EventUI
+import com.ps_pn.firstblockpractice.presentation.utills.BindingException
 import com.ps_pn.firstblockpractice.presentation.utills.navigator
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-
-private const val KEY_NEWS_COUNTER = "news_counter"
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class NewsFragment : Fragment() {
     private var _binding: FragmentNewsBinding? = null
     private val binding
-        get() = _binding ?: throw RuntimeException("FragmentNewsBinding is null")
+        get() = _binding ?: throw BindingException("FragmentNewsBinding is null")
 
     private val newsAdapter: NewsAdapter = NewsAdapter()
-    private val fullDataList = StubData.newsData
-    private var newsCounter = 0
+    lateinit var viewModel: NewsViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (savedInstanceState != null) {
-            newsCounter = savedInstanceState.getInt(KEY_NEWS_COUNTER, 0)
-        }
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val component: AppComponent by lazy {
+        (requireActivity().application as App).component
     }
+
+    private val mainDispatcher = Dispatchers.Main
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,93 +51,87 @@ class NewsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onViewCreated(view, savedInstanceState)
-        setAdapterOnClickListener()
+        viewModel = ViewModelProvider(this, viewModelFactory)[NewsViewModel::class.java]
+        setClickListeners()
         binding.newsRv.adapter = newsAdapter
-        newsAdapter.submitList(fullDataList)
-        observeData()
-        observeBadgeCount()
-        setFilterButtonOnClick()
+        observeViewModel()
     }
 
-    private fun observeBadgeCount() {
+    private fun observeViewModel() {
         lifecycleScope.launch {
-            StubData.budgeFlow.collect { count ->
-                newsCounter = count
-                navigator().setNewsBadges(newsCounter)
-            }
-        }
-    }
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.uiState.collect { state ->
+                    when (state) {
+                        is NewsUIState.Loading -> {
+                            showProgressBar()
+                        }
 
-    private fun observeData() {
-        lifecycleScope.launch {
-            StubData.events
-                .flowOn(Dispatchers.IO)
-                .collect { events ->
-                    updateNewsByFilter(events)
-                    StubData.emitToBadge(events.size)
-                    hideProgressBar()
+                        is NewsUIState.Response -> {
+                            newsAdapter.submitList(state.events)
+                            navigator().setNewsBadges(state.viewedNews)
+                            hideProgressBar()
+                        }
+
+                        is NewsUIState.Error -> {
+                            withContext(mainDispatcher) {
+                                showErrorMsg()
+                            }
+                        }
+                    }
                 }
-        }
-        observeDataLoading()
-    }
-
-    private fun observeDataLoading() {
-        StubData.eventsIsLoaded.observe(viewLifecycleOwner) { isLoaded ->
-            if (isLoaded) {
-                hideProgressBar()
-            } else {
-                showProgressBar()
             }
         }
+    }
+
+    private fun showErrorMsg() {
+        Toast.makeText(this@NewsFragment.requireContext(), "Some error", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    private fun setClickListeners() {
+        setFilterButtonOnClick()
+        setAdapterOnClickListener()
     }
 
     private fun setFilterButtonOnClick() {
         binding.imageButtonFilter.setOnClickListener {
-            val direction = NewsFragmentDirections.actionNewsFragmentToFilterFragment()
-            findNavController().navigate(direction)
+            navigateToFilterFragment()
         }
     }
 
     private fun setAdapterOnClickListener() {
-        newsAdapter.onNewsClickListener = { newsItem ->
-            if (!newsItem.isRead) {
-                lifecycleScope.launch {
-                    StubData.markIsReadEvent(newsItem.id)
-                }
-                newsItem.isRead = true
-                if (newsCounter > 0) {
-                    newsCounter -= 1
-                    StubData.emitToBadge(newsCounter)
-                }
-            }
-            val direction =
-                NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(newsItem)
-            findNavController().navigate(direction)
+        newsAdapter.onNewsClickListener = { event ->
+            readEvent(event)
+            navigateToDetailFragment(event)
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(KEY_NEWS_COUNTER, newsCounter)
+    private fun readEvent(event: EventUI) {
+        if (!event.isRead) {
+            viewModel.readEvent(event.id)
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        navigator().setNewsBadges(newsCounter)
+    private fun navigateToDetailFragment(event: EventUI) {
+        val direction =
+            NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(event)
+        findNavController().navigate(direction)
+    }
+
+    private fun navigateToFilterFragment() {
+        val direction = NewsFragmentDirections.actionNewsFragmentToFilterFragment()
+        findNavController().navigate(direction)
     }
 
     private fun showProgressBar() {
-        binding.newsProgressBar.visibility = View.VISIBLE
-        binding.newsRv.visibility = View.GONE
+        binding.newsProgressBar.isVisible = true
+        binding.newsRv.isVisible = false
     }
 
     private fun hideProgressBar() {
-        binding.newsProgressBar.visibility = View.GONE
-        binding.newsRv.visibility = View.VISIBLE
-    }
-
-    private fun updateNewsByFilter(currentList: List<Event>) {
-        newsAdapter.submitList(StubData.filterEvents(currentList, PreferenceManager.filterList))
+        binding.newsProgressBar.isVisible = false
+        binding.newsRv.isVisible = true
     }
 }

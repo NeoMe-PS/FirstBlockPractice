@@ -1,4 +1,3 @@
 package com.ps_pn.firstblockpractice.presentation.utills
 
-interface WithoutBottomBar {
-}
+interface WithoutBottomBar

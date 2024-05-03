@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FriendItemBinding
-import com.ps_pn.firstblockpractice.presentation.models.Friend
+import com.ps_pn.firstblockpractice.domain.entity.Friend
 
 class FriendsAdapter : ListAdapter<Friend, FriendViewHolder>(FriendDiffUtil()) {
     override fun onCreateViewHolder(

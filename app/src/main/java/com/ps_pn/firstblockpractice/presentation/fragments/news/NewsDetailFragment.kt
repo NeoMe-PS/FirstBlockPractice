@@ -8,13 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.ps_pn.firstblockpractice.databinding.FragmentNewsDetailBinding
+import com.ps_pn.firstblockpractice.presentation.utills.BindingException
 import com.ps_pn.firstblockpractice.presentation.utills.HasCustomBottomBar
 
 class NewsDetailFragment : Fragment(), HasCustomBottomBar {
 
     private var _binding: FragmentNewsDetailBinding? = null
     private val binding
-        get() = _binding ?: throw RuntimeException("FragmentNewsDetailBinding is null")
+        get() = _binding ?: throw BindingException("FragmentNewsDetailBinding is null")
     private val args: NewsDetailFragmentArgs by navArgs()
 
     override fun onCreateView(

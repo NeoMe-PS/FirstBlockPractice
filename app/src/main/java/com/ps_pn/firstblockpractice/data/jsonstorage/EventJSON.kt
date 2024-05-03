@@ -1,13 +1,12 @@
-package com.ps_pn.firstblockpractice.data
+package com.ps_pn.firstblockpractice.data.jsonstorage
 
 import android.os.Parcelable
-import com.ps_pn.firstblockpractice.presentation.models.Category
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class EventDataModel(
+data class EventJSON(
     val id: Int,
-    val categories: List<Category>,
+    val categories: List<CategoryJSON>,
     val label: String,
     val shortDesc: String,
     val fullDesc: String,

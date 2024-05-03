@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Category(
+data class CategoryUI(
     val id: Int,
     val label: String,
     val img: String

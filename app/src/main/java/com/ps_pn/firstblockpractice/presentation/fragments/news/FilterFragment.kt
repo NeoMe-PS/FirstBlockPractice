@@ -10,13 +10,14 @@ import androidx.navigation.fragment.findNavController
 import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.databinding.FragmentFilterBinding
 import com.ps_pn.firstblockpractice.presentation.models.Filter
+import com.ps_pn.firstblockpractice.presentation.utills.BindingException
 import com.ps_pn.firstblockpractice.presentation.utills.PreferenceManager
 
 class FilterFragment : Fragment() {
 
     private var _binding: FragmentFilterBinding? = null
     private val binding
-        get() = _binding ?: throw RuntimeException("FragmentFilterBinding is null")
+        get() = _binding ?: throw BindingException("FragmentFilterBinding is null")
     private var settings: MutableList<Filter> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +35,6 @@ class FilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setStartedSettingsValue()
         setSettingsListeners()
         setBackButton()
@@ -81,10 +81,5 @@ class FilterFragment : Fragment() {
     private fun saveSettings() {
         PreferenceManager.saveFilterSettings()
         Toast.makeText(requireContext(), R.string.toast_prefs_success, Toast.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = FilterFragment()
     }
 }
