@@ -1,7 +1,7 @@
 package com.ps_pn.firstblockpractice.data.mapper
 
 import com.ps_pn.firstblockpractice.data.network.dto.FriendDto
-import com.ps_pn.firstblockpractice.domain.entity.Friend
+import com.ps_pn.firstblockpractice.domain.user.entity.Friend
 import javax.inject.Inject
 
 class FriendMapper @Inject constructor() {

@@ -11,10 +11,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.navigation.NavigationBarView
 import com.ps_pn.firstblockpractice.R
+import com.ps_pn.firstblockpractice.core.App
+import com.ps_pn.firstblockpractice.core.exception.BindingException
 import com.ps_pn.firstblockpractice.databinding.ActivityMainBinding
 import com.ps_pn.firstblockpractice.di.AppComponent
-import com.ps_pn.firstblockpractice.presentation.utills.BindingException
-import com.ps_pn.firstblockpractice.presentation.utills.Navigator
+import com.ps_pn.firstblockpractice.presentation.navigateutill.Navigator
 
 const val FILTER_PREFERENCES = "FILTER_PREFERENCES"
 

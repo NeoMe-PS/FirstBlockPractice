@@ -2,12 +2,12 @@ package com.ps_pn.firstblockpractice.di
 
 import android.app.Application
 import com.ps_pn.firstblockpractice.presentation.MainActivity
-import com.ps_pn.firstblockpractice.presentation.fragments.help.HelpFragment
-import com.ps_pn.firstblockpractice.presentation.fragments.news.NewsFragment
-import com.ps_pn.firstblockpractice.presentation.fragments.search.EventsSearchFragment
-import com.ps_pn.firstblockpractice.presentation.fragments.search.OrgSearchFragment
-import com.ps_pn.firstblockpractice.presentation.fragments.search.SearchFragment
-import com.ps_pn.firstblockpractice.presentation.fragments.user.UserProfileFragment
+import com.ps_pn.firstblockpractice.presentation.help.ui.HelpFragment
+import com.ps_pn.firstblockpractice.presentation.news.ui.NewsFragment
+import com.ps_pn.firstblockpractice.presentation.search.ui.EventsSearchFragment
+import com.ps_pn.firstblockpractice.presentation.search.ui.OrgSearchFragment
+import com.ps_pn.firstblockpractice.presentation.search.ui.SearchFragment
+import com.ps_pn.firstblockpractice.presentation.user.ui.UserProfileFragment
 import dagger.BindsInstance
 import dagger.Component
 

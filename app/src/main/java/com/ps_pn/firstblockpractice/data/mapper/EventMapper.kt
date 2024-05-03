@@ -1,11 +1,11 @@
 package com.ps_pn.firstblockpractice.data.mapper
 
+import com.ps_pn.firstblockpractice.core.date.TimeFormatter
 import com.ps_pn.firstblockpractice.data.db.entity.EventDbModel
 import com.ps_pn.firstblockpractice.data.jsonstorage.EventJSON
 import com.ps_pn.firstblockpractice.data.network.dto.EventDto
-import com.ps_pn.firstblockpractice.domain.entity.Category
-import com.ps_pn.firstblockpractice.domain.entity.Event
-import com.ps_pn.firstblockpractice.presentation.utills.TimeFormatter
+import com.ps_pn.firstblockpractice.domain.help.entity.Category
+import com.ps_pn.firstblockpractice.domain.news.entity.Event
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimePeriod
 import kotlinx.datetime.Instant

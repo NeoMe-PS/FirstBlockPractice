@@ -1,7 +1,7 @@
 package com.ps_pn.firstblockpractice.data.jsonstorage
 
 import com.google.gson.Gson
-import com.ps_pn.firstblockpractice.presentation.App
+import com.ps_pn.firstblockpractice.core.App
 
 object JSONParser {
 

@@ -4,7 +4,7 @@ import com.ps_pn.firstblockpractice.R
 import com.ps_pn.firstblockpractice.data.db.entity.CategoryDbModel
 import com.ps_pn.firstblockpractice.data.jsonstorage.CategoryJSON
 import com.ps_pn.firstblockpractice.data.network.dto.CategoryDto
-import com.ps_pn.firstblockpractice.domain.entity.Category
+import com.ps_pn.firstblockpractice.domain.help.entity.Category
 import com.ps_pn.firstblockpractice.presentation.models.Filter
 import javax.inject.Inject
 

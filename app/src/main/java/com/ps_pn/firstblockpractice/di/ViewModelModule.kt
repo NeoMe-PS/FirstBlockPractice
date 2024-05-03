@@ -1,10 +1,10 @@
 package com.ps_pn.firstblockpractice.di
 
 import androidx.lifecycle.ViewModel
-import com.ps_pn.firstblockpractice.presentation.fragments.help.HelpViewModel
-import com.ps_pn.firstblockpractice.presentation.fragments.news.NewsViewModel
-import com.ps_pn.firstblockpractice.presentation.fragments.search.SearchViewModel
-import com.ps_pn.firstblockpractice.presentation.fragments.user.UserProfileViewModel
+import com.ps_pn.firstblockpractice.presentation.help.viewModel.HelpViewModel
+import com.ps_pn.firstblockpractice.presentation.news.viewmodel.NewsViewModel
+import com.ps_pn.firstblockpractice.presentation.search.viewmodel.SearchViewModel
+import com.ps_pn.firstblockpractice.presentation.user.viewmodel.UserProfileViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
