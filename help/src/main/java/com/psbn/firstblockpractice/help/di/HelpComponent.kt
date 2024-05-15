@@ -4,7 +4,11 @@ import com.psbn.firstblockpractice.help.presentation.ui.HelpFragment
 import dagger.Component
 import dagger.Component.Factory
 
-@Component(modules = [HelpDataModule::class], dependencies = [HelpDeps::class])
+@HelpScope
+@Component(
+    modules = [HelpDataModule::class, HelpViewModelModule::class],
+    dependencies = [HelpDeps::class]
+)
 interface HelpComponent {
 
     fun inject(helpFragment: HelpFragment)
