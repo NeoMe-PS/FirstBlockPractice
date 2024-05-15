@@ -3,32 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/splash_navgraph">
 
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.splash.ui.SplashFragment"
-        tools:layout="@layout/fragment_splash">
-        <action
-            android:id="@+id/action_splashFragment_to_authorizationFragment"
-            app:destination="@id/authorizationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/authorizationFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.auth.ui.AuthorizationFragment"
 
-        tools:layout="@layout/fragment_authorization">
-        <action
-            android:id="@+id/action_authorizationFragment_to_helpFragment2"
-            app:destination="@id/helpFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/helpFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.help.ui.HelpFragment"
-        tools:layout="@layout/fragment_help" />
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.user.ui.EditProfileFragment"
+        android:name="com.psbn.firstblockpractice.presentation.user.ui.EditProfileFragment"
         tools:layout="@layout/fragment_edit_profile">
         <action
             android:id="@+id/action_editProfileFragment_to_editImageDialog"
@@ -39,11 +19,11 @@
     </fragment>
     <fragment
         android:id="@+id/eventsSearchFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.search.ui.EventsSearchFragment"
+        android:name="com.psbn.firstblockpractice.presentation.search.ui.EventsSearchFragment"
         tools:layout="@layout/fragment_events_search" />
     <fragment
         android:id="@+id/filterFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.news.ui.FilterFragment"
+        android:name="com.psbn.firstblockpractice.presentation.news.ui.FilterFragment"
         tools:layout="@layout/fragment_filter">
         <action
             android:id="@+id/action_filterFragment_to_newsFragment"
@@ -51,14 +31,14 @@
     </fragment>
     <dialog
         android:id="@+id/editImageDialog"
-        android:name="com.ps_pn.firstblockpractice.presentation.user.ui.EditImageDialog" />
+        android:name="com.psbn.firstblockpractice.presentation.user.ui.EditImageDialog" />
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.history.ui.HistoryFragment"
+        android:name="com.psbn.firstblockpractice.presentation.history.ui.HistoryFragment"
         tools:layout="@layout/fragment_history" />
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.news.ui.NewsFragment"
+        android:name="com.psbn.firstblockpractice.presentation.news.ui.NewsFragment"
 
         tools:layout="@layout/fragment_news">
         <action
@@ -70,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/newsDetailFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.news.ui.NewsDetailFragment"
+        android:name="com.psbn.firstblockpractice.presentation.news.ui.NewsDetailFragment"
 
         tools:layout="@layout/fragment_news_detail">
         <action
@@ -78,21 +58,21 @@
             app:destination="@id/newsFragment" />
         <argument
             android:name="event"
-            app:argType="com.ps_pn.firstblockpractice.presentation.models.EventUI" />
+            app:argType="com.psbn.firstblockpractice.presentation.models.EventUI" />
     </fragment>
     <fragment
         android:id="@+id/orgSearchFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.search.ui.OrgSearchFragment"
+        android:name="com.psbn.firstblockpractice.presentation.search.ui.OrgSearchFragment"
 
         tools:layout="@layout/fragment_org_search" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.search.ui.SearchFragment"
+        android:name="com.psbn.firstblockpractice.presentation.search.ui.SearchFragment"
 
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.ps_pn.firstblockpractice.presentation.user.ui.UserProfileFragment"
+        android:name="com.psbn.firstblockpractice.presentation.user.ui.UserProfileFragment"
 
         tools:layout="@layout/fragment_user_profile">
         <action
@@ -100,4 +80,8 @@
             app:destination="@id/editProfileFragment" />
     </fragment>
 
+
+    <include app:graph="@navigation/splash_navgraph" />
+    <include app:graph="@navigation/auth_navgraph" />
+    <include app:graph="@navigation/help_navgraph" />
 </navigation>

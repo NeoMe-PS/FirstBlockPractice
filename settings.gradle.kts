@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "FirstBlockPractice"
 include(":app")
- 
+include(":auth")
+include(":splash")
+include(":core")
+include(":help")

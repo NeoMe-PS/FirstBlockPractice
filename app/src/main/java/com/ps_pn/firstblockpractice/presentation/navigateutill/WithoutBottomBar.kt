@@ -1,3 +1,0 @@
-package com.ps_pn.firstblockpractice.presentation.navigateutill
-
-interface WithoutBottomBar
