@@ -41,7 +41,7 @@ class HelpFragment : Fragment() {
         super.onAttach(context)
         val componentDeps = (context.applicationContext as HelpDepsProvider).getHelpDeps()
         val component =
-            DaggerHelpComponent.factory().create(requireActivity().application, componentDeps)
+            DaggerHelpComponent.factory().create(componentDeps)
         component.inject(this)
     }
 

@@ -1,8 +1,6 @@
 package com.psbn.firstblockpractice.help.di
 
-import android.app.Application
 import com.psbn.firstblockpractice.help.presentation.ui.HelpFragment
-import dagger.BindsInstance
 import dagger.Component
 import dagger.Component.Factory
 
@@ -13,7 +11,6 @@ interface HelpComponent {
 
     @Factory
     interface HelpComponentFactory {
-
-        fun create(@BindsInstance application: Application, helpDeps: HelpDeps): HelpComponent
+        fun create(helpDeps: HelpDeps): HelpComponent
     }
 }
