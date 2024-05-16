@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ps_pn.firstblockpractice"
+    namespace = "com.psbn.firstblockpractice"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ps_pn.firstblockpractice"
+        applicationId = "com.psbn.firstblockpractice"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -75,6 +75,15 @@ val daggerVersion = "2.51.1"
 
 
 dependencies {
+
+    implementation(project(":auth"))
+    implementation(project(":splash"))
+    implementation(project(":help"))
+    implementation(project(":news"))
+    implementation(project(":core"))
+    implementation(project(":history"))
+    implementation(project(":user"))
+    implementation(project(":search"))
 
     implementation("androidx.core:core-ktx:$coreKtxVersion")
     implementation("androidx.appcompat:appcompat:$appcompatVersion")
