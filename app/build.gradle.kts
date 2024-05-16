@@ -79,7 +79,11 @@ dependencies {
     implementation(project(":auth"))
     implementation(project(":splash"))
     implementation(project(":help"))
+    implementation(project(":news"))
     implementation(project(":core"))
+    implementation(project(":history"))
+    implementation(project(":user"))
+    implementation(project(":search"))
 
     implementation("androidx.core:core-ktx:$coreKtxVersion")
     implementation("androidx.appcompat:appcompat:$appcompatVersion")

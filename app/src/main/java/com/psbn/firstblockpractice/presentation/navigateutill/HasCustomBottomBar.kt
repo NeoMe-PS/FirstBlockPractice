@@ -1,3 +1,0 @@
-package com.psbn.firstblockpractice.presentation.navigateutill
-
-interface HasCustomBottomBar

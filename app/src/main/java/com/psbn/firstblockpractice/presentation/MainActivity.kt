@@ -11,13 +11,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.navigation.NavigationBarView
 import com.psbn.firstblockpractice.R
-import com.psbn.firstblockpractice.core.App
 import com.psbn.firstblockpractice.core.exception.BindingException
+import com.psbn.firstblockpractice.core.uiUtills.Navigator
 import com.psbn.firstblockpractice.databinding.ActivityMainBinding
-import com.psbn.firstblockpractice.di.AppComponent
-import com.psbn.firstblockpractice.presentation.navigateutill.Navigator
-
-const val FILTER_PREFERENCES = "FILTER_PREFERENCES"
 
 class MainActivity : AppCompatActivity(), Navigator {
     private var _binding: ActivityMainBinding? = null
@@ -30,12 +26,7 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
     private var newsBadges: BadgeDrawable? = null
 
-    private val component: AppComponent by lazy {
-        (application as App).component
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        component.inject(this)
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         supportActionBar?.hide()
@@ -48,17 +39,17 @@ class MainActivity : AppCompatActivity(), Navigator {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.help_navgraph,
-                R.id.historyFragment,
-                R.id.profileFragment,
-                R.id.newsFragment,
-                R.id.searchFragment,
+                com.psbn.history.R.id.history_navgraph,
+                com.psbn.user.R.id.user_navgraph,
+                com.psbn.news.R.id.news_navgraph,
+                com.psbn.search.R.id.search_navgraph,
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigationView.setupWithNavController(navController)
         binding.bottomNavigationView.labelVisibilityMode =
             NavigationBarView.LABEL_VISIBILITY_SELECTED
-        newsBadges = binding.bottomNavigationView.getOrCreateBadge(R.id.newsFragment)
+        newsBadges = binding.bottomNavigationView.getOrCreateBadge(com.psbn.news.R.id.news_navgraph)
 
     }
 
@@ -90,9 +81,9 @@ class MainActivity : AppCompatActivity(), Navigator {
 
     private fun isRequiringHide(currentFragmentId: Int): Boolean {
         val splashID = com.psbn.firstblockpractice.splash.R.id.splashFragment
-        val editProfileFragmentID = R.id.editProfileFragment
+        val editProfileFragmentID = com.psbn.user.R.id.editProfileFragment
         val authID = com.psbn.firstblockpractice.auth.R.id.authorizationFragment
-        val newsDetailed = R.id.newsDetailFragment
+        val newsDetailed = com.psbn.news.R.id.newsDetailFragment
 
         return currentFragmentId == splashID ||
                 currentFragmentId == authID ||

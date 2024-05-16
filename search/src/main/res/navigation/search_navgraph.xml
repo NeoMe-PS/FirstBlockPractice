@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_navgraph"
+    app:startDestination="@id/searchFragment">
+
+    <fragment
+        android:id="@+id/eventsSearchFragment"
+        android:name="com.psbn.search.presentation.ui.EventsSearchFragment"
+        android:label="EventsSearchFragment" />
+    <fragment
+        android:id="@+id/orgSearchFragment"
+        android:name="com.psbn.search.presentation.ui.OrgSearchFragment"
+        android:label="OrgSearchFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.psbn.search.presentation.ui.SearchFragment"
+        android:label="SearchFragment" />
+</navigation>

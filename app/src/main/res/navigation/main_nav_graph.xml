@@ -1,87 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/splash_navgraph">
 
-
-    <fragment
-        android:id="@+id/editProfileFragment"
-        android:name="com.psbn.firstblockpractice.presentation.user.ui.EditProfileFragment"
-        tools:layout="@layout/fragment_edit_profile">
-        <action
-            android:id="@+id/action_editProfileFragment_to_editImageDialog"
-            app:destination="@id/editImageDialog" />
-        <action
-            android:id="@+id/action_editProfileFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/eventsSearchFragment"
-        android:name="com.psbn.firstblockpractice.presentation.search.ui.EventsSearchFragment"
-        tools:layout="@layout/fragment_events_search" />
-    <fragment
-        android:id="@+id/filterFragment"
-        android:name="com.psbn.firstblockpractice.presentation.news.ui.FilterFragment"
-        tools:layout="@layout/fragment_filter">
-        <action
-            android:id="@+id/action_filterFragment_to_newsFragment"
-            app:destination="@id/newsFragment" />
-    </fragment>
-    <dialog
-        android:id="@+id/editImageDialog"
-        android:name="com.psbn.firstblockpractice.presentation.user.ui.EditImageDialog" />
-    <fragment
-        android:id="@+id/historyFragment"
-        android:name="com.psbn.firstblockpractice.presentation.history.ui.HistoryFragment"
-        tools:layout="@layout/fragment_history" />
-    <fragment
-        android:id="@+id/newsFragment"
-        android:name="com.psbn.firstblockpractice.presentation.news.ui.NewsFragment"
-
-        tools:layout="@layout/fragment_news">
-        <action
-            android:id="@+id/action_newsFragment_to_filterFragment"
-            app:destination="@id/filterFragment" />
-        <action
-            android:id="@+id/action_newsFragment_to_newsDetailFragment"
-            app:destination="@id/newsDetailFragment"></action>
-    </fragment>
-    <fragment
-        android:id="@+id/newsDetailFragment"
-        android:name="com.psbn.firstblockpractice.presentation.news.ui.NewsDetailFragment"
-
-        tools:layout="@layout/fragment_news_detail">
-        <action
-            android:id="@+id/action_newsDetailFragment_to_newsFragment"
-            app:destination="@id/newsFragment" />
-        <argument
-            android:name="event"
-            app:argType="com.psbn.firstblockpractice.presentation.models.EventUI" />
-    </fragment>
-    <fragment
-        android:id="@+id/orgSearchFragment"
-        android:name="com.psbn.firstblockpractice.presentation.search.ui.OrgSearchFragment"
-
-        tools:layout="@layout/fragment_org_search" />
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.psbn.firstblockpractice.presentation.search.ui.SearchFragment"
-
-        tools:layout="@layout/fragment_search" />
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.psbn.firstblockpractice.presentation.user.ui.UserProfileFragment"
-
-        tools:layout="@layout/fragment_user_profile">
-        <action
-            android:id="@+id/action_userProfileFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
-    </fragment>
-
-
+    <include app:graph="@navigation/search_navgraph" />
+    <include app:graph="@navigation/news_navgraph" />
+    <include app:graph="@navigation/history_navgraph" />
     <include app:graph="@navigation/splash_navgraph" />
     <include app:graph="@navigation/auth_navgraph" />
     <include app:graph="@navigation/help_navgraph" />
+    <include app:graph="@navigation/user_navgraph" />
 </navigation>
