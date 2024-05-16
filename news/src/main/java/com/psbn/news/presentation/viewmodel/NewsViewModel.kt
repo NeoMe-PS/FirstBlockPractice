@@ -37,7 +37,6 @@ class NewsViewModel @Inject constructor(
                         list.map { EventMapper.mapDomainToUi(it) },
                         getReadEventsCount(list)
                     ) as NewsUIState
-
                 }
                 .onStart { emit(NewsUIState.Loading) }
                 .collect { state ->

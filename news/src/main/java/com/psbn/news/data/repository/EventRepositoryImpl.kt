@@ -39,9 +39,10 @@ class EventRepositoryImpl @Inject constructor(
         val result = mutableListOf<Event>()
         currentList.forEach { event ->
             val filters = event.categories.map { it.id }
-            filters.forEach { filterOfEvent ->
-                if (activeFilters.any { activeFilter -> activeFilter == filterOfEvent }) {
+            for (filterInItem in filters) {
+                if (activeFilters.any { activeFilter -> activeFilter == filterInItem }) {
                     result.add(event)
+                    break
                 }
             }
         }

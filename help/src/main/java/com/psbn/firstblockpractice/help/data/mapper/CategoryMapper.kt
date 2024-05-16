@@ -28,15 +28,14 @@ class CategoryMapper @Inject constructor() {
             img = getCategoryResId(categoryDto.id)
         )
 
-    /* private fun getCategoryResId(idFrom: Int): String = when (idFrom) {
-         KIDS_ID -> R.drawable.icon_kids.toString()
-         ADULTS_ID -> R.drawable.icon_adult.toString()
-         ELDERLY_ID -> R.drawable.icon_elderly.toString()
-         ANIMALS_ID -> R.drawable.icon_animals.toString()
-         EVENTS_ID -> R.drawable.icon_event.toString()
-         else -> R.drawable.bg_white_rounded.toString()
-     }*/
-    private fun getCategoryResId(idFrom: Int) = "2"
+    private fun getCategoryResId(idFrom: Int): String = when (idFrom) {
+        KIDS_ID -> com.ps_pn.firstblockpractice.help.R.drawable.icon_kids.toString()
+        ADULTS_ID -> com.ps_pn.firstblockpractice.help.R.drawable.icon_adult.toString()
+        ELDERLY_ID -> com.ps_pn.firstblockpractice.help.R.drawable.icon_elderly.toString()
+        ANIMALS_ID -> com.ps_pn.firstblockpractice.help.R.drawable.icon_animals.toString()
+        EVENTS_ID -> com.ps_pn.firstblockpractice.help.R.drawable.icon_event.toString()
+        else -> com.ps_pn.firstblockpractice.help.R.drawable.round_button.toString()
+    }
 
     companion object {
         const val KIDS_ID = 1
