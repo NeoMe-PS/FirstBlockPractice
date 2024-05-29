@@ -1,0 +1,26 @@
+package com.psbn.firstblockpractice.core.uitheme
+
+import androidx.compose.ui.graphics.Color
+
+val black = Color(0xFF000000)
+val white = Color(0xFFFFFFFF)
+val splash_background = Color(0xEFF3F6)
+val turtle_green = Color(0x66A636)
+val laef = Color(0x51842B)
+val unactive_text = Color(0x66000000)
+val black_87 = Color(0xde000000)
+val black_38 = Color(0x61000000)
+val black_60 = Color(0x99000000)
+val black_70 = Color(0xb3000000)
+val black_40 = Color(0x66000000)
+val black_12 = Color(0x1e000000)
+val black_54 = Color(0x8a000000)
+val melon = Color(0xFE7460)
+val cool_grey = Color(0xaabbbb)
+val light_olive_green = Color(0x9ebf50)
+val light_grey = Color(0xeaede8)
+val light_grey_two = Color(0xe8eded)
+val macaroni_and_cheese = Color(0xf2b630)
+val white_70 = Color(0xb3ffffff)
+val blue_grey = Color(0x627f8f)
+val grey = Color(0x94998a)

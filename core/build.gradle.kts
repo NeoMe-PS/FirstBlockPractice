@@ -33,6 +33,13 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.13"
+    }
 }
 
 
@@ -65,15 +72,31 @@ val httpInterceptorVersion = "4.12.0"
 val glideVersion = "4.16.0"
 val roomVersion = "2.6.1"
 val daggerVersion = "2.51.1"
+val composeMaterialVersion = "1.2.1"
+val composeViewModelVersion = "2.8.0"
 
 
 dependencies {
 
 
+    // Compose
+    val composeBom = platform("androidx.compose:compose-bom:2024.05.00")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("androidx.compose.material3:material3-window-size-class")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$composeViewModelVersion")
+    implementation("androidx.compose.runtime:runtime-rxjava2")
+
     implementation("androidx.core:core-ktx:$coreKtxVersion")
     implementation("androidx.appcompat:appcompat:$appcompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
     implementation("androidx.constraintlayout:constraintlayout:$constraintlayoutVersion")
+    implementation("androidx.compose.material3:material3-android:$composeMaterialVersion")
     testImplementation("junit:junit:$junitVersion")
     androidTestImplementation("androidx.test.ext:junit:$testJunitVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$testEspressoVersion")

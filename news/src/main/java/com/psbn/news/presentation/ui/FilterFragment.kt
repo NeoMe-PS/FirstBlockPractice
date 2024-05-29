@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.psbn.firstblockpractice.core.R
 import com.psbn.firstblockpractice.core.exception.BindingException
-import com.psbn.news.R
 import com.psbn.news.databinding.FragmentFilterBinding
 import com.psbn.news.di.DaggerNewsComponent
 import com.psbn.news.di.NewsDepsProvider

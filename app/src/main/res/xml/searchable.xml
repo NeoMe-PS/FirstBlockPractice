@@ -3,6 +3,4 @@
     android:hint="@string/hint_search_org"
     android:label="@string/app_name"
     android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
-    android:searchSuggestAuthority="com.ps_pn.firstblockpractice"
-    >
-</searchable>
+    android:searchSuggestAuthority="com.ps_pn.firstblockpractice"></searchable>

@@ -87,7 +87,9 @@
     <string name="desc_news_img">Изображение связанное с событием</string>
     <string name="desc_nav_icon">Иконка навигации</string>
     <string name="desc_phone_icon">Иконка телефона</string>
+    <string name="desc_calendar_icon">Иконка календаря</string>
     <string name="desc_mail_icon">Иконка почты</string>
+    <string name="desc_decor_img">Элемент декора</string>
 
     <!-- other  -->
 
@@ -102,5 +104,5 @@
     <string name="label_registration_auth"><u>Регистрация</u></string>
     <string name="desc_auth_with_vk">Иконка для входя с помощью VK</string>
     <string name="desc_auth_with_fb">Иконка для входя с помощью FB</string>
-    <string name="desc_auth_with_ok">Иконка для входя с помощью Ok</string>
+    <string name="desc_auth_with_ok">Иконка для входя с помощью OK</string>
 </resources>
