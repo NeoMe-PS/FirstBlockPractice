@@ -5,8 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.navigation.NavigationBarView
@@ -29,23 +27,12 @@ class MainActivity : AppCompatActivity(), Navigator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
-        supportActionBar?.hide()
         setContentView(binding.root)
         setNavigation()
         hideBottomAtDestination()
     }
 
     private fun setNavigation() {
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.help_navgraph,
-                com.psbn.history.R.id.history_navgraph,
-                com.psbn.user.R.id.user_navgraph,
-                com.psbn.news.R.id.news_navgraph,
-                com.psbn.search.R.id.search_navgraph,
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigationView.setupWithNavController(navController)
         binding.bottomNavigationView.labelVisibilityMode =
             NavigationBarView.LABEL_VISIBILITY_SELECTED

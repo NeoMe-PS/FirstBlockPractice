@@ -13,7 +13,6 @@ import dagger.Component
 @Component(modules = [DataBaseModule::class, NetworkModule::class])
 interface AppComponent : HelpDeps, NewsDeps, UserDeps, SearchDeps {
 
-
     fun inject(mainActivity: MainActivity)
 
     @Component.Factory

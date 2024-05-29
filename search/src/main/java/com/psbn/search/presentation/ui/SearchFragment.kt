@@ -18,8 +18,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
+import com.psbn.firstblockpractice.core.R
 import com.psbn.firstblockpractice.core.exception.BindingException
-import com.psbn.search.R
 import com.psbn.search.databinding.FragmentSearchBinding
 import com.psbn.search.di.DaggerSearchComponent
 import com.psbn.search.di.SearchDepsProvider

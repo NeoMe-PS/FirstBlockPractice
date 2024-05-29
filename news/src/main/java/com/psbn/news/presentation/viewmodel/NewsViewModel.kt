@@ -11,8 +11,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,10 +20,15 @@ class NewsViewModel @Inject constructor(
     private val loadEventsUseCase: LoadEventsUseCase,
     private val readEventUseCase: ReadEventUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<NewsUIState>(NewsUIState.Loading)
-    val uiState: StateFlow<NewsUIState> = _uiState
+
+    private val _uiState = MutableStateFlow(NewsUiState())
+    val uiState: StateFlow<NewsUiState> = _uiState.asStateFlow()
+
+    private val _badges = MutableStateFlow(0)
+    val badges: StateFlow<Int> = _badges.asStateFlow()
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private fun getReadEventsCount(events: List<Event>) = events.filter { !it.isRead }.size
 
     init {
         setState()
@@ -33,19 +38,18 @@ class NewsViewModel @Inject constructor(
         scope.launch {
             loadEventsUseCase.invoke()
                 .map { list ->
-                    NewsUIState.Response(
-                        list.map { EventMapper.mapDomainToUi(it) },
-                        getReadEventsCount(list)
-                    ) as NewsUIState
+                    _badges.value = getReadEventsCount(list)
+                    _uiState.value.copy(
+                        events = list.map { EventMapper.mapDomainToUi(it) },
+                        viewedNews = getReadEventsCount(list),
+                        isLoading = false
+                    )
                 }
-                .onStart { emit(NewsUIState.Loading) }
                 .collect { state ->
                     _uiState.value = state
                 }
         }
     }
-
-    private fun getReadEventsCount(events: List<Event>) = events.filter { !it.isRead }.size
 
     fun readEvent(id: Int) {
         scope.launch {
