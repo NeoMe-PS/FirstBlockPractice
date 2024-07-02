@@ -60,6 +60,8 @@ val navVersion = "2.7.7"
 val retrofitVersion = "2.9.0"
 val httpInterceptorVersion = "4.12.0"
 val composeViewModelVersion = "2.8.0"
+val workManagerVersion = "2.9.0"
+
 dependencies {
 
     implementation(project(":core"))
@@ -113,4 +115,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$composeViewModelVersion")
     implementation("androidx.compose.material:material-icons-core")
     implementation("androidx.compose.material:material-icons-extended")
+
+    implementation("androidx.work:work-runtime-ktx:$workManagerVersion")
+
 }

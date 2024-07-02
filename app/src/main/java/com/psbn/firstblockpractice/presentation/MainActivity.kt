@@ -3,6 +3,7 @@ package com.psbn.firstblockpractice.presentation
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
@@ -12,6 +13,7 @@ import com.psbn.firstblockpractice.R
 import com.psbn.firstblockpractice.core.exception.BindingException
 import com.psbn.firstblockpractice.core.uiUtills.Navigator
 import com.psbn.firstblockpractice.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity(), Navigator {
     private var _binding: ActivityMainBinding? = null
@@ -30,6 +32,10 @@ class MainActivity : AppCompatActivity(), Navigator {
         setContentView(binding.root)
         setNavigation()
         hideBottomAtDestination()
+        if (intent != null && intent.extras != null) {
+            val id = intent?.extras?.getInt("id", 1)
+            navController.navigate(R.id.action_global_news_navgraph, bundleOf("id" to id))
+        }
     }
 
     private fun setNavigation() {

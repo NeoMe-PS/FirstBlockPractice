@@ -33,6 +33,7 @@
     <dimen name="font_xs">12sp</dimen>
     <dimen name="font_small">14sp</dimen>
     <dimen name="font_medium">16sp</dimen>
+    <dimen name="font_20">20sp</dimen>
     <dimen name="font_large">21sp</dimen>
     <dimen name="font_xl">24sp</dimen>
 
@@ -74,6 +75,7 @@
     <dimen name="_5dp">5dp</dimen>
     <dimen name="_7dp">7dp</dimen>
     <dimen name="_9dp">9dp</dimen>
+    <dimen name="_11dp">11dp</dimen>
     <dimen name="_17dp">17dp</dimen>
     <dimen name="_30dp">30dp</dimen>
     <dimen name="big_spacing">40dp</dimen>
