@@ -13,6 +13,7 @@
     <include app:graph="@navigation/user_navgraph" />
     <action
         android:id="@+id/action_global_news_navgraph"
-        app:destination="@id/news_navgraph" />
+        app:destination="@id/newsDetailFragment"></action>
+
 
 </navigation>

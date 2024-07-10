@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
+import com.psbn.firstblockpractice.core.R
 import com.psbn.firstblockpractice.core.exception.BindingException
 import com.psbn.firstblockpractice.core.uiUtills.HasCustomBottomBar
 import com.psbn.news.data.DonateWorker
@@ -56,7 +57,11 @@ class NewsDetailFragment : Fragment(), HasCustomBottomBar {
                 DonateWorker.makeRequest(
                     title = args.event.label,
                     sum = sumValue,
-                    id = args.event.id
+                    id = args.event.id,
+                    infoText = requireContext().getString(
+                        R.string.donate_notification_info_text,
+                        sumValue
+                    )
                 )
             )
         }

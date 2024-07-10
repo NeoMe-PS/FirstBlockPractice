@@ -2,6 +2,7 @@ package com.psbn.news.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,11 +65,14 @@ class NewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         observeViewModel()
+
         val item = arguments
         item?.let {
             val id = it.getInt(WORKER_ID_KEY)
             val event =
                 viewModel.uiState.value.events.find { it.id == id } ?: return
+            Log.i("TestLOG", "id in fragment is - $id")
+            Log.i("TestLOG", "event in fragment is - $event")
             navigateToDetailFragment(event)
         }
     }

@@ -3,12 +3,12 @@ package com.psbn.firstblockpractice.presentation
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.navigation.NavigationBarView
+import com.psbn.firstblockpractice.MainNavGraphDirections
 import com.psbn.firstblockpractice.R
 import com.psbn.firstblockpractice.core.exception.BindingException
 import com.psbn.firstblockpractice.core.uiUtills.Navigator
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         hideBottomAtDestination()
         if (intent != null && intent.extras != null) {
             val id = intent?.extras?.getInt("id", 1)
-            navController.navigate(R.id.action_global_news_navgraph, bundleOf("id" to id))
+            navController.navigate(MainNavGraphDirections.actionGlobalNewsNavgraph())
         }
     }
 

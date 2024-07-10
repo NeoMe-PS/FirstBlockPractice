@@ -116,5 +116,6 @@
     <string name="money_sum_1000">1000 ₽</string>
     <string name="money_sum_2000">2000 ₽</string>
     <string name="donate_notification_info_text">Спасибо, что пожертвовали %1$d ₽! Будем очень признательны, если вы сможете пожертвовать еще больше.</string>
+    <string name="donate_notification_info_text_remember">Напоминаем, что мы будем очень признательны, если вы сможете пожертвовать еще больше.</string>
     <string name="remember_later">Напомнить позже</string>
 </resources>
