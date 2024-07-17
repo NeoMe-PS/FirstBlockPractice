@@ -46,6 +46,13 @@ val daggerVersion = "2.51.1"
 val navVersion = "2.7.7"
 val retrofitVersion = "2.9.0"
 val httpInterceptorVersion = "4.12.0"
+
+val mockitoKotlinVersion = "5.4.0"
+val coroutinesVersion = "1.2.1"
+val mockitoCore = "3.4.6"
+val turbine = "0.11.0"
+val coroutineTest = "1.4.2"
+
 dependencies {
 
     implementation(project(":core"))
@@ -53,6 +60,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.test.ext:junit-ktx:1.2.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -72,7 +80,7 @@ dependencies {
     implementation("com.google.dagger:dagger:$daggerVersion")
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 
-// Retrofit
+    // Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
     implementation("com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion")
@@ -80,4 +88,12 @@ dependencies {
 
     //FragmentKTX
     implementation("androidx.fragment:fragment-ktx:$fragmentKtxVersion")
+
+    //Test
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineTest")
+    testImplementation("org.mockito:mockito-core:$mockitoCore")
+    testImplementation("app.cash.turbine:turbine:$turbine")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+
 }

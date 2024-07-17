@@ -62,6 +62,14 @@ val httpInterceptorVersion = "4.12.0"
 val composeViewModelVersion = "2.8.0"
 val workManagerVersion = "2.9.0"
 
+val mockitoKotlinVersion = "5.4.0"
+val coroutinesVersion = "1.2.1"
+val mockitoCore = "3.4.6"
+val turbine = "0.11.0"
+val coroutineTest = "1.4.2"
+val fragmentVersion = "1.8.1"
+
+
 dependencies {
 
     implementation(project(":core"))
@@ -117,5 +125,16 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
 
     implementation("androidx.work:work-runtime-ktx:$workManagerVersion")
+
+    //Test
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineTest")
+    testImplementation("org.mockito:mockito-core:$mockitoCore")
+    testImplementation("app.cash.turbine:turbine:$turbine")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    debugImplementation("androidx.fragment:fragment-testing-manifest:$fragmentVersion")
+    androidTestImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
+
+
 
 }
