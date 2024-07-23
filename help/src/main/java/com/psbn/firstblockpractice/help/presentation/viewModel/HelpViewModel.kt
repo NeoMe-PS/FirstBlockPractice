@@ -9,7 +9,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +28,6 @@ class HelpViewModel @Inject constructor(
         scope.launch {
             loadCategoriesUseCase.invoke()
                 .map { list -> HelpUIState.Response(list) as HelpUIState }
-                .onStart { emit(HelpUIState.Loading) }
                 .collect { state ->
                     _uiState.value = state
                 }

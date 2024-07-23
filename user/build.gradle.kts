@@ -48,6 +48,13 @@ val navVersion = "2.7.7"
 val retrofitVersion = "2.9.0"
 val httpInterceptorVersion = "4.12.0"
 val glideVersion = "4.16.0"
+
+val mockitoKotlinVersion = "5.4.0"
+val coroutinesVersion = "1.2.1"
+val mockitoCore = "3.4.6"
+val turbine = "0.11.0"
+val coroutineTest = "1.4.2"
+
 dependencies {
 
     implementation(project(":core"))
@@ -87,4 +94,11 @@ dependencies {
 
     //Glide
     implementation("com.github.bumptech.glide:glide:$glideVersion")
+
+    //Test
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineTest")
+    testImplementation("org.mockito:mockito-core:$mockitoCore")
+    testImplementation("app.cash.turbine:turbine:$turbine")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 }

@@ -38,6 +38,7 @@ android {
 
 val daggerVersion = "2.51.1"
 dependencies {
+    implementation(project(":core"))
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")

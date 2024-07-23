@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.news.ui.NewsDetailFragment">
+    tools:context="com.psbn.news.presentation.ui.NewsDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -363,6 +363,7 @@
                     android:drawablePadding="@dimen/_7dp"
                     android:gravity="center"
                     android:lines="2"
+                    android:clickable="true"
                     android:paddingTop="@dimen/_9dp"
                     android:text="@string/menu_label_money_help_two_lines"
                     app:drawableTopCompat="@drawable/shirt" />
