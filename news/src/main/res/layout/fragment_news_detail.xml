@@ -363,6 +363,7 @@
                     android:drawablePadding="@dimen/_7dp"
                     android:gravity="center"
                     android:lines="2"
+                    android:clickable="true"
                     android:paddingTop="@dimen/_9dp"
                     android:text="@string/menu_label_money_help_two_lines"
                     app:drawableTopCompat="@drawable/shirt" />
