@@ -8,10 +8,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.navigation.NavigationBarView
+import com.psbn.firstblockpractice.MainNavGraphDirections
 import com.psbn.firstblockpractice.R
 import com.psbn.firstblockpractice.core.exception.BindingException
 import com.psbn.firstblockpractice.core.uiUtills.Navigator
 import com.psbn.firstblockpractice.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity(), Navigator {
     private var _binding: ActivityMainBinding? = null
@@ -30,6 +32,10 @@ class MainActivity : AppCompatActivity(), Navigator {
         setContentView(binding.root)
         setNavigation()
         hideBottomAtDestination()
+        if (intent != null && intent.extras != null) {
+            val id = intent?.extras?.getInt("id", 1)
+            navController.navigate(MainNavGraphDirections.actionGlobalNewsNavgraph())
+        }
     }
 
     private fun setNavigation() {

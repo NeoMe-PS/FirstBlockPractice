@@ -105,4 +105,17 @@
     <string name="desc_auth_with_vk">Иконка для входя с помощью VK</string>
     <string name="desc_auth_with_fb">Иконка для входя с помощью FB</string>
     <string name="desc_auth_with_ok">Иконка для входя с помощью OK</string>
+    <string name="help_dialog_title_text">Спасибо за решение помочь!</string>
+    <string name="first_hint_money_dialog_text">Выберите размер пожертвования</string>
+    <string name="second_hint_money_dialog_text">или введите нужную сумму</string>
+    <string name="help_dialog_edit_hint">Введите сумму</string>
+    <string name="cancel">Отмена</string>
+    <string name="transfer">Перевести</string>
+    <string name="money_sum_100">100 ₽</string>
+    <string name="money_sum_500">500 ₽</string>
+    <string name="money_sum_1000">1000 ₽</string>
+    <string name="money_sum_2000">2000 ₽</string>
+    <string name="donate_notification_info_text">Спасибо, что пожертвовали %1$d ₽! Будем очень признательны, если вы сможете пожертвовать еще больше.</string>
+    <string name="donate_notification_info_text_remember">Напоминаем, что мы будем очень признательны, если вы сможете пожертвовать еще больше.</string>
+    <string name="remember_later">Напомнить позже</string>
 </resources>

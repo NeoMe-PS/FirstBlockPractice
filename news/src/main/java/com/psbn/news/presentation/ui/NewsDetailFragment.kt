@@ -5,11 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
+import com.psbn.firstblockpractice.core.R
 import com.psbn.firstblockpractice.core.exception.BindingException
 import com.psbn.firstblockpractice.core.uiUtills.HasCustomBottomBar
+import com.psbn.news.data.DonateWorker
 import com.psbn.news.databinding.FragmentNewsDetailBinding
+
+const val MONEY_DIALOG_REQUEST_KEY = "money_request_key"
+const val MONEY_DIALOG_RESULT_KEY = "money_result_key"
 
 class NewsDetailFragment : Fragment(), HasCustomBottomBar {
 
@@ -19,6 +27,10 @@ class NewsDetailFragment : Fragment(), HasCustomBottomBar {
             "FragmentNewsDetailBinding is null"
         )
     private val args: NewsDetailFragmentArgs by navArgs()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,8 +42,29 @@ class NewsDetailFragment : Fragment(), HasCustomBottomBar {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBackButton()
+        setOnClickListeners()
         setUIFromArgs()
+        setDialogListener()
+    }
+
+    private fun setDialogListener() {
+        setFragmentResultListener(MONEY_DIALOG_REQUEST_KEY) { _, bundle ->
+            val sumValue = bundle.getInt(MONEY_DIALOG_RESULT_KEY)
+            val workManager = WorkManager.getInstance(requireActivity().application)
+            workManager.enqueueUniqueWork(
+                DonateWorker.WORK_NAME,
+                ExistingWorkPolicy.APPEND,
+                DonateWorker.makeRequest(
+                    title = args.event.label,
+                    sum = sumValue,
+                    id = args.event.id,
+                    infoText = requireContext().getString(
+                        R.string.donate_notification_info_text,
+                        sumValue
+                    )
+                )
+            )
+        }
     }
 
     private fun setUIFromArgs() {
@@ -58,5 +91,20 @@ class NewsDetailFragment : Fragment(), HasCustomBottomBar {
                 NewsDetailFragmentDirections.actionNewsDetailFragmentToNewsFragment()
             findNavController().navigate(direction)
         }
+    }
+
+    private fun setOnClickListeners() {
+        setBackButton()
+        setOnHelpButton()
+    }
+
+    private fun setOnHelpButton() {
+        binding.helpMoneyBtn.setOnClickListener {
+            showMoneyHelpDialog()
+        }
+    }
+
+    private fun showMoneyHelpDialog() {
+        MoneyHelpDialog().show(parentFragmentManager, MONEY_DIALOG_REQUEST_KEY)
     }
 }

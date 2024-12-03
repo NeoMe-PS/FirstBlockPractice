@@ -7,5 +7,5 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.psbn.firstblockpractice.splash.presentation.SplashFragment"
-        android:label="SplashFragment" />
+        android:label="SplashFragment"></fragment>
 </navigation>

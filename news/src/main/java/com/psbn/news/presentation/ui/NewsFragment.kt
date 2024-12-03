@@ -2,6 +2,7 @@ package com.psbn.news.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.psbn.firstblockpractice.core.uiUtills.Navigator
+import com.psbn.news.data.WORKER_ID_KEY
 import com.psbn.news.di.DaggerNewsComponent
 import com.psbn.news.di.NewsDepsProvider
 import com.psbn.news.presentation.models.EventUI
@@ -37,6 +39,7 @@ class NewsFragment : Fragment() {
         component.inject(this)
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,7 +63,18 @@ class NewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         observeViewModel()
+
+        val item = arguments
+        item?.let {
+            val id = it.getInt(WORKER_ID_KEY)
+            val event =
+                viewModel.uiState.value.events.find { it.id == id } ?: return
+            Log.i("TestLOG", "id in fragment is - $id")
+            Log.i("TestLOG", "event in fragment is - $event")
+            navigateToDetailFragment(event)
+        }
     }
 
     private fun observeViewModel() {
